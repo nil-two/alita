@@ -18,7 +18,8 @@ Usage: ali [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Options:
-  -s, --separator=STRING   use STRING to separate line (default: spaces)
+  -r, --regexp             PATTERN is a regular expression
+  -s, --separator=PATTERN  use PATTERN to separate line (default: /\s+/)
   --help                   show this help message
   --version                print the version
 `[1:])
@@ -33,7 +34,8 @@ v0.1.0
 var SPACES = regexp.MustCompile(`\s+`)
 
 type Separator struct {
-	re *regexp.Regexp
+	re        *regexp.Regexp
+	UseRegexp bool
 }
 
 func NewSeparator() *Separator {
@@ -45,7 +47,10 @@ func (s *Separator) String() string {
 }
 
 func (s *Separator) Set(expr string) error {
-	re, err := regexp.Compile(regexp.QuoteMeta(expr))
+	if !s.UseRegexp {
+		expr = regexp.QuoteMeta(expr)
+	}
+	re, err := regexp.Compile(expr)
 	if err != nil {
 		return err
 	}
@@ -146,6 +151,8 @@ func _main() error {
 	a := NewAligner()
 	flag.Var(a.Sep, "s", "")
 	flag.Var(a.Sep, "separator", "")
+	flag.BoolVar(&a.Sep.UseRegexp, "r", false, "")
+	flag.BoolVar(&a.Sep.UseRegexp, "regexp", false, "")
 
 	flag.Usage = usage
 	flag.Parse()
