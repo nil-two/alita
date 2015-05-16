@@ -104,12 +104,9 @@ func (a *Aligner) appendLine(s string) {
 func (a *Aligner) ReadAll(r io.Reader) error {
 	s := bufio.NewScanner(r)
 	for s.Scan() {
-		if s.Err() != nil {
-			return s.Err()
-		}
 		a.appendLine(s.Text())
 	}
-	return nil
+	return s.Err()
 }
 
 func (a *Aligner) format(l []string) string {
