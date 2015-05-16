@@ -140,8 +140,7 @@ func do(a *Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
 	}
-	a.Flush(os.Stdout)
-	return nil
+	return a.Flush(os.Stdout)
 }
 
 func _main() error {
