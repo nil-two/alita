@@ -33,14 +33,11 @@ v0.1.0
 var SPACES = regexp.MustCompile(`\s+`)
 
 type Separator struct {
-	re        *regexp.Regexp
-	isDefault bool
+	re *regexp.Regexp
 }
 
 func NewSeparator() *Separator {
-	return &Separator{
-		isDefault: true,
-	}
+	return &Separator{}
 }
 
 func (s *Separator) String() string {
@@ -52,13 +49,12 @@ func (s *Separator) Set(expr string) error {
 	if err != nil {
 		return err
 	}
-	s.isDefault = false
 	s.re = re
 	return nil
 }
 
 func (s *Separator) Split(t string) []string {
-	if s.isDefault {
+	if s.re == nil {
 		return SPACES.Split(t, -1)
 	}
 
