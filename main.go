@@ -58,20 +58,25 @@ func (s *Separator) Split(t string) []string {
 		return SPACES.Split(t, -1)
 	}
 
-	ils := s.re.FindAllStringIndex(t, -1)
-	if len(ils) == 0 {
+	matches := s.re.FindAllStringIndex(t, -1)
+	if len(matches) == 0 {
 		return []string{t}
 	}
 
-	nls := make([]string, 0, len(ils)*2+1)
-	nls = append(nls, strings.TrimSpace(t[:ils[0][0]]))
-	for i := 1; i < len(ils); i++ {
-		nls = append(nls, strings.TrimSpace(t[ils[i-1][0]:ils[i-1][1]]))
-		nls = append(nls, strings.TrimSpace(t[ils[i-1][1]:ils[i][0]]))
+	sls := make([]string, 0, len(matches)*2+1)
+	beg, end := 0, 0
+	for _, match := range matches {
+		end = match[0]
+		sls = append(sls, t[beg:end])
+		beg, end = match[0], match[1]
+		sls = append(sls, t[beg:end])
+		beg = match[1]
 	}
-	nls = append(nls, strings.TrimSpace(t[ils[len(ils)-1][0]:ils[len(ils)-1][1]]))
-	nls = append(nls, strings.TrimSpace(t[ils[len(ils)-1][1]:]))
-	return nls
+	sls = append(sls, t[beg:])
+	for i := 0; i < len(sls); i++ {
+		sls[i] = strings.TrimSpace(sls[i])
+	}
+	return sls
 }
 
 type Aligner struct {
