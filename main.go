@@ -79,19 +79,19 @@ func (s *Separator) Split(t string) []string {
 }
 
 type Aligner struct {
-	sep   *Separator
+	Sep   *Separator
 	lines [][]string
 	width []int
 }
 
 func NewAligner() *Aligner {
 	return &Aligner{
-		sep: NewSeparator(),
+		Sep: NewSeparator(),
 	}
 }
 
 func (a *Aligner) appendLine(s string) {
-	sp := a.sep.Split(s)
+	sp := a.Sep.Split(s)
 	for i, cell := range sp {
 		if i == len(a.width) {
 			a.width = append(a.width, 0)
@@ -146,8 +146,8 @@ func _main() error {
 	isVersion := flag.Bool("version", false, "")
 
 	a := NewAligner()
-	flag.Var(a.sep, "s", "")
-	flag.Var(a.sep, "separator", "")
+	flag.Var(a.Sep, "s", "")
+	flag.Var(a.Sep, "separator", "")
 
 	flag.Usage = usage
 	flag.Parse()
