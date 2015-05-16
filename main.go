@@ -98,6 +98,10 @@ func NewAligner() *Aligner {
 
 func (a *Aligner) appendLine(s string) {
 	sp := a.Sep.Split(s)
+	a.lines = append(a.lines, sp)
+	if len(sp) == 1 {
+		return
+	}
 	for i, cell := range sp {
 		if i == len(a.width) {
 			a.width = append(a.width, 0)
@@ -108,7 +112,6 @@ func (a *Aligner) appendLine(s string) {
 			a.width[i] = w
 		}
 	}
-	a.lines = append(a.lines, sp)
 }
 
 func (a *Aligner) ReadAll(r io.Reader) error {
@@ -120,6 +123,9 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 }
 
 func (a *Aligner) format(l []string) string {
+	if len(l) == 1 {
+		return l[0]
+	}
 	for i := 0; i < len(l); i++ {
 		l[i] = l[i] + strings.Repeat(" ", a.width[i]-runewidth.StringWidth(l[i]))
 	}
