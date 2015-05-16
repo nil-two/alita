@@ -85,13 +85,15 @@ func (s *Separator) Split(t string) []string {
 }
 
 type Aligner struct {
+	w     io.Writer
 	Sep   *Separator
 	lines [][]string
 	width []int
 }
 
-func NewAligner() *Aligner {
+func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
+		w:   w,
 		Sep: NewSeparator(),
 	}
 }
@@ -132,9 +134,9 @@ func (a *Aligner) format(l []string) string {
 	return strings.TrimSpace(strings.Join(l, " "))
 }
 
-func (a *Aligner) Flush(w io.Writer) error {
+func (a *Aligner) Flush() error {
 	for _, l := range a.lines {
-		_, err := fmt.Fprintln(w, a.format(l))
+		_, err := fmt.Fprintln(a.w, a.format(l))
 		if err != nil {
 			return err
 		}
@@ -146,14 +148,14 @@ func do(a *Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
 	}
-	return a.Flush(os.Stdout)
+	return a.Flush()
 }
 
 func _main() error {
 	isHelp := flag.Bool("help", false, "")
 	isVersion := flag.Bool("version", false, "")
 
-	a := NewAligner()
+	a := NewAligner(os.Stdout)
 	flag.Var(a.Sep, "s", "")
 	flag.Var(a.Sep, "separator", "")
 	flag.BoolVar(&a.Sep.UseRegexp, "r", false, "")
