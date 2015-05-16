@@ -18,8 +18,9 @@ Usage: ali [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Options:
-	--help       show this help message
-	--version    print the version
+  -s, --separator=STRING   use STRING to separate line (default: spaces)
+  --help                   show this help message
+  --version                print the version
 `[1:])
 }
 
