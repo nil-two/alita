@@ -15,7 +15,7 @@ import (
 
 func usage() {
 	os.Stderr.WriteString(`
-Usage: ali [OPTION]... [FILE]...
+Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Options:
@@ -268,7 +268,7 @@ func _main() error {
 
 func main() {
 	if err := _main(); err != nil {
-		fmt.Fprintln(os.Stderr, "ali:", err)
+		fmt.Fprintln(os.Stderr, "alita:", err)
 		os.Exit(1)
 	}
 }
