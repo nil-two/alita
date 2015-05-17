@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/mattn/go-runewidth"
@@ -18,6 +19,7 @@ Usage: ali [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Options:
+  -m, --margin=FORMAT      join line by FORMAT (default: 1:1)
   -r, --regexp             PATTERN is a regular expression
   -s, --separator=PATTERN  use PATTERN to separate line (default: /\s+/)
   --help                   show this help message
@@ -29,6 +31,78 @@ func version() {
 	os.Stderr.WriteString(`
 v0.1.0
 `[1:])
+}
+
+var (
+	DIGIT_ONLY             = regexp.MustCompile(`^\d+$`)
+	COLON_SEPARATED_DIGITS = regexp.MustCompile(`^(\d+):(\d+)$`)
+)
+
+type Margin struct {
+	left  int
+	right int
+}
+
+func NewMargin() *Margin {
+	return &Margin{
+		left:  1,
+		right: 1,
+	}
+}
+
+func (m *Margin) String() string {
+	return fmt.Sprint(*m)
+}
+
+func (m *Margin) Set(format string) error {
+	switch {
+	case DIGIT_ONLY.MatchString(format):
+		n, err := strconv.Atoi(format)
+		if err != nil {
+			return err
+		}
+		m.left, m.right = n, n
+	case COLON_SEPARATED_DIGITS.MatchString(format):
+		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)
+		left, err := strconv.Atoi(a[0][1])
+		if err != nil {
+			return err
+		}
+		right, err := strconv.Atoi(a[0][2])
+		if err != nil {
+			return err
+		}
+		m.left, m.right = left, right
+	default:
+		return fmt.Errorf("margin:", "invalid format:", format)
+	}
+	return nil
+}
+
+func (m *Margin) Join(a []string) string {
+	if len(a) == 0 {
+		return ""
+	}
+	if len(a) == 1 {
+		return a[0]
+	}
+	n := (m.left + m.right) * (len(a) / 2)
+	for i := 0; i < len(a); i++ {
+		n += len(a[i])
+	}
+	lm, rm := strings.Repeat(" ", m.left), strings.Repeat(" ", m.right)
+
+	b := make([]byte, n)
+	bp := copy(b, a[0])
+	for i := 2; i <= len(a); i += 2 {
+		bp += copy(b[bp:], lm)
+		bp += copy(b[bp:], a[i-1])
+		if i != len(a) {
+			bp += copy(b[bp:], rm)
+			bp += copy(b[bp:], a[i])
+		}
+	}
+	return string(b)
 }
 
 var SPACES = regexp.MustCompile(`\s+`)
@@ -85,16 +159,18 @@ func (s *Separator) Split(t string) []string {
 }
 
 type Aligner struct {
-	w     io.Writer
-	Sep   *Separator
-	lines [][]string
-	width []int
+	w      io.Writer
+	Margin *Margin
+	Sep    *Separator
+	lines  [][]string
+	width  []int
 }
 
 func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
-		w:   w,
-		Sep: NewSeparator(),
+		w:      w,
+		Margin: NewMargin(),
+		Sep:    NewSeparator(),
 	}
 }
 
@@ -131,7 +207,7 @@ func (a *Aligner) format(l []string) string {
 	for i := 0; i < len(l); i++ {
 		l[i] = l[i] + strings.Repeat(" ", a.width[i]-runewidth.StringWidth(l[i]))
 	}
-	return strings.TrimSpace(strings.Join(l, " "))
+	return strings.TrimSpace(a.Margin.Join(l))
 }
 
 func (a *Aligner) Flush() error {
@@ -156,6 +232,8 @@ func _main() error {
 	isVersion := flag.Bool("version", false, "")
 
 	a := NewAligner(os.Stdout)
+	flag.Var(a.Margin, "m", "")
+	flag.Var(a.Margin, "margin", "")
 	flag.Var(a.Sep, "s", "")
 	flag.Var(a.Sep, "separator", "")
 	flag.BoolVar(&a.Sep.UseRegexp, "r", false, "")
