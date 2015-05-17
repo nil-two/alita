@@ -76,7 +76,7 @@ func (m *Margin) Set(format string) error {
 		m.left, m.right = left, right
 		return nil
 	}
-	return fmt.Errorf("margin:", "invalid format:", format)
+	return fmt.Errorf("margin: invalid format: %s", format)
 }
 
 func (m *Margin) Join(a []string) string {
