@@ -132,30 +132,30 @@ func (d *Delimiter) Set(expr string) error {
 	return nil
 }
 
-func (d *Delimiter) Split(a string) []string {
+func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
-		return SPACES.Split(a, -1)
+		return SPACES.Split(s, -1)
 	}
 
-	matches := d.re.FindAllStringIndex(a, -1)
+	matches := d.re.FindAllStringIndex(s, -1)
 	if len(matches) == 0 {
-		return []string{a}
+		return []string{s}
 	}
 
-	sls := make([]string, 0, len(matches)*2+1)
+	a := make([]string, 0, len(matches)*2+1)
 	beg, end := 0, 0
 	for _, match := range matches {
 		end = match[0]
-		sls = append(sls, a[beg:end])
+		a = append(a, s[beg:end])
 		beg, end = match[0], match[1]
-		sls = append(sls, a[beg:end])
+		a = append(a, s[beg:end])
 		beg = match[1]
 	}
-	sls = append(sls, a[beg:])
-	for i := 0; i < len(sls); i++ {
-		sls[i] = strings.TrimSpace(sls[i])
+	a = append(a, s[beg:])
+	for i := 0; i < len(a); i++ {
+		a[i] = strings.TrimSpace(a[i])
 	}
-	return sls
+	return a
 }
 
 type Aligner struct {
@@ -200,19 +200,19 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 	return s.Err()
 }
 
-func (a *Aligner) format(l []string) string {
-	if len(l) == 1 {
-		return l[0]
+func (a *Aligner) format(sp []string) string {
+	if len(sp) == 1 {
+		return sp[0]
 	}
-	for i := 0; i < len(l); i++ {
-		l[i] = l[i] + strings.Repeat(" ", a.width[i]-runewidth.StringWidth(l[i]))
+	for i := 0; i < len(sp); i++ {
+		sp[i] = sp[i] + strings.Repeat(" ", a.width[i]-runewidth.StringWidth(sp[i]))
 	}
-	return strings.TrimSpace(a.Margin.Join(l))
+	return strings.TrimSpace(a.Margin.Join(sp))
 }
 
 func (a *Aligner) Flush() error {
-	for _, l := range a.lines {
-		_, err := fmt.Fprintln(a.w, a.format(l))
+	for _, sp := range a.lines {
+		_, err := fmt.Fprintln(a.w, a.format(sp))
 		if err != nil {
 			return err
 		}
