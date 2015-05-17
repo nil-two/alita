@@ -22,8 +22,8 @@ Options:
   -m, --margin=FORMAT      join line by FORMAT (default: 1:1)
   -r, --regexp             DELIM is a regular expression
   -d, --delimiter=DELIM    use DELIM to separate line (default: /\s+/)
-  --help                   show this help message
-  --version                print the version
+  -h, --help               show this help message
+  -v, --version            print the version
 `[1:])
 }
 
@@ -228,8 +228,11 @@ func do(a *Aligner, r io.Reader) error {
 }
 
 func _main() error {
-	isHelp := flag.Bool("help", false, "")
-	isVersion := flag.Bool("version", false, "")
+	var isHelp, isVersion bool
+	flag.BoolVar(&isHelp, "h", false, "")
+	flag.BoolVar(&isHelp, "help", false, "")
+	flag.BoolVar(&isVersion, "v", false, "")
+	flag.BoolVar(&isVersion, "version", false, "")
 
 	a := NewAligner(os.Stdout)
 	flag.Var(a.Margin, "m", "")
@@ -242,10 +245,10 @@ func _main() error {
 	flag.Usage = usage
 	flag.Parse()
 	switch {
-	case *isHelp:
+	case isHelp:
 		usage()
 		return nil
-	case *isVersion:
+	case isVersion:
 		version()
 		return nil
 	}
