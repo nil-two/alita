@@ -55,14 +55,15 @@ func (m *Margin) String() string {
 }
 
 func (m *Margin) Set(format string) error {
-	switch {
-	case DIGIT_ONLY.MatchString(format):
+	if DIGIT_ONLY.MatchString(format) {
 		n, err := strconv.Atoi(format)
 		if err != nil {
 			return err
 		}
 		m.left, m.right = n, n
-	case COLON_SEPARATED_DIGITS.MatchString(format):
+		return nil
+	}
+	if COLON_SEPARATED_DIGITS.MatchString(format) {
 		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)
 		left, err := strconv.Atoi(a[0][1])
 		if err != nil {
@@ -73,10 +74,9 @@ func (m *Margin) Set(format string) error {
 			return err
 		}
 		m.left, m.right = left, right
-	default:
-		return fmt.Errorf("margin:", "invalid format:", format)
+		return nil
 	}
-	return nil
+	return fmt.Errorf("margin:", "invalid format:", format)
 }
 
 func (m *Margin) Join(a []string) string {
