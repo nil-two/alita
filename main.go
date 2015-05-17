@@ -20,8 +20,8 @@ Align FILE(s), or standard input.
 
 Options:
   -m, --margin=FORMAT      join line by FORMAT (default: 1:1)
-  -r, --regexp             PATTERN is a regular expression
-  -s, --separator=PATTERN  use PATTERN to separate line (default: /\s+/)
+  -r, --regexp             DELIM is a regular expression
+  -d, --delimiter=DELIM    use DELIM to separate line (default: /\s+/)
   --help                   show this help message
   --version                print the version
 `[1:])
@@ -107,51 +107,51 @@ func (m *Margin) Join(a []string) string {
 
 var SPACES = regexp.MustCompile(`\s+`)
 
-type Separator struct {
+type Delimiter struct {
 	re        *regexp.Regexp
 	UseRegexp bool
 }
 
-func NewSeparator() *Separator {
-	return &Separator{}
+func NewDelimiter() *Delimiter {
+	return &Delimiter{}
 }
 
-func (s *Separator) String() string {
-	return fmt.Sprint(*s)
+func (d *Delimiter) String() string {
+	return fmt.Sprint(*d)
 }
 
-func (s *Separator) Set(expr string) error {
-	if !s.UseRegexp {
+func (d *Delimiter) Set(expr string) error {
+	if !d.UseRegexp {
 		expr = regexp.QuoteMeta(expr)
 	}
 	re, err := regexp.Compile(expr)
 	if err != nil {
 		return err
 	}
-	s.re = re
+	d.re = re
 	return nil
 }
 
-func (s *Separator) Split(t string) []string {
-	if s.re == nil {
-		return SPACES.Split(t, -1)
+func (d *Delimiter) Split(a string) []string {
+	if d.re == nil {
+		return SPACES.Split(a, -1)
 	}
 
-	matches := s.re.FindAllStringIndex(t, -1)
+	matches := d.re.FindAllStringIndex(a, -1)
 	if len(matches) == 0 {
-		return []string{t}
+		return []string{a}
 	}
 
 	sls := make([]string, 0, len(matches)*2+1)
 	beg, end := 0, 0
 	for _, match := range matches {
 		end = match[0]
-		sls = append(sls, t[beg:end])
+		sls = append(sls, a[beg:end])
 		beg, end = match[0], match[1]
-		sls = append(sls, t[beg:end])
+		sls = append(sls, a[beg:end])
 		beg = match[1]
 	}
-	sls = append(sls, t[beg:])
+	sls = append(sls, a[beg:])
 	for i := 0; i < len(sls); i++ {
 		sls[i] = strings.TrimSpace(sls[i])
 	}
@@ -161,7 +161,7 @@ func (s *Separator) Split(t string) []string {
 type Aligner struct {
 	w      io.Writer
 	Margin *Margin
-	Sep    *Separator
+	Delim  *Delimiter
 	lines  [][]string
 	width  []int
 }
@@ -170,12 +170,12 @@ func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
 		w:      w,
 		Margin: NewMargin(),
-		Sep:    NewSeparator(),
+		Delim:  NewDelimiter(),
 	}
 }
 
 func (a *Aligner) appendLine(s string) {
-	sp := a.Sep.Split(s)
+	sp := a.Delim.Split(s)
 	a.lines = append(a.lines, sp)
 	if len(sp) == 1 {
 		return
@@ -234,10 +234,10 @@ func _main() error {
 	a := NewAligner(os.Stdout)
 	flag.Var(a.Margin, "m", "")
 	flag.Var(a.Margin, "margin", "")
-	flag.Var(a.Sep, "s", "")
-	flag.Var(a.Sep, "separator", "")
-	flag.BoolVar(&a.Sep.UseRegexp, "r", false, "")
-	flag.BoolVar(&a.Sep.UseRegexp, "regexp", false, "")
+	flag.Var(a.Delim, "d", "")
+	flag.Var(a.Delim, "delimiter", "")
+	flag.BoolVar(&a.Delim.UseRegexp, "r", false, "")
+	flag.BoolVar(&a.Delim.UseRegexp, "regexp", false, "")
 
 	flag.Usage = usage
 	flag.Parse()
