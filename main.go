@@ -86,7 +86,10 @@ func (m *Margin) Join(a []string) string {
 	if len(a) == 1 {
 		return a[0]
 	}
-	n := (m.left + m.right) * (len(a) / 2)
+	n := m.left * (len(a) / 2)
+	if len(a)%2 != 0 {
+		n += m.left * (len(a) / 2)
+	}
 	for i := 0; i < len(a); i++ {
 		n += len(a[i])
 	}
