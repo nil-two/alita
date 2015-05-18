@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/kusabashira/alita"
 )
 
 func usage() {
@@ -27,7 +29,7 @@ v0.2.0
 `[1:])
 }
 
-func do(a *Aligner, r io.Reader) error {
+func do(a *alita.Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
 	}
@@ -41,7 +43,7 @@ func _main() error {
 	flag.BoolVar(&isVersion, "v", false, "")
 	flag.BoolVar(&isVersion, "version", false, "")
 
-	a := NewAligner(os.Stdout)
+	a := alita.NewAligner(os.Stdout)
 	flag.Var(a.Margin, "m", "")
 	flag.Var(a.Margin, "margin", "")
 	flag.Var(a.Delim, "d", "")
