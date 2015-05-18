@@ -66,3 +66,29 @@ func TestParseErrFormat(t *testing.T) {
 		}
 	}
 }
+
+type JoinTest struct {
+	format string
+	src    []string
+	dst    string
+}
+
+var indexTestJoinStrings = []JoinTest{
+	{"1", []string{"n", "=", "100"}, "n = 100"},
+	{"2", []string{"n", "=", "100"}, "n  =  100"},
+}
+
+func TestJoinStrings(t *testing.T) {
+	m := NewMargin()
+	for _, test := range indexTestJoinStrings {
+		if err := m.Set(test.format); err != nil {
+			t.Errorf("Set(%q) returns err; want nil", test.format)
+		}
+		actual := m.Join(test.src)
+		expect := test.dst
+		if actual != expect {
+			t.Errorf("Join(%q) = %q; want %q",
+				test.src, actual, expect)
+		}
+	}
+}
