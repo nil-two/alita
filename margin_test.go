@@ -77,7 +77,12 @@ type JoinTest struct {
 var indexTestJoinStrings = []JoinTest{
 	{"1", []string{"n", "=", "100"}, "n = 100"},
 	{"2", []string{"n", "=", "100"}, "n  =  100"},
+
 	{"1:0", []string{"n", "=", "100"}, "n =100"},
+	{"0:1", []string{"n", "=", "100"}, "n= 100"},
+
+	{"1", []string{"1", "2", "3", "4"}, "1 2 3 4"},
+	{"2", []string{"1", "2", "3", "4"}, "1  2  3  4"},
 }
 
 func TestJoinStrings(t *testing.T) {
