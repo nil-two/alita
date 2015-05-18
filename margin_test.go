@@ -37,7 +37,8 @@ func TestParseFormat(t *testing.T) {
 	m := NewMargin()
 	for _, test := range indexTestsFormat {
 		if err := m.Set(test.format); err != nil {
-			t.Errorf("Set(%q) returns err; want nil", test.format)
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.format, err)
 		}
 		if m.left != test.left || m.right != test.right {
 			t.Errorf("got %d:%d, want %d:%d",
@@ -62,7 +63,7 @@ func TestParseErrFormat(t *testing.T) {
 	m := NewMargin()
 	for _, format := range indexTestsErrFormat {
 		if err := m.Set(format); err == nil {
-			t.Errorf("Set(%q) returns nil; want err", format)
+			t.Errorf("Margin.Set(%q) returns nil; want err", format)
 		}
 	}
 }
@@ -82,13 +83,15 @@ func TestJoinStrings(t *testing.T) {
 	m := NewMargin()
 	for _, test := range indexTestJoinStrings {
 		if err := m.Set(test.format); err != nil {
-			t.Errorf("Set(%q) returns err; want nil", test.format)
+			t.Errorf("Margin.Set(%q) returns %q; want nil",
+				err, test.format)
 		}
+
 		actual := m.Join(test.src)
 		expect := test.dst
 		if actual != expect {
-			t.Errorf("Join(%q) = %q; want %q",
-				test.src, actual, expect)
+			t.Errorf("Margin.Set(%q).Join(%q) = %q; want %q",
+				test.format, test.src, actual, expect)
 		}
 	}
 }
