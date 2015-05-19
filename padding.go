@@ -1,6 +1,8 @@
 package alita
 
 import (
+	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/mattn/go-runewidth"
@@ -32,6 +34,8 @@ func (j Justify) Just(width int, s string) string {
 	return s + strings.Repeat(" ", width-w)
 }
 
+var JUSTFIES_SEQUENCE = regexp.MustCompile("^[lrc]+$")
+
 type Padding struct {
 	justfies []Justify
 	width    []int
@@ -43,6 +47,29 @@ func NewPadding() *Padding {
 
 func (p *Padding) SetJustfies(a []Justify) {
 	p.justfies = a
+}
+
+func (m *Padding) String() string {
+	return fmt.Sprint(*m)
+}
+
+func (p *Padding) Set(format string) error {
+	if !JUSTFIES_SEQUENCE.MatchString(format) {
+		return fmt.Errorf("padding: invalid format: %s", format)
+	}
+	a := make([]Justify, 0)
+	for _, c := range format {
+		switch c {
+		case 'l':
+			a = append(a, JustLeft)
+		case 'r':
+			a = append(a, JustRight)
+		case 'c':
+			a = append(a, JustCenter)
+		}
+	}
+	p.SetJustfies(a)
+	return nil
 }
 
 func (p *Padding) UpdateWidth(a []string) {

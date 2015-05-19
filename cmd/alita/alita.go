@@ -16,6 +16,7 @@ Align FILE(s), or standard input.
 
 Options:
   -m, --margin=FORMAT      join line by FORMAT (default: 1:1)
+  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE (default: l)
   -r, --regexp             DELIM is a regular expression
   -d, --delimiter=DELIM    use DELIM to separate line (default: /\s+/)
   -h, --help               show this help message
@@ -46,6 +47,8 @@ func _main() error {
 	a := alita.NewAligner(os.Stdout)
 	flag.Var(a.Margin, "m", "")
 	flag.Var(a.Margin, "margin", "")
+	flag.Var(a.Padding, "j", "")
+	flag.Var(a.Padding, "justfy", "")
 	flag.Var(a.Delimiter, "d", "")
 	flag.Var(a.Delimiter, "delimiter", "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
