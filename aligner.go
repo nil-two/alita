@@ -39,10 +39,13 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 	return s.Err()
 }
 
+func (a *Aligner) format(sp []string) string {
+	return strings.TrimSpace(a.Margin.Join(a.Padding.Format(sp)))
+}
+
 func (a *Aligner) Flush() error {
 	for _, sp := range a.lines {
-		s := strings.TrimSpace(a.Margin.Join(a.Padding.Format(sp)))
-		_, err := fmt.Fprintln(a.w, s)
+		_, err := fmt.Fprintln(a.w, a.format(sp))
 		if err != nil {
 			return err
 		}
