@@ -11,7 +11,7 @@ type UpdateWidthTest struct {
 	after  []int
 }
 
-var indexTestUpdateWidth = []UpdateWidthTest{
+var indexTestsUpdateWidth = []UpdateWidthTest{
 	// Through update
 	{[]string{"a"},
 		[]int{}, []int{}},
@@ -49,7 +49,7 @@ var indexTestUpdateWidth = []UpdateWidthTest{
 
 func TestUpdateWidth(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestUpdateWidth {
+	for _, test := range indexTestsUpdateWidth {
 		p.width = test.before
 
 		p.UpdateWidth(test.a)

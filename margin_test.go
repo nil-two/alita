@@ -75,7 +75,7 @@ type JoinTest struct {
 	dst   string
 }
 
-var indexTestJoinStrings = []JoinTest{
+var indexTestsJoinStrings = []JoinTest{
 	{0, 0, []string{"a"}, "a"},
 	{2, 2, []string{"a"}, "a"},
 
@@ -105,7 +105,7 @@ var indexTestJoinStrings = []JoinTest{
 
 func TestJoinStrings(t *testing.T) {
 	m := NewMargin()
-	for _, test := range indexTestJoinStrings {
+	for _, test := range indexTestsJoinStrings {
 		m.SetMargin(test.left, test.right)
 		actual := m.Join(test.src)
 		expect := test.dst

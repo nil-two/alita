@@ -42,7 +42,7 @@ type DefaultSplitTest struct {
 	dst []string
 }
 
-var indexTestDefaultSplit = []DefaultSplitTest{
+var indexTestsDefaultSplit = []DefaultSplitTest{
 	{"a", []string{"a"}},
 	{"a b", []string{"a", "b"}},
 	{"a b c", []string{"a", "b", "c"}},
@@ -54,7 +54,7 @@ var indexTestDefaultSplit = []DefaultSplitTest{
 
 func TestDefaultSplit(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestDefaultSplit {
+	for _, test := range indexTestsDefaultSplit {
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
