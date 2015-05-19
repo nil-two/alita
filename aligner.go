@@ -8,24 +8,24 @@ import (
 )
 
 type Aligner struct {
-	w       io.Writer
-	Margin  *Margin
-	Delim   *Delimiter
-	Padding *Padding
-	lines   [][]string
+	w         io.Writer
+	Margin    *Margin
+	Delimiter *Delimiter
+	Padding   *Padding
+	lines     [][]string
 }
 
 func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
-		w:       w,
-		Margin:  NewMargin(),
-		Delim:   NewDelimiter(),
-		Padding: NewPadding(),
+		w:         w,
+		Margin:    NewMargin(),
+		Delimiter: NewDelimiter(),
+		Padding:   NewPadding(),
 	}
 }
 
 func (a *Aligner) appendLine(s string) {
-	sp := a.Delim.Split(s)
+	sp := a.Delimiter.Split(s)
 	a.lines = append(a.lines, sp)
 
 	a.Padding.UpdateWidth(sp)

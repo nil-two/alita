@@ -46,10 +46,10 @@ func _main() error {
 	a := alita.NewAligner(os.Stdout)
 	flag.Var(a.Margin, "m", "")
 	flag.Var(a.Margin, "margin", "")
-	flag.Var(a.Delim, "d", "")
-	flag.Var(a.Delim, "delimiter", "")
-	flag.BoolVar(&a.Delim.UseRegexp, "r", false, "")
-	flag.BoolVar(&a.Delim.UseRegexp, "regexp", false, "")
+	flag.Var(a.Delimiter, "d", "")
+	flag.Var(a.Delimiter, "delimiter", "")
+	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
+	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
 
 	flag.Usage = usage
 	flag.Parse()
