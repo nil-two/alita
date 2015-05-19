@@ -69,52 +69,49 @@ func TestParseErrFormat(t *testing.T) {
 }
 
 type JoinTest struct {
-	format string
-	src    []string
-	dst    string
+	left  int
+	right int
+	src   []string
+	dst   string
 }
 
 var indexTestJoinStrings = []JoinTest{
-	{"0", []string{"a"}, "a"},
-	{"2", []string{"a"}, "a"},
+	{0, 0, []string{"a"}, "a"},
+	{2, 2, []string{"a"}, "a"},
 
-	{"0", []string{"a", "b"}, "ab"},
-	{"2", []string{"a", "b"}, "a  b"},
+	{0, 0, []string{"a", "b"}, "ab"},
+	{2, 2, []string{"a", "b"}, "a  b"},
 
-	{"1", []string{"n", "=", "100"}, "n = 100"},
-	{"2", []string{"n", "=", "100"}, "n  =  100"},
-	{"1:0", []string{"n", "=", "100"}, "n =100"},
-	{"0:1", []string{"n", "=", "100"}, "n= 100"},
+	{1, 1, []string{"n", "=", "100"}, "n = 100"},
+	{2, 2, []string{"n", "=", "100"}, "n  =  100"},
+	{1, 0, []string{"n", "=", "100"}, "n =100"},
+	{0, 1, []string{"n", "=", "100"}, "n= 100"},
 
-	{"1", []string{"1", "2", "3", "4"}, "1 2 3 4"},
-	{"2", []string{"1", "2", "3", "4"}, "1  2  3  4"},
-	{"0:1", []string{"1", "2", "3", "4"}, "12 34"},
-	{"1:0", []string{"1", "2", "3", "4"}, "1 23 4"},
+	{1, 1, []string{"1", "2", "3", "4"}, "1 2 3 4"},
+	{2, 2, []string{"1", "2", "3", "4"}, "1  2  3  4"},
+	{0, 1, []string{"1", "2", "3", "4"}, "12 34"},
+	{1, 0, []string{"1", "2", "3", "4"}, "1 23 4"},
 
-	{"1", []string{"a", ":", "b", ":", "c"}, "a : b : c"},
-	{"2", []string{"a", ":", "b", ":", "c"}, "a  :  b  :  c"},
-	{"0:1", []string{"a", ":", "b", ":", "c"}, "a: b: c"},
-	{"1:0", []string{"a", ":", "b", ":", "c"}, "a :b :c"},
+	{1, 1, []string{"a", ":", "b", ":", "c"}, "a : b : c"},
+	{2, 2, []string{"a", ":", "b", ":", "c"}, "a  :  b  :  c"},
+	{0, 1, []string{"a", ":", "b", ":", "c"}, "a: b: c"},
+	{1, 0, []string{"a", ":", "b", ":", "c"}, "a :b :c"},
 
-	{"0:1", []string{"1", "2", "3", "4", "5", "6", "7", "8"},
+	{0, 1, []string{"1", "2", "3", "4", "5", "6", "7", "8"},
 		"12 34 56 78"},
-	{"1:0", []string{"1", "2", "3", "4", "5", "6", "7", "8"},
+	{1, 0, []string{"1", "2", "3", "4", "5", "6", "7", "8"},
 		"1 23 45 67 8"},
 }
 
 func TestJoinStrings(t *testing.T) {
 	m := NewMargin()
 	for _, test := range indexTestJoinStrings {
-		if err := m.Set(test.format); err != nil {
-			t.Errorf("Margin.Set(%q) returns %q; want nil",
-				err, test.format)
-		}
-
+		m.SetMargin(test.left, test.right)
 		actual := m.Join(test.src)
 		expect := test.dst
 		if actual != expect {
-			t.Errorf("Margin.Set(%q).Join(%q) = %q; want %q",
-				test.format, test.src, actual, expect)
+			t.Errorf("Margin(%d, %d).Join(%q) = %q; want %q",
+				test.left, test.right, test.src, actual, expect)
 		}
 	}
 }

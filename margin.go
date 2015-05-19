@@ -24,6 +24,10 @@ func NewMargin() *Margin {
 	}
 }
 
+func (m *Margin) SetMargin(l, r int) {
+	m.left, m.right = l, r
+}
+
 func (m *Margin) String() string {
 	return fmt.Sprint(*m)
 }
@@ -34,20 +38,20 @@ func (m *Margin) Set(format string) error {
 		if err != nil {
 			return err
 		}
-		m.left, m.right = n, n
+		m.SetMargin(n, n)
 		return nil
 	}
 	if COLON_SEPARATED_DIGITS.MatchString(format) {
-		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)
-		left, err := strconv.Atoi(a[0][1])
+		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)[0]
+		l, err := strconv.Atoi(a[1])
 		if err != nil {
 			return err
 		}
-		right, err := strconv.Atoi(a[0][2])
+		r, err := strconv.Atoi(a[2])
 		if err != nil {
 			return err
 		}
-		m.left, m.right = left, right
+		m.SetMargin(l, r)
 		return nil
 	}
 	return fmt.Errorf("margin: invalid format: %s", format)
