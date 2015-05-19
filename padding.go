@@ -61,8 +61,11 @@ func (p *Padding) UpdateWidth(a []string) {
 }
 
 func (p *Padding) justKind(i int) Justify {
-	if len(p.justfies) == 0 {
+	switch len(p.justfies) {
+	case 0:
 		return JustLeft
+	case 1:
+		return p.justfies[0]
 	}
 	j := (i-1)%(len(p.justfies)-1) + 1
 	return p.justfies[j]
