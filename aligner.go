@@ -40,7 +40,7 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 }
 
 func (a *Aligner) format(sp []string) string {
-	return strings.TrimSpace(a.Margin.Join(a.Padding.Format(sp)))
+	return strings.TrimRight(a.Margin.Join(a.Padding.Format(sp)), " ")
 }
 
 func (a *Aligner) Flush() error {
