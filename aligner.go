@@ -5,42 +5,30 @@ import (
 	"fmt"
 	"io"
 	"strings"
-
-	"github.com/mattn/go-runewidth"
 )
 
 type Aligner struct {
-	w      io.Writer
-	Margin *Margin
-	Delim  *Delimiter
-	lines  [][]string
-	width  []int
+	w       io.Writer
+	Margin  *Margin
+	Delim   *Delimiter
+	Padding *Padding
+	lines   [][]string
 }
 
 func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
-		w:      w,
-		Margin: NewMargin(),
-		Delim:  NewDelimiter(),
+		w:       w,
+		Margin:  NewMargin(),
+		Delim:   NewDelimiter(),
+		Padding: NewPadding(),
 	}
 }
 
 func (a *Aligner) appendLine(s string) {
 	sp := a.Delim.Split(s)
 	a.lines = append(a.lines, sp)
-	if len(sp) == 1 {
-		return
-	}
-	for i, cell := range sp {
-		if i == len(a.width) {
-			a.width = append(a.width, 0)
-		}
 
-		w := runewidth.StringWidth(cell)
-		if w > a.width[i] {
-			a.width[i] = w
-		}
-	}
+	a.Padding.UpdateWidth(sp)
 }
 
 func (a *Aligner) ReadAll(r io.Reader) error {
@@ -51,19 +39,10 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 	return s.Err()
 }
 
-func (a *Aligner) format(sp []string) string {
-	if len(sp) == 1 {
-		return sp[0]
-	}
-	for i := 0; i < len(sp); i++ {
-		sp[i] = sp[i] + strings.Repeat(" ", a.width[i]-runewidth.StringWidth(sp[i]))
-	}
-	return strings.TrimSpace(a.Margin.Join(sp))
-}
-
 func (a *Aligner) Flush() error {
 	for _, sp := range a.lines {
-		_, err := fmt.Fprintln(a.w, a.format(sp))
+		s := strings.TrimSpace(a.Margin.Join(a.Padding.Format(sp)))
+		_, err := fmt.Fprintln(a.w, s)
 		if err != nil {
 			return err
 		}
