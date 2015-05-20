@@ -24,7 +24,7 @@ Output control:
 
 Miscellaneous:
   -h, --help               show this help message
-  -v, --version            print the version
+      --version            print the version
 `[1:])
 }
 
@@ -45,7 +45,6 @@ func _main() error {
 	var isHelp, isVersion bool
 	flag.BoolVar(&isHelp, "h", false, "")
 	flag.BoolVar(&isHelp, "help", false, "")
-	flag.BoolVar(&isVersion, "v", false, "")
 	flag.BoolVar(&isVersion, "version", false, "")
 
 	a := alita.NewAligner(os.Stdout)
