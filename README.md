@@ -36,6 +36,14 @@ Usage
 
 Installation
 --------
+`alita` can be easily installed as an executable.
+Download the latest
+[compiled binaries](https://github.com/kusabashira/alita/releases)
+and put it anywhere in your executable path.
+
+Or, if you've done Go development before
+and your $GOPATH/bin directory is already in your PATH:
+
 	go get github.com/kusabashira/alita
 
 Command Line Options
