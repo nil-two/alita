@@ -179,3 +179,66 @@ func TestsPaddingJustKind(t *testing.T) {
 		}
 	}
 }
+
+type PaddingFormatTest struct {
+	justfies []Justify
+	width    []int
+	src      []string
+	dst      []string
+}
+
+var indexTestsPaddingFormat = []PaddingFormatTest{
+	{nil, nil,
+		[]string{"a"},
+		[]string{"a"}},
+	{nil, nil,
+		[]string{"a", "b"},
+		[]string{"a", "b"}},
+
+	{nil, []int{2, 3},
+		[]string{"a", "b"},
+		[]string{"a ", "b  "}},
+	{nil, []int{2, 3, 4},
+		[]string{"a", "b", "c"},
+		[]string{"a ", "b  ", "c   "}},
+	{nil, []int{2, 3, 4, 5},
+		[]string{"a", "b", "b", "d"},
+		[]string{"a ", "b  ", "b   ", "d    "}},
+	{nil, []int{2, 3, 4, 5, 6},
+		[]string{"a", "b", "b", "d", "e"},
+		[]string{"a ", "b  ", "b   ", "d    ", "e     "}},
+
+	{[]Justify{JustRight}, []int{2, 3},
+		[]string{"a", "b"},
+		[]string{" a", "  b"}},
+	{[]Justify{JustRight}, []int{2, 3, 4},
+		[]string{"a", "b", "c"},
+		[]string{" a", "  b", "   c"}},
+	{[]Justify{JustRight}, []int{2, 3, 4, 5},
+		[]string{"a", "b", "c", "d"},
+		[]string{" a", "  b", "   c", "    d"}},
+	{[]Justify{JustRight}, []int{2, 3, 4, 5, 6},
+		[]string{"a", "b", "c", "d", "e"},
+		[]string{" a", "  b", "   c", "    d", "     e"}},
+
+	{[]Justify{JustLeft, JustCenter, JustRight}, []int{5, 1, 5},
+		[]string{"n", "=", "100"},
+		[]string{"n    ", "=", "  100"}},
+	{[]Justify{JustLeft, JustCenter, JustRight}, []int{8, 1, 8},
+		[]string{"n", "=", "100"},
+		[]string{"n       ", "=", "     100"}},
+}
+
+func TestPaddingFormat(t *testing.T) {
+	p := NewPadding()
+	for _, test := range indexTestsPaddingFormat {
+		p.SetJustfies(test.justfies)
+		p.width = test.width
+		actual := p.Format(test.src)
+		expect := test.dst
+		if !reflect.DeepEqual(actual, expect) {
+			t.Errorf("Padding(%v,%v) = %q; want %q",
+				test.justfies, test.width, actual, expect)
+		}
+	}
+}
