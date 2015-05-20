@@ -109,7 +109,12 @@ func (p *Padding) Format(a []string) []string {
 		return a
 	}
 	for i := 0; i < len(a); i++ {
-		a[i] = p.justKind(i).Just(p.width[i], a[i])
+		j := p.justKind(i)
+		w := 0
+		if i < len(p.width) {
+			w = p.width[i]
+		}
+		a[i] = j.Just(w, a[i])
 	}
 	return a
 }
