@@ -6,13 +6,13 @@ import (
 	"testing"
 )
 
-type ExprTest struct {
+type DelimiterSetTest struct {
 	useRegexp bool
 	expr      string
 	re        *regexp.Regexp
 }
 
-var indexTestsExpr = []ExprTest{
+var indexTestsDelimiterSet = []DelimiterSetTest{
 	{false, `=`, regexp.MustCompile(`=`)},
 	{false, `=+`, regexp.MustCompile(`=\+`)},
 	{false, `-*>`, regexp.MustCompile(`-\*>`)},
@@ -22,9 +22,9 @@ var indexTestsExpr = []ExprTest{
 	{true, `-*>`, regexp.MustCompile(`-*>`)},
 }
 
-func TestParseExpr(t *testing.T) {
+func TestDelimiterSet(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsExpr {
+	for _, test := range indexTestsDelimiterSet {
 		d.UseRegexp = test.useRegexp
 		if err := d.Set(test.expr); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
@@ -37,12 +37,12 @@ func TestParseExpr(t *testing.T) {
 	}
 }
 
-type DefaultSplitTest struct {
+type DelimiterSplitDefaultTest struct {
 	src string
 	dst []string
 }
 
-var indexTestsDefaultSplit = []DefaultSplitTest{
+var indexTestsDelimiterSplitDefault = []DelimiterSplitDefaultTest{
 	{"a", []string{"a"}},
 	{"a b", []string{"a", "b"}},
 	{"a b c", []string{"a", "b", "c"}},
@@ -52,9 +52,9 @@ var indexTestsDefaultSplit = []DefaultSplitTest{
 	{"a  b c", []string{"a", "b", "c"}},
 }
 
-func TestDefaultSplit(t *testing.T) {
+func TestDelimiterDefaultSplit(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsDefaultSplit {
+	for _, test := range indexTestsDelimiterSplitDefault {
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
@@ -64,14 +64,14 @@ func TestDefaultSplit(t *testing.T) {
 	}
 }
 
-type SplitTest struct {
+type DelimiterSplitTest struct {
 	useRegexp bool
 	expr      string
 	src       string
 	dst       []string
 }
 
-var indexTestsSplit = []SplitTest{
+var indexTestsDelimiterSplit = []DelimiterSplitTest{
 	{false, `=`, "n", []string{"n"}},
 	{false, `=`, "n=", []string{"n", "=", ""}},
 	{false, `=`, "=n", []string{"", "=", "n"}},
@@ -93,9 +93,9 @@ var indexTestsSplit = []SplitTest{
 		[]string{"a", "=>", "b", "==>", "c", "===>", "d"}},
 }
 
-func TestSplit(t *testing.T) {
+func TestDelimiterSplit(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsSplit {
+	for _, test := range indexTestsDelimiterSplit {
 		d.UseRegexp = test.useRegexp
 		if err := d.Set(test.expr); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",

@@ -65,13 +65,13 @@ func TestJustfy(t *testing.T) {
 	}
 }
 
-type UpdateWidthTest struct {
+type PaddingUpdateWidthTest struct {
 	a      []string
 	before []int
 	after  []int
 }
 
-var indexTestsUpdateWidth = []UpdateWidthTest{
+var indexTestsPaddingUpdateWidth = []PaddingUpdateWidthTest{
 	// Through update
 	{[]string{"a"},
 		[]int{}, []int{}},
@@ -107,9 +107,9 @@ var indexTestsUpdateWidth = []UpdateWidthTest{
 		[]int{1, 1}, []int{12, 14}},
 }
 
-func TestUpdateWidth(t *testing.T) {
+func TestPaddingUpdateWidth(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestsUpdateWidth {
+	for _, test := range indexTestsPaddingUpdateWidth {
 		p.width = test.before
 		p.UpdateWidth(test.a)
 		actual := p.width
@@ -121,13 +121,13 @@ func TestUpdateWidth(t *testing.T) {
 	}
 }
 
-type JustKindTest struct {
+type PaddingJustKindTest struct {
 	justfies []Justify
 	src      int
 	dst      Justify
 }
 
-var indexTestsJustKind = []JustKindTest{
+var indexTestsPaddingJustKind = []PaddingJustKindTest{
 	{nil, -1, JustLeft},
 	{nil, 0, JustLeft},
 	{nil, 1, JustLeft},
@@ -167,9 +167,9 @@ var indexTestsJustKind = []JustKindTest{
 	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 7, JustCenter},
 }
 
-func TestJustKind(t *testing.T) {
+func TestsPaddingJustKind(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestsJustKind {
+	for _, test := range indexTestsPaddingJustKind {
 		p.SetJustfies(test.justfies)
 		actual := p.justKind(test.src)
 		expect := test.dst

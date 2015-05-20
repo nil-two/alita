@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDefaultMargin(t *testing.T) {
+func TestMarginDefault(t *testing.T) {
 	m := NewMargin()
 	l, r := 1, 1
 	if m.left != l || m.right != r {
@@ -12,13 +12,13 @@ func TestDefaultMargin(t *testing.T) {
 	}
 }
 
-type FormatTest struct {
+type MarginSetTest struct {
 	format string
 	left   int
 	right  int
 }
 
-var indexTestsFormat = []FormatTest{
+var indexTestsMarginSet = []MarginSetTest{
 	// digit only
 	{"1", 1, 1},
 	{"2", 2, 2},
@@ -33,9 +33,9 @@ var indexTestsFormat = []FormatTest{
 	{"5:20", 5, 20},
 }
 
-func TestParseFormat(t *testing.T) {
+func TestMarginSet(t *testing.T) {
 	m := NewMargin()
-	for _, test := range indexTestsFormat {
+	for _, test := range indexTestsMarginSet {
 		if err := m.Set(test.format); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.format, err)
@@ -47,7 +47,7 @@ func TestParseFormat(t *testing.T) {
 	}
 }
 
-var indexTestsErrFormat = []string{
+var indexTestsMarginSetErr = []string{
 	"abc",
 	"100000000000000000000000000000",
 	"-1",
@@ -59,23 +59,23 @@ var indexTestsErrFormat = []string{
 	"3:1:4",
 }
 
-func TestParseErrFormat(t *testing.T) {
+func TestMarginSetErr(t *testing.T) {
 	m := NewMargin()
-	for _, format := range indexTestsErrFormat {
+	for _, format := range indexTestsMarginSetErr {
 		if err := m.Set(format); err == nil {
 			t.Errorf("Margin.Set(%q) returns nil; want err", format)
 		}
 	}
 }
 
-type JoinTest struct {
+type MarginJoinTest struct {
 	left  int
 	right int
 	src   []string
 	dst   string
 }
 
-var indexTestsJoinStrings = []JoinTest{
+var indexTestsMarginJoin = []MarginJoinTest{
 	{0, 0, []string{"a"}, "a"},
 	{2, 2, []string{"a"}, "a"},
 
@@ -103,9 +103,9 @@ var indexTestsJoinStrings = []JoinTest{
 		"1 23 45 67 8"},
 }
 
-func TestJoinStrings(t *testing.T) {
+func TestMarginJoin(t *testing.T) {
 	m := NewMargin()
-	for _, test := range indexTestsJoinStrings {
+	for _, test := range indexTestsMarginJoin {
 		m.SetMargin(test.left, test.right)
 		actual := m.Join(test.src)
 		expect := test.dst

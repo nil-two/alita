@@ -11,7 +11,7 @@ type AlignSimpleTest struct {
 	dst []byte
 }
 
-var indexTestsSimpleAlign = []AlignSimpleTest{
+var indexTestsAlignSimple = []AlignSimpleTest{
 	{[]byte(`
 a
 bb
@@ -55,8 +55,8 @@ ccc
 `[1:])},
 }
 
-func TestSimpleAlign(t *testing.T) {
-	for _, test := range indexTestsSimpleAlign {
+func TestAlignSimple(t *testing.T) {
+	for _, test := range indexTestsAlignSimple {
 		w := bytes.NewBuffer(make([]byte, 0))
 		a := NewAligner(w)
 
