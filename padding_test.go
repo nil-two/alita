@@ -13,22 +13,18 @@ type JustfyTest struct {
 }
 
 var indexTestsJustfy = []JustfyTest{
-	// Case odd
+	// Case normal
 	{JustLeft, 5, "abc", "abc  "},
 	{JustRight, 5, "abc", "  abc"},
 	{JustCenter, 5, "abc", " abc "},
-
-	// Case odd && equal
-	{JustLeft, 5, "abcde", "abcde"},
-	{JustRight, 5, "abcde", "abcde"},
-	{JustCenter, 5, "abcde", "abcde"},
-
-	// Case even
 	{JustLeft, 6, "abc", "abc   "},
 	{JustRight, 6, "abc", "   abc"},
 	{JustCenter, 6, "abc", " abc  "},
 
-	// Case even && equal
+	// Case equal
+	{JustLeft, 5, "abcde", "abcde"},
+	{JustRight, 5, "abcde", "abcde"},
+	{JustCenter, 5, "abcde", "abcde"},
 	{JustLeft, 6, "abcdef", "abcdef"},
 	{JustRight, 6, "abcdef", "abcdef"},
 	{JustCenter, 6, "abcdef", "abcdef"},
@@ -42,6 +38,19 @@ var indexTestsJustfy = []JustfyTest{
 	{JustLeft, 4, "abcdefg", "abcdefg"},
 	{JustRight, 4, "abcdefg", "abcdefg"},
 	{JustCenter, 4, "abcdefg", "abcdefg"},
+
+	// Case minus
+	{JustLeft, -5, "abc", "abc"},
+	{JustRight, -5, "abc", "abc"},
+	{JustCenter, -5, "abc", "abc"},
+
+	// Case double-width character
+	{JustLeft, 8, "日本語", "日本語  "},
+	{JustRight, 8, "日本語", "  日本語"},
+	{JustCenter, 8, "日本語", " 日本語 "},
+	{JustLeft, 9, "日本語", "日本語   "},
+	{JustRight, 9, "日本語", "   日本語"},
+	{JustCenter, 9, "日本語", " 日本語  "},
 }
 
 func TestJustfy(t *testing.T) {
