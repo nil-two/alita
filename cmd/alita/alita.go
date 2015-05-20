@@ -14,11 +14,15 @@ func usage() {
 Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
-Options:
-  -m, --margin=FORMAT      join line by FORMAT (default: 1:1)
+Delimiter control:
+  -r, --regexp             DELIM is a regular expression(default: off)
+  -d, --delimiter=DELIM    delimit line by DELIM (default: /\s+/)
+
+Output control:
+  -m, --margin=FORMAT      join cells by FORMAT (default: 1:1)
   -j, --justfy=SEQUENCE    justfy cells by SEQUENCE (default: l)
-  -r, --regexp             DELIM is a regular expression
-  -d, --delimiter=DELIM    use DELIM to separate line (default: /\s+/)
+
+Miscellaneous:
   -h, --help               show this help message
   -v, --version            print the version
 `[1:])
