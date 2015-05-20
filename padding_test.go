@@ -111,13 +111,71 @@ func TestUpdateWidth(t *testing.T) {
 	p := NewPadding()
 	for _, test := range indexTestsUpdateWidth {
 		p.width = test.before
-
 		p.UpdateWidth(test.a)
 		actual := p.width
 		expect := test.after
 		if !reflect.DeepEqual(actual, expect) {
 			t.Errorf("%v -> UpdateWidth(%v) got %v; want %v",
 				test.before, test.a, actual, expect)
+		}
+	}
+}
+
+type JustKindTest struct {
+	justfies []Justify
+	src      int
+	dst      Justify
+}
+
+var indexTestsJustKind = []JustKindTest{
+	{nil, -1, JustLeft},
+	{nil, 0, JustLeft},
+	{nil, 1, JustLeft},
+	{nil, 2, JustLeft},
+
+	{[]Justify{JustLeft}, 0, JustLeft},
+	{[]Justify{JustRight}, 0, JustRight},
+	{[]Justify{JustCenter}, 0, JustCenter},
+
+	{[]Justify{JustRight}, -2, JustRight},
+	{[]Justify{JustRight}, -1, JustRight},
+	{[]Justify{JustRight}, 1, JustRight},
+	{[]Justify{JustRight}, 2, JustRight},
+
+	{[]Justify{JustRight, JustCenter}, -1, JustRight},
+	{[]Justify{JustRight, JustCenter}, 0, JustRight},
+	{[]Justify{JustRight, JustCenter}, 1, JustCenter},
+	{[]Justify{JustRight, JustCenter}, 2, JustCenter},
+	{[]Justify{JustRight, JustCenter}, 3, JustCenter},
+
+	{[]Justify{JustLeft, JustCenter, JustRight}, -1, JustLeft},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 0, JustLeft},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 1, JustCenter},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 2, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 3, JustCenter},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 4, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight}, 5, JustCenter},
+
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, -1, JustLeft},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 0, JustLeft},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 1, JustCenter},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 2, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 3, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 4, JustCenter},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 5, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 6, JustRight},
+	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 7, JustCenter},
+}
+
+func TestJustKind(t *testing.T) {
+	p := NewPadding()
+	for _, test := range indexTestsJustKind {
+		p.SetJustfies(test.justfies)
+		actual := p.justKind(test.src)
+		expect := test.dst
+		if actual != expect {
+			t.Errorf("Padding(%v).justkind(%v) = %v; want %v",
+				test.justfies, test.src, actual, expect)
 		}
 	}
 }
