@@ -97,6 +97,9 @@ func (p *Padding) justKind(i int) Justify {
 	case 1:
 		return p.justfies[0]
 	}
+	if i <= 0 {
+		return p.justfies[0]
+	}
 	j := (i-1)%(len(p.justfies)-1) + 1
 	return p.justfies[j]
 }
