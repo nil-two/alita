@@ -9,7 +9,14 @@ import (
 	"github.com/kusabashira/alita"
 )
 
-func usage() {
+func shortUsage() {
+	os.Stderr.WriteString(`
+Usage: alita [OPTION]... [FILE]...
+Try 'alita --help' for more information.
+`[1:])
+}
+
+func longUsage() {
 	os.Stderr.WriteString(`
 Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
@@ -57,11 +64,11 @@ func _main() error {
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
 
-	flag.Usage = usage
+	flag.Usage = shortUsage
 	flag.Parse()
 	switch {
 	case isHelp:
-		usage()
+		longUsage()
 		return nil
 	case isVersion:
 		version()
