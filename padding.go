@@ -18,6 +18,9 @@ const (
 
 func (j Justify) Just(width int, s string) string {
 	w := runewidth.StringWidth(s)
+	if width <= w {
+		return s
+	}
 	switch j {
 	case JustLeft:
 		return s + strings.Repeat(" ", width-w)
