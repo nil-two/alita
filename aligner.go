@@ -4,11 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"strings"
 )
 
 type Aligner struct {
 	w         io.Writer
+	Space     *Space
 	Margin    *Margin
 	Delimiter *Delimiter
 	Padding   *Padding
@@ -18,6 +18,7 @@ type Aligner struct {
 func NewAligner(w io.Writer) *Aligner {
 	return &Aligner{
 		w:         w,
+		Space:     NewSpace(),
 		Margin:    NewMargin(),
 		Delimiter: NewDelimiter(),
 		Padding:   NewPadding(),
@@ -25,9 +26,10 @@ func NewAligner(w io.Writer) *Aligner {
 }
 
 func (a *Aligner) appendLine(s string) {
-	sp := a.Delimiter.Split(s)
+	sp := a.Delimiter.Split(a.Space.Strip(s))
 	a.lines = append(a.lines, sp)
 
+	a.Space.UpdateHeadWidth(s)
 	a.Padding.UpdateWidth(sp)
 }
 
@@ -40,7 +42,7 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 }
 
 func (a *Aligner) format(sp []string) string {
-	return strings.TrimRight(a.Margin.Join(a.Padding.Format(sp)), " ")
+	return a.Space.Adjust(a.Margin.Join(a.Padding.Format(sp)))
 }
 
 func (a *Aligner) Flush() error {
