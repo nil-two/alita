@@ -8,7 +8,7 @@ func TestMarginDefault(t *testing.T) {
 	m := NewMargin()
 	l, r := 1, 1
 	if m.left != l || m.right != r {
-		t.Errorf("got %d:%d, want %d:%d", m.left, m.right, l, r)
+		t.Errorf("got %d:%d; want %d:%d", m.left, m.right, l, r)
 	}
 }
 
@@ -41,7 +41,7 @@ func TestMarginSet(t *testing.T) {
 				test.format, err)
 		}
 		if m.left != test.left || m.right != test.right {
-			t.Errorf("got %d:%d, want %d:%d",
+			t.Errorf("got %d:%d; want %d:%d",
 				m.left, m.right, test.left, test.right)
 		}
 	}

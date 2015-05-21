@@ -31,7 +31,7 @@ func TestDelimiterSet(t *testing.T) {
 				test.expr, err)
 		}
 		if !reflect.DeepEqual(d.re, test.re) {
-			t.Errorf("got %q, want %q",
+			t.Errorf("got %q; want %q",
 				d.re, test.re)
 		}
 	}

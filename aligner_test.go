@@ -71,7 +71,7 @@ func TestAlignSimple(t *testing.T) {
 		actual := w.Bytes()
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("got %q;want %q", actual, expect)
+			t.Errorf("got %q; want %q", actual, expect)
 		}
 	}
 }
