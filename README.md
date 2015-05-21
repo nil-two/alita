@@ -133,12 +133,12 @@ right side will interpreted as `right-margin`.
 If FORMAT is `digit only`,
 digit will interpreted as both `left-margin` and `right-margin`
 
-	$ cat user | alita --margin=2
+	$ cat user | alita -m=2
 	(left-margin: 2, right-margin: 2)
 	name  =  Tom
 	age   =  17
 
-	$ cat user | alita --margin=0
+	$ cat user | alita -m=0
 	(left-margin will 0 space)
 	name=Tom
 	age =17
@@ -190,7 +190,7 @@ they will continue to be applied to the order.
 	  aaa = bbb   = ccc   = ddd   = eee   = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-	$ alita --justfy=rllcc
+	$ alita -j=rllcc
 	(cell[0] right-justified.  cell[1] left-justified.
 	 cell[2] left-justified.   cell[3] center-justified.
 	 cell[4] center-justified. cell[5] left-justified.
