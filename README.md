@@ -200,6 +200,12 @@ they will continue to be applied to the order.
 	  aaa = bbb   =  ccc  = ddd   =  eee  = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
+Other specification
+------
+###head space
+If input text has head space.
+It will remain shortest head space.
+
 License
 --------
 MIT License
