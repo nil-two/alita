@@ -76,9 +76,6 @@ func (p *Padding) Set(format string) error {
 }
 
 func (p *Padding) UpdateWidth(a []string) {
-	if len(a) == 1 {
-		return
-	}
 	for i, s := range a {
 		w := runewidth.StringWidth(s)
 		switch {
@@ -105,9 +102,6 @@ func (p *Padding) justKind(i int) Justify {
 }
 
 func (p *Padding) Format(a []string) []string {
-	if len(a) == 1 {
-		return a
-	}
 	for i := 0; i < len(a); i++ {
 		j := p.justKind(i)
 		w := 0

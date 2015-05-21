@@ -13,7 +13,8 @@ type Space struct {
 
 func NewSpace() *Space {
 	return &Space{
-		tabWidth: 8,
+		tabWidth:  8,
+		headWidth: int(^uint(0) >> 1),
 	}
 }
 
@@ -32,7 +33,7 @@ func (s *Space) UpdateHeadWidth(t string) {
 		}
 	}
 END:
-	if w > s.headWidth {
+	if w < s.headWidth {
 		s.headWidth = w
 		s.headSpace = t[:i]
 	}

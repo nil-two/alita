@@ -22,32 +22,32 @@ type SpaceUpdateWidthTest struct {
 
 var indexTestsSpaceUpdateWidth = []SpaceUpdateWidthTest{
 	// read only headspace
-	{"abc ",
-		&Space{8, 0, ""},
-		&Space{8, 0, ""}},
-	{"abc\t",
-		&Space{8, 0, ""},
-		&Space{8, 0, ""}},
+	{"  abc ",
+		&Space{8, 2, "  "},
+		&Space{8, 2, "  "}},
+	{"\t abc\t",
+		&Space{8, 9, "\t"},
+		&Space{8, 9, "\t"}},
 
 	// update
-	{" abc",
-		&Space{8, 0, ""},
-		&Space{8, 1, " "}},
+	{"abc",
+		&Space{8, 1, " "},
+		&Space{8, 0, ""}},
 	{"\tabc",
-		&Space{8, 0, ""},
+		&Space{8, 10, "\t  "},
 		&Space{8, 8, "\t"}},
 	{"\t abc",
-		&Space{8, 0, ""},
+		&Space{8, 16, "\t\t"},
 		&Space{8, 9, "\t "}},
 
 	// no update
-	{"abc",
+	{" abc",
 		&Space{8, 1, " "},
 		&Space{8, 1, " "}},
-	{" abc",
+	{"\t   abc",
 		&Space{8, 8, "\t"},
 		&Space{8, 8, "\t"}},
-	{"\tabc",
+	{"\t\tabc",
 		&Space{8, 9, "\t "},
 		&Space{8, 9, "\t "}},
 }

@@ -29,8 +29,10 @@ func (a *Aligner) appendLine(s string) {
 	sp := a.Delimiter.Split(a.Space.Strip(s))
 	a.lines = append(a.lines, sp)
 
-	a.Space.UpdateHeadWidth(s)
-	a.Padding.UpdateWidth(sp)
+	if len(sp) > 1 {
+		a.Space.UpdateHeadWidth(s)
+		a.Padding.UpdateWidth(sp)
+	}
 }
 
 func (a *Aligner) ReadAll(r io.Reader) error {
@@ -42,6 +44,9 @@ func (a *Aligner) ReadAll(r io.Reader) error {
 }
 
 func (a *Aligner) format(sp []string) string {
+	if len(sp) == 1 {
+		return sp[0]
+	}
 	return a.Space.Adjust(a.Margin.Join(a.Padding.Format(sp)))
 }
 

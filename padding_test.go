@@ -72,14 +72,6 @@ type PaddingUpdateWidthTest struct {
 }
 
 var indexTestsPaddingUpdateWidth = []PaddingUpdateWidthTest{
-	// Through update
-	{[]string{"a"},
-		[]int{}, []int{}},
-	{[]string{"aaaa"},
-		[]int{}, []int{}},
-	{[]string{"aaaa"},
-		[]int{3, 5}, []int{3, 5}},
-
 	// Update
 	{[]string{"aaa", "aaa"},
 		[]int{1, 2}, []int{3, 3}},

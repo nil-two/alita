@@ -40,7 +40,7 @@ func (d *Delimiter) Split(s string) []string {
 
 	matches := d.re.FindAllStringIndex(s, -1)
 	if len(matches) == 0 {
-		return []string{s}
+		return []string{strings.TrimSpace(s)}
 	}
 
 	a := make([]string, 0, len(matches)*2+1)
