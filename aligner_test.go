@@ -6,12 +6,31 @@ import (
 	"testing"
 )
 
-type AlignSimpleTest struct {
+func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
+	w := bytes.NewBuffer(make([]byte, 0))
+	a.SetOutput(w)
+
+	r := bytes.NewReader(src)
+	if err := a.ReadAll(r); err != nil {
+		t.Errorf("ReadAll(%q) returns err; want nil", src)
+	}
+	if err := a.Flush(); err != nil {
+		t.Errorf("Flush(%q) returns err; want nil", src)
+	}
+
+	actual := w.Bytes()
+	expect := dst
+	if !reflect.DeepEqual(actual, expect) {
+		t.Errorf("got %q; want %q", actual, expect)
+	}
+}
+
+type AlignTest struct {
 	src []byte
 	dst []byte
 }
 
-var indexTestsAlignSimple = []AlignSimpleTest{
+var indexTestsAlignSimple = []AlignTest{
 	{[]byte(`
 `[1:]), []byte(`
 `[1:])},
@@ -81,32 +100,18 @@ eleven twelve thirteen fourteen fifteen
 
 func TestAlignSimple(t *testing.T) {
 	for _, test := range indexTestsAlignSimple {
-		w := bytes.NewBuffer(make([]byte, 0))
-		a := NewAligner(w)
-
-		r := bytes.NewReader(test.src)
-		if err := a.ReadAll(r); err != nil {
-			t.Errorf("ReadAll(%q) returns err; want nil", test.src)
-		}
-		if err := a.Flush(); err != nil {
-			t.Errorf("Flush(%q) returns err; want nil", test.src)
-		}
-
-		actual := w.Bytes()
-		expect := test.dst
-		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("got %q; want %q", actual, expect)
-		}
+		a := NewAligner(nil)
+		testAlign(t, a, test.src, test.dst)
 	}
 }
 
-type AlignWithDelimiterTest struct {
+type AlignDelimiterTest struct {
 	delim string
 	src   []byte
 	dst   []byte
 }
 
-var indexTestsAlignFixedTest = []AlignWithDelimiterTest{
+var indexTestsAlignFixedTest = []AlignDelimiterTest{
 	{`=`, []byte(`
 a =  1
  bbb = 10
@@ -242,30 +247,16 @@ ccccc = 100
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range indexTestsAlignFixedTest {
-		w := bytes.NewBuffer(make([]byte, 0))
-		a := NewAligner(w)
+		a := NewAligner(nil)
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-
-		r := bytes.NewReader(test.src)
-		if err := a.ReadAll(r); err != nil {
-			t.Errorf("ReadAll(%q) returns err; want nil", test.src)
-		}
-		if err := a.Flush(); err != nil {
-			t.Errorf("Flush(%q) returns err; want nil", test.src)
-		}
-
-		actual := w.Bytes()
-		expect := test.dst
-		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("got %q; want %q", actual, expect)
-		}
+		testAlign(t, a, test.src, test.dst)
 	}
 }
 
-var indexTestsAlignRegexpTest = []AlignWithDelimiterTest{
+var indexTestsAlignRegexpTest = []AlignDelimiterTest{
 	{`=+>`, []byte(`
 a=>b ===>  c
 c ==>    d ==>e
@@ -335,26 +326,12 @@ ccccc \d\+ 100 \u\+ C c
 
 func TestAlignRegexp(t *testing.T) {
 	for _, test := range indexTestsAlignRegexpTest {
-		w := bytes.NewBuffer(make([]byte, 0))
-		a := NewAligner(w)
+		a := NewAligner(nil)
 		a.Delimiter.UseRegexp = true
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-
-		r := bytes.NewReader(test.src)
-		if err := a.ReadAll(r); err != nil {
-			t.Errorf("ReadAll(%q) returns err; want nil", test.src)
-		}
-		if err := a.Flush(); err != nil {
-			t.Errorf("Flush(%q) returns err; want nil", test.src)
-		}
-
-		actual := w.Bytes()
-		expect := test.dst
-		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("got %q; want %q", actual, expect)
-		}
+		testAlign(t, a, test.src, test.dst)
 	}
 }
