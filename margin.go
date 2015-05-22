@@ -64,14 +64,22 @@ func (m *Margin) Join(a []string) string {
 	if len(a) == 1 {
 		return a[0]
 	}
-	n := (m.left + m.right) * (len(a) / 2)
+
+	l, r := m.left, m.right
+	if r < 0 {
+		r = 0
+	}
+	if l < 0 {
+		l = 0
+	}
+	n := (l + r) * (len(a) / 2)
 	if len(a)%2 == 0 {
-		n -= m.right
+		n -= r
 	}
 	for i := 0; i < len(a); i++ {
 		n += len(a[i])
 	}
-	lm, rm := strings.Repeat(" ", m.left), strings.Repeat(" ", m.right)
+	lm, rm := strings.Repeat(" ", l), strings.Repeat(" ", r)
 
 	b := make([]byte, n)
 	bp := copy(b, a[0])
