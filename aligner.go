@@ -25,6 +25,10 @@ func NewAligner(w io.Writer) *Aligner {
 	}
 }
 
+func (a *Aligner) SetOutput(w io.Writer) {
+	a.w = w
+}
+
 func (a *Aligner) appendLine(s string) {
 	sp := a.Delimiter.Split(a.Space.Strip(s))
 	a.lines = append(a.lines, sp)
