@@ -139,7 +139,7 @@ digit will interpreted as both `left-margin` and `right-margin`
 	age   =  17
 
 	$ cat user | alita -m=0
-	(left-margin will 0 space)
+	(left-margin: 2, right-margin: 2)
 	name=Tom
 	age =17
 
@@ -200,11 +200,14 @@ they will continue to be applied to the order.
 	  aaa = bbb   =  ccc  = ddd   =  eee  = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-Other specification
+Other Specification
 ------
 ###head space
 If input text has head space.
 It will remain shortest head space.
+
+###tailing space
+It will remove all trailing spaces.
 
 License
 --------
