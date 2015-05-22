@@ -100,13 +100,13 @@ func TestAlignSimple(t *testing.T) {
 	}
 }
 
-type AlignWithFixedTest struct {
+type AlignWithDelimiterTest struct {
 	delim string
 	src   []byte
 	dst   []byte
 }
 
-var indexTestsAlignFixedTest = []AlignWithFixedTest{
+var indexTestsAlignFixedTest = []AlignWithDelimiterTest{
 	{`=`, []byte(`
 a =  1
  bbb = 10
@@ -157,6 +157,16 @@ cout << "this is x=" << x;
 cout << "but y="     << y  << "is not";
 `[1:])},
 
+	{`:`, []byte(`
+one:two:three
+four:five:six
+seven:eight:nine
+`[1:]), []byte(`
+one   : two   : three
+four  : five  : six
+seven : eight : nine
+`[1:])},
+
 	{`:=`, []byte(`
 aa:=bb:=cc:=1;
 a:=b:=c:=1;
@@ -176,6 +186,49 @@ aa  = bb  = cc  = 1;
 a   = b   = c   = 1;
 aaa = bbb = ccc = 1;
 `[1:])},
+
+	{`=`, []byte(`
+a =  1
+ bbb = 10
+ccccc = 100
+a =  2
+ bbb = 20
+ccccc = 200
+a =  3
+ bbb = 30
+ccccc = 300
+a =  4
+ bbb = 40
+ccccc = 400
+`[1:]), []byte(`
+a     = 1
+bbb   = 10
+ccccc = 100
+a     = 2
+bbb   = 20
+ccccc = 200
+a     = 3
+bbb   = 30
+ccccc = 300
+a     = 4
+bbb   = 40
+ccccc = 400
+`[1:])},
+
+	{`=`, []byte(`
+a = 1
+
+bbb = 10
+
+ccccc = 100
+`[1:]), []byte(`
+a     = 1
+
+bbb   = 10
+
+ccccc = 100
+`[1:])},
+
 	{`＝`, []byte(`
 あ ＝  壱
 あいう ＝ 壱十
@@ -185,22 +238,106 @@ aaa = bbb = ccc = 1;
 あいう     ＝ 壱十
 あいうえお ＝ 壱十百
 `[1:])},
-
-	{`＝`, []byte(`
-あ ＝ 壱
-ΑΒΓ ＝ 壱十
-あいうえお ＝ 壱十百
-`[1:]), []byte(`
-あ         ＝ 壱
-ΑΒΓ     ＝ 壱十
-あいうえお ＝ 壱十百
-`[1:])},
 }
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range indexTestsAlignFixedTest {
 		w := bytes.NewBuffer(make([]byte, 0))
 		a := NewAligner(w)
+		if err := a.Delimiter.Set(test.delim); err != nil {
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.delim, err)
+		}
+
+		r := bytes.NewReader(test.src)
+		if err := a.ReadAll(r); err != nil {
+			t.Errorf("ReadAll(%q) returns err; want nil", test.src)
+		}
+		if err := a.Flush(); err != nil {
+			t.Errorf("Flush(%q) returns err; want nil", test.src)
+		}
+
+		actual := w.Bytes()
+		expect := test.dst
+		if !reflect.DeepEqual(actual, expect) {
+			t.Errorf("got %q; want %q", actual, expect)
+		}
+	}
+}
+
+var indexTestsAlignRegexpTest = []AlignWithDelimiterTest{
+	{`=+>`, []byte(`
+a=>b ===>  c
+c ==>    d ==>e
+f===> g =>   h
+`[1:]), []byte(`
+a =>   b ===> c
+c ==>  d ==>  e
+f ===> g =>   h
+`[1:])},
+
+	{`[:/]+`, []byte(`
+https://github.com/vim-scripts/Align
+https://github.com/h1mesuke/vim-alignta
+https://github.com/kusabashira/alita
+`[1:]), []byte(`
+https :// github.com / vim-scripts / Align
+https :// github.com / h1mesuke    / vim-alignta
+https :// github.com / kusabashira / alita
+`[1:])},
+
+	{`\\$`, []byte(`
+one \
+two three \
+four five six \
+seven \\ \
+eight \nine \
+ten \
+`[1:]), []byte(`
+one           \
+two three     \
+four five six \
+seven \\      \
+eight \nine   \
+ten           \
+`[1:])},
+
+	{`(&|\\\\)`, []byte(`
+one&two&three\\ \hline
+four&five&six\\
+seven&eight&nine\\
+`[1:]), []byte(`
+one   & two   & three \\ \hline
+four  & five  & six   \\
+seven & eight & nine  \\
+`[1:])},
+
+	{`\d+`, []byte(`
+a \d\+ 1 aaaaa
+bbb \d\+ 10 bbb
+ccccc \d\+ 100 c
+`[1:]), []byte(`
+a \d\+     1   aaaaa
+bbb \d\+   10  bbb
+ccccc \d\+ 100 c
+`[1:])},
+
+	{`\d+`, []byte(`
+a \d\+ 1 \u\+ AAAAA a
+bbb \d\+ 10 \u\+ BBB b
+ccccc \d\+ 100 \u\+ C c
+`[1:]), []byte(`
+a \d\+     1   \u\+ AAAAA a
+bbb \d\+   10  \u\+ BBB b
+ccccc \d\+ 100 \u\+ C c
+`[1:])},
+}
+
+func TestAlignRegexp(t *testing.T) {
+	for _, test := range indexTestsAlignRegexpTest {
+		w := bytes.NewBuffer(make([]byte, 0))
+		a := NewAligner(w)
+		a.Delimiter.UseRegexp = true
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
