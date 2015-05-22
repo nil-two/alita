@@ -80,7 +80,7 @@ DELIM will interpreted as fixed string.
 	cout    <<    "9 * 2 = "<<9 * 2 << endl;
 	cout << "9 / 2 = "<<9 / 2 << ".." << 9 % 2<< endl;
 
-	$ alita -d="<<"
+	$ cat snip.cpp | alita -d="<<"
 	(delimit line with '<<')
 	cout << "9 * 2 = " << 9 * 2 << endl;
 	cout << "9 / 2 = " << 9 / 2 << ".."  << 9 % 2 << endl;
@@ -190,7 +190,7 @@ they will continue to be applied to the order.
 	  aaa = bbb   = ccc   = ddd   = eee   = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-	$ alita -j=rllcc
+	$ cat text | alita -j=rllcc
 	(cell[0] right-justified.  cell[1] left-justified.
 	 cell[2] left-justified.   cell[3] center-justified.
 	 cell[4] center-justified. cell[5] left-justified.
