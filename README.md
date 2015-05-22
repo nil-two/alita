@@ -202,11 +202,11 @@ they will continue to be applied to the order.
 
 Other Specification
 ------
-###head space
-If input text has head space.
-It will remain shortest head space.
+####head spaces
+If input text has head spaces.
+It will remain shortest head spaces.
 
-###tailing space
+####trailing spaces
 It will remove all trailing spaces.
 
 License
