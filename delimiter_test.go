@@ -13,13 +13,21 @@ type DelimiterSetTest struct {
 }
 
 var indexTestsDelimiterSet = []DelimiterSetTest{
+	// Fixed
 	{false, `=`, regexp.MustCompile(`=`)},
 	{false, `=+`, regexp.MustCompile(`=\+`)},
 	{false, `-*>`, regexp.MustCompile(`-\*>`)},
+	{false, `abc`, regexp.MustCompile(`abc`)},
+	{false, `\w+:`, regexp.MustCompile(`\\w\+:`)},
+	{false, `[:/]+`, regexp.MustCompile(`\[:/\]\+`)},
 
+	// Regexp
 	{true, `=`, regexp.MustCompile(`=`)},
 	{true, `=+`, regexp.MustCompile(`=+`)},
 	{true, `-*>`, regexp.MustCompile(`-*>`)},
+	{true, `abc`, regexp.MustCompile(`abc`)},
+	{true, `\w+:`, regexp.MustCompile(`\w+:`)},
+	{true, `[:/]+`, regexp.MustCompile(`[:/]+`)},
 }
 
 func TestDelimiterSet(t *testing.T) {
@@ -43,13 +51,22 @@ type DelimiterSplitDefaultTest struct {
 }
 
 var indexTestsDelimiterSplitDefault = []DelimiterSplitDefaultTest{
+	// Normal
 	{"a", []string{"a"}},
 	{"a b", []string{"a", "b"}},
 	{"a b c", []string{"a", "b", "c"}},
 	{"a b c d", []string{"a", "b", "c", "d"}},
+	{"ab cd", []string{"ab", "cd"}},
+	{"日本 語", []string{"日本", "語"}},
 
+	// Long spaces
 	{"a  b", []string{"a", "b"}},
 	{"a  b c", []string{"a", "b", "c"}},
+	{"a \t b c", []string{"a", "b", "c"}},
+
+	// Head and tail spaces
+	{"  a b c", []string{"", "a", "b", "c"}},
+	{"a b c ", []string{"a", "b", "c", ""}},
 }
 
 func TestDelimiterDefaultSplit(t *testing.T) {
@@ -86,11 +103,14 @@ var indexTestsDelimiterSplit = []DelimiterSplitTest{
 
 	{false, `=>`, "a=>b=>c", []string{"a", "=>", "b", "=>", "c"}},
 	{false, `=>`, "a => b => c", []string{"a", "=>", "b", "=>", "c"}},
+	{false, `=>`, "a==>=b==>=c", []string{"a=", "=>", "=b=", "=>", "=c"}},
 
 	{true, `=+>`, "a => b",
 		[]string{"a", "=>", "b"}},
 	{true, `=+>`, "a => b ==> c ===> d",
 		[]string{"a", "=>", "b", "==>", "c", "===>", "d"}},
+	{true, `=+>`, "a=>b==>=c",
+		[]string{"a", "=>", "b", "==>", "=c"}},
 }
 
 func TestDelimiterSplit(t *testing.T) {

@@ -19,13 +19,16 @@ type MarginSetTest struct {
 }
 
 var indexTestsMarginSet = []MarginSetTest{
-	// digit only
+	// Digit only
 	{"1", 1, 1},
 	{"2", 2, 2},
 	{"10", 10, 10},
 	{"00", 0, 0},
+	{"001", 1, 1},
 
-	// colon separated digits
+	// Colon separated digits
+	{"0:3", 0, 3},
+	{"00:001", 0, 1},
 	{"1:1", 1, 1},
 	{"2:1", 2, 1},
 	{"1:4", 1, 4},
@@ -56,6 +59,8 @@ var indexTestsMarginSetErr = []string{
 	":1",
 	"1:-1",
 	"-1:1",
+	"::",
+	"1::2",
 	"3:1:4",
 }
 
@@ -76,6 +81,13 @@ type MarginJoinTest struct {
 }
 
 var indexTestsMarginJoin = []MarginJoinTest{
+	{0, 0, nil, ""},
+	{1, 1, nil, ""},
+
+	{0, -2, []string{"a", "b", "c"}, "abc"},
+	{-4, 0, []string{"a", "b", "c"}, "abc"},
+	{-4, -5, []string{"a", "b", "c"}, "abc"},
+
 	{0, 0, []string{"a"}, "a"},
 	{2, 2, []string{"a"}, "a"},
 

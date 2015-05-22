@@ -85,6 +85,8 @@ var indexTestsPaddingUpdateWidth = []PaddingUpdateWidthTest{
 		[]int{1, 2}, []int{1, 2, 3}},
 
 	// No update
+	{nil,
+		[]int{1, 1}, []int{1, 1}},
 	{[]string{"a", "a"},
 		[]int{1, 1}, []int{1, 1}},
 	{[]string{"aaaaa", "aa"},

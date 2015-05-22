@@ -26,10 +26,13 @@ var indexTestsSpaceUpdateWidth = []SpaceUpdateWidthTest{
 		&Space{8, 2, "  "},
 		&Space{8, 2, "  "}},
 	{"\t abc\t",
-		&Space{8, 9, "\t"},
-		&Space{8, 9, "\t"}},
+		&Space{8, 9, "\t "},
+		&Space{8, 9, "\t "}},
 
 	// update
+	{"",
+		&Space{8, 1, " "},
+		&Space{8, 0, ""}},
 	{"abc",
 		&Space{8, 1, " "},
 		&Space{8, 0, ""}},
