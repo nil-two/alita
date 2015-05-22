@@ -19,6 +19,10 @@ func NewSpace() *Space {
 }
 
 func (s *Space) UpdateHeadWidth(t string) {
+	if s.headWidth < 1 {
+		return
+	}
+
 	w, i := 0, 0
 	for _, c := range t {
 		switch c {
