@@ -22,12 +22,12 @@ Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Delimiter control:
-  -r, --regexp             DELIM is a regular expression(default: off)
-  -d, --delimiter=DELIM    delimit line by DELIM (default: /\s+/)
+  -r, --regexp             DELIM is a regular expression
+  -d, --delimiter=DELIM    delimit line by DELIM
 
 Output control:
-  -m, --margin=FORMAT      join cells by FORMAT (default: 1:1)
-  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE (default: l)
+  -m, --margin=FORMAT      join cells by FORMAT
+  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE
 
 Miscellaneous:
   -h, --help               show this help message
@@ -37,7 +37,7 @@ Miscellaneous:
 
 func version() {
 	os.Stderr.WriteString(`
-v0.5.0
+v0.5.1
 `[1:])
 }
 
