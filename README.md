@@ -25,7 +25,7 @@ Usage
 	  -d, --delimiter=DELIM    delimit line by DELIM
 
 	Output control:
-	  -m, --margin=FORMAT      join cells with FORMAT
+	  -m, --margin=FORMAT      join cells by FORMAT
 	  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE
 
 	Miscellaneous:
@@ -72,7 +72,7 @@ DELIM will interpreted as fixed string.
 	age=17
 
 	$ cat user | alita -d==
-	(delimit line with '=')
+	(delimit line by '=')
 	name = Tom
 	age  = 17
 
@@ -81,7 +81,7 @@ DELIM will interpreted as fixed string.
 	cout << "9 / 2 = "<<9 / 2 << ".." << 9 % 2<< endl;
 
 	$ cat snip.cpp | alita -d="<<"
-	(delimit line with '<<')
+	(delimit line by '<<')
 	cout << "9 * 2 = " << 9 * 2 << endl;
 	cout << "9 / 2 = " << 9 / 2 << ".."  << 9 % 2 << endl;
 
@@ -94,7 +94,7 @@ DELIM will interpreted as regexp.
 	f===> g =>   h
 
 	$ cat root | alita -r -d="=+>"
-	(delimit line with /=+>/)
+	(delimit line by /=+>/)
 	a =>   b ===> c
 	c ==>  d ==>  e
 	f ===> g =>   h
@@ -105,7 +105,7 @@ DELIM will interpreted as regexp.
 	https://github.com/kusabashira/alita
 
 	$ cat url | alita -r -d="[:/]+"
-	(delimit line with /[:\/]+/)
+	(delimit line by /[:\/]+/)
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
 	https :// github.com / kusabashira / alita
