@@ -162,6 +162,16 @@ cout << "this is x=" << x;
 cout << "but y="     << y  << "is not";
 `[1:])},
 
+	{`\d\+`, []byte(`
+a \d\+ 1 aaaaa
+bbb \d\+ 10 bbb
+ccccc \d\+ 100 c
+`[1:]), []byte(`
+a     \d\+ 1 aaaaa
+bbb   \d\+ 10 bbb
+ccccc \d\+ 100 c
+`[1:])},
+
 	{`:`, []byte(`
 one:two:three
 four:five:six
@@ -322,6 +332,16 @@ a \d\+     1   \u\+ AAAAA a
 bbb \d\+   10  \u\+ BBB b
 ccccc \d\+ 100 \u\+ C c
 `[1:])},
+
+	{`(=|/\*|\*/)`, []byte(`
+a =  1 /* AAAAA */
+ bbb = 10 /*  BBB */
+ccccc = 100 /* C */
+`[1:]), []byte(`
+a     = 1   /* AAAAA */
+bbb   = 10  /* BBB   */
+ccccc = 100 /* C     */
+`[1:])},
 }
 
 func TestAlignRegexp(t *testing.T) {
@@ -395,6 +415,26 @@ aaa=b=ccc
 a  =  bbb=  ccccc
 aaa=  b  =  ccc
 `[1:])},
+
+	{`0`, `|`, []byte(`
+|one|two|three|
+|four|five|six|
+|seven|eight|nine|
+`[1:]), []byte(`
+|one  |two  |three|
+|four |five |six  |
+|seven|eight|nine |
+`[1:])},
+
+	{`2`, `|`, []byte(`
+|one|two|three|
+|four|five|six|
+|seven|eight|nine|
+`[1:]), []byte(`
+  |  one    |  two    |  three  |
+  |  four   |  five   |  six    |
+  |  seven  |  eight  |  nine   |
+`[1:])},
 }
 
 func TestAlignMargin(t *testing.T) {
@@ -420,6 +460,26 @@ type AlignJustifyTest struct {
 }
 
 var indexTestsAlignJustify = []AlignJustifyTest{
+	{`l`, `=`, []byte(`
+a = 1
+bbb = 10
+ccccc = 100
+`[1:]), []byte(`
+a     = 1
+bbb   = 10
+ccccc = 100
+`[1:])},
+
+	{`r`, `=`, []byte(`
+a = 1
+bbb = 10
+ccccc = 100
+`[1:]), []byte(`
+    a =   1
+  bbb =  10
+ccccc = 100
+`[1:])},
+
 	{`l`, `=`, []byte(`
 a = bbbbb =  c = ddddd =  e = fffff =  1
  aaa = bbb = ccc =  ddd = eee = fff = 10
@@ -458,6 +518,46 @@ aaaaa =  b = ccccc = d = eeeee =  f = 100
     a = bbbbb =   c   = ddddd =   e   = fffff =  1
   aaa = bbb   =  ccc  = ddd   =  eee  = fff   = 10
 aaaaa = b     = ccccc = d     = eeeee = f     = 100
+`[1:])},
+
+	{`r`, `＝`, []byte(`
+あ ＝  壱
+ あいう ＝ 壱十
+あいうえお ＝ 壱十百
+`[1:]), []byte(`
+        あ ＝     壱
+    あいう ＝   壱十
+あいうえお ＝ 壱十百
+`[1:])},
+
+	{`c`, `＝`, []byte(`
+あ ＝  壱
+ あいう ＝ 壱十
+あいうえお ＝ 壱十百
+`[1:]), []byte(`
+    あ     ＝   壱
+  あいう   ＝  壱十
+あいうえお ＝ 壱十百
+`[1:])},
+
+	{`lcr`, `＝`, []byte(`
+あ ＝  壱
+ あいう ＝ 壱十
+あいうえお ＝ 壱十百
+`[1:]), []byte(`
+あ         ＝     壱
+あいう     ＝   壱十
+あいうえお ＝ 壱十百
+`[1:])},
+
+	{`rcl`, `＝`, []byte(`
+あ ＝  壱
+ あいう ＝ 壱十
+あいうえお ＝ 壱十百
+`[1:]), []byte(`
+        あ ＝ 壱
+    あいう ＝ 壱十
+あいうえお ＝ 壱十百
 `[1:])},
 }
 
