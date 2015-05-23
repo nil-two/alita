@@ -335,3 +335,143 @@ func TestAlignRegexp(t *testing.T) {
 		testAlign(t, a, test.src, test.dst)
 	}
 }
+
+type AlignMarginTest struct {
+	margin string
+	delim  string
+	src    []byte
+	dst    []byte
+}
+
+var indexTestsAlignMarginTest = []AlignMarginTest{
+	{`1:0`, `=`, []byte(`
+`[1:]), []byte(`
+`[1:])},
+
+	{`0:1`, `=`, []byte(`
+name=Tom
+age=17
+`[1:]), []byte(`
+name= Tom
+age = 17
+`[1:])},
+
+	{`3:2`, `=`, []byte(`
+name=Tom
+age=17
+`[1:]), []byte(`
+name   =  Tom
+age    =  17
+`[1:])},
+
+	{`2`, `=`, []byte(`
+name=Tom
+age=17
+`[1:]), []byte(`
+name  =  Tom
+age   =  17
+`[1:])},
+
+	{`0`, `=`, []byte(`
+name=Tom
+age=17
+`[1:]), []byte(`
+name=Tom
+age =17
+`[1:])},
+
+	{`1:3`, `=`, []byte(`
+a=bbb=ccccc
+aaa=b=ccc
+`[1:]), []byte(`
+a   =   bbb =   ccccc
+aaa =   b   =   ccc
+`[1:])},
+
+	{`0:2`, `=`, []byte(`
+a=bbb=ccccc
+aaa=b=ccc
+`[1:]), []byte(`
+a  =  bbb=  ccccc
+aaa=  b  =  ccc
+`[1:])},
+}
+
+func TestAlignMargin(t *testing.T) {
+	for _, test := range indexTestsAlignMarginTest {
+		a := NewAligner(nil)
+		if err := a.Delimiter.Set(test.delim); err != nil {
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.delim, err)
+		}
+		if err := a.Margin.Set(test.margin); err != nil {
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.delim, err)
+		}
+		testAlign(t, a, test.src, test.dst)
+	}
+}
+
+type AlignJustifyTest struct {
+	justfy string
+	delim  string
+	src    []byte
+	dst    []byte
+}
+
+var indexTestsAlignJustify = []AlignJustifyTest{
+	{`l`, `=`, []byte(`
+a = bbbbb =  c = ddddd =  e = fffff =  1
+ aaa = bbb = ccc =  ddd = eee = fff = 10
+aaaaa =  b = ccccc = d = eeeee =  f = 100
+`[1:]), []byte(`
+a     = bbbbb = c     = ddddd = e     = fffff = 1
+aaa   = bbb   = ccc   = ddd   = eee   = fff   = 10
+aaaaa = b     = ccccc = d     = eeeee = f     = 100
+`[1:])},
+
+	{`r`, `=`, []byte(`
+a = bbbbb =  c = ddddd =  e = fffff =  1
+ aaa = bbb = ccc =  ddd = eee = fff = 10
+aaaaa =  b = ccccc = d = eeeee =  f = 100
+`[1:]), []byte(`
+    a = bbbbb =     c = ddddd =     e = fffff =   1
+  aaa =   bbb =   ccc =   ddd =   eee =   fff =  10
+aaaaa =     b = ccccc =     d = eeeee =     f = 100
+`[1:])},
+
+	{`rl`, `=`, []byte(`
+a = bbbbb =  c = ddddd =  e = fffff =  1
+ aaa = bbb = ccc =  ddd = eee = fff = 10
+aaaaa =  b = ccccc = d = eeeee =  f = 100
+`[1:]), []byte(`
+    a = bbbbb = c     = ddddd = e     = fffff = 1
+  aaa = bbb   = ccc   = ddd   = eee   = fff   = 10
+aaaaa = b     = ccccc = d     = eeeee = f     = 100
+`[1:])},
+
+	{`rllcc`, `=`, []byte(`
+a = bbbbb =  c = ddddd =  e = fffff =  1
+ aaa = bbb = ccc =  ddd = eee = fff = 10
+aaaaa =  b = ccccc = d = eeeee =  f = 100
+`[1:]), []byte(`
+    a = bbbbb =   c   = ddddd =   e   = fffff =  1
+  aaa = bbb   =  ccc  = ddd   =  eee  = fff   = 10
+aaaaa = b     = ccccc = d     = eeeee = f     = 100
+`[1:])},
+}
+
+func TestAlignJustify(t *testing.T) {
+	for _, test := range indexTestsAlignJustify {
+		a := NewAligner(nil)
+		if err := a.Delimiter.Set(test.delim); err != nil {
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.delim, err)
+		}
+		if err := a.Padding.Set(test.justfy); err != nil {
+			t.Errorf("Set(%q) returns %q; want nil",
+				test.delim, err)
+		}
+		testAlign(t, a, test.src, test.dst)
+	}
+}
