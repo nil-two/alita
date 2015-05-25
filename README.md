@@ -38,7 +38,7 @@ Installation
 See [releases](https://github.com/kusabashira/alita/releases)
 
 ###go get
-	go get github.com/kusabashira/alita
+	go get github.com/kusabashira/alita/cmd/alita
 
 Command Line Options
 ------
