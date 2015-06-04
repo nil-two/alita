@@ -29,7 +29,7 @@ func (a *Aligner) SetOutput(w io.Writer) {
 	a.w = w
 }
 
-func (a *Aligner) appendLine(s string) {
+func (a *Aligner) AppendLine(s string) {
 	sp := a.Delimiter.Split(a.Space.Strip(s))
 	a.lines = append(a.lines, sp)
 
@@ -42,7 +42,7 @@ func (a *Aligner) appendLine(s string) {
 func (a *Aligner) ReadAll(r io.Reader) error {
 	s := bufio.NewScanner(r)
 	for s.Scan() {
-		a.appendLine(s.Text())
+		a.AppendLine(s.Text())
 	}
 	return s.Err()
 }
