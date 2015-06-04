@@ -1,5 +1,6 @@
 alita
-===
+=====
+
 Align FILE(s), or standard input.
 
 It's inspired by [h1mesuke/vim-alignta](https://github.com/h1mesuke/vim-alignta).
@@ -17,7 +18,8 @@ It's inspired by [h1mesuke/vim-alignta](https://github.com/h1mesuke/vim-alignta)
 	userid = 10001
 
 Usage
-------
+-----
+
 	$ alita [OPTION]... [FILE]...
 
 	Delimiter control:
@@ -33,25 +35,33 @@ Usage
 	      --version            print the version
 
 Installation
---------
+------------
+
 ###compiled binary
+
 See [releases](https://github.com/kusabashira/alita/releases)
 
 ###go get
+
 	go get github.com/kusabashira/alita/cmd/alita
 
 Command Line Options
-------
+--------------------
+
 ###-h, --help
+
 Display a help message.
 
 ###--version
+
 Display the version of alita.
 
 ###-r, --regexp
+
 Enable delimit line with regexp.
 
 ###-d, --delimiter=DELIM
+
 Delimit line by DELIM.
 Default DELIM is `spaces (/\s+/)`.
 
@@ -111,6 +121,7 @@ DELIM will interpreted as regexp.
 	https :// github.com / kusabashira / alita
 
 ###-m, --margin=FORMAT
+
 Join cells with margin which described in FORMAT.
 Default FORMAT is `1:1`.
 
@@ -144,6 +155,7 @@ digit will interpreted as both `left-margin` and `right-margin`
 	age =17
 
 ### -j, --justfy=SEQUENCE
+
 Justfy cells by format which described in SEQUENCE.
 
 SEQUENCE include `l`, `r` or `c`.
@@ -201,18 +213,23 @@ they will continue to be applied to the order.
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
 Other Specification
-------
+-------------------
+
 ####head spaces
+
 If input text has head spaces.
 It will remain shortest head spaces.
 
 ####trailing spaces
+
 It will remove all trailing spaces.
 
 License
---------
+-------
+
 MIT License
 
 Author
 -------
+
 wara <kusabashira227@gmail.com>
