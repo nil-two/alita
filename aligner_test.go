@@ -25,12 +25,10 @@ func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
 	}
 }
 
-type AlignTest struct {
+var alignSimpleTests = []struct {
 	src []byte
 	dst []byte
-}
-
-var indexTestsAlignSimple = []AlignTest{
+}{
 	{[]byte(`
 `[1:]), []byte(`
 `[1:])},
@@ -99,19 +97,17 @@ eleven twelve thirteen fourteen fifteen
 }
 
 func TestAlignSimple(t *testing.T) {
-	for _, test := range indexTestsAlignSimple {
+	for _, test := range alignSimpleTests {
 		a := NewAligner(nil)
 		testAlign(t, a, test.src, test.dst)
 	}
 }
 
-type AlignDelimiterTest struct {
+var alignFixedTests = []struct {
 	delim string
 	src   []byte
 	dst   []byte
-}
-
-var indexTestsAlignFixedTest = []AlignDelimiterTest{
+}{
 	{`=`, []byte(`
 a =  1
  bbb = 10
@@ -256,7 +252,7 @@ ccccc = 100
 }
 
 func TestAlignFixed(t *testing.T) {
-	for _, test := range indexTestsAlignFixedTest {
+	for _, test := range alignFixedTests {
 		a := NewAligner(nil)
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
@@ -266,7 +262,11 @@ func TestAlignFixed(t *testing.T) {
 	}
 }
 
-var indexTestsAlignRegexpTest = []AlignDelimiterTest{
+var alignRegexpTests = []struct {
+	delim string
+	src   []byte
+	dst   []byte
+}{
 	{`=+>`, []byte(`
 a=>b ===>  c
 c ==>    d ==>e
@@ -345,7 +345,7 @@ ccccc = 100 /* C     */
 }
 
 func TestAlignRegexp(t *testing.T) {
-	for _, test := range indexTestsAlignRegexpTest {
+	for _, test := range alignRegexpTests {
 		a := NewAligner(nil)
 		a.Delimiter.UseRegexp = true
 		if err := a.Delimiter.Set(test.delim); err != nil {
@@ -356,14 +356,12 @@ func TestAlignRegexp(t *testing.T) {
 	}
 }
 
-type AlignMarginTest struct {
+var alignMarginTests = []struct {
 	margin string
 	delim  string
 	src    []byte
 	dst    []byte
-}
-
-var indexTestsAlignMarginTest = []AlignMarginTest{
+}{
 	{`1:0`, `=`, []byte(`
 `[1:]), []byte(`
 `[1:])},
@@ -438,7 +436,7 @@ aaa=  b  =  ccc
 }
 
 func TestAlignMargin(t *testing.T) {
-	for _, test := range indexTestsAlignMarginTest {
+	for _, test := range alignMarginTests {
 		a := NewAligner(nil)
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
@@ -452,14 +450,12 @@ func TestAlignMargin(t *testing.T) {
 	}
 }
 
-type AlignJustifyTest struct {
+var alignJustifyTests = []struct {
 	justfy string
 	delim  string
 	src    []byte
 	dst    []byte
-}
-
-var indexTestsAlignJustify = []AlignJustifyTest{
+}{
 	{`l`, `=`, []byte(`
 a = 1
 bbb = 10
@@ -562,7 +558,7 @@ aaaaa = b     = ccccc = d     = eeeee = f     = 100
 }
 
 func TestAlignJustify(t *testing.T) {
-	for _, test := range indexTestsAlignJustify {
+	for _, test := range alignJustifyTests {
 		a := NewAligner(nil)
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",

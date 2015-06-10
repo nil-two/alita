@@ -5,14 +5,12 @@ import (
 	"testing"
 )
 
-type JustfyTest struct {
+var justfyTests = []struct {
 	justfy Justify
 	width  int
 	src    string
 	dst    string
-}
-
-var indexTestsJustfy = []JustfyTest{
+}{
 	// Case normal
 	{JustLeft, 5, "abc", "abc  "},
 	{JustRight, 5, "abc", "  abc"},
@@ -54,7 +52,7 @@ var indexTestsJustfy = []JustfyTest{
 }
 
 func TestJustfy(t *testing.T) {
-	for _, test := range indexTestsJustfy {
+	for _, test := range justfyTests {
 		actual := test.justfy.Just(test.width, test.src)
 		expect := test.dst
 		if actual != expect {
@@ -65,13 +63,11 @@ func TestJustfy(t *testing.T) {
 	}
 }
 
-type PaddingUpdateWidthTest struct {
+var paddingUpdateWidthTests = []struct {
 	a      []string
 	before []int
 	after  []int
-}
-
-var indexTestsPaddingUpdateWidth = []PaddingUpdateWidthTest{
+}{
 	// Update
 	{[]string{"aaa", "aaa"},
 		[]int{1, 2}, []int{3, 3}},
@@ -103,7 +99,7 @@ var indexTestsPaddingUpdateWidth = []PaddingUpdateWidthTest{
 
 func TestPaddingUpdateWidth(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestsPaddingUpdateWidth {
+	for _, test := range paddingUpdateWidthTests {
 		p.width = test.before
 		p.UpdateWidth(test.a)
 		actual := p.width
@@ -115,13 +111,11 @@ func TestPaddingUpdateWidth(t *testing.T) {
 	}
 }
 
-type PaddingJustKindTest struct {
+var paddingJustKindTests = []struct {
 	justfies []Justify
 	src      int
 	dst      Justify
-}
-
-var indexTestsPaddingJustKind = []PaddingJustKindTest{
+}{
 	{nil, -1, JustLeft},
 	{nil, 0, JustLeft},
 	{nil, 1, JustLeft},
@@ -163,7 +157,7 @@ var indexTestsPaddingJustKind = []PaddingJustKindTest{
 
 func TestsPaddingJustKind(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestsPaddingJustKind {
+	for _, test := range paddingJustKindTests {
 		p.SetJustfies(test.justfies)
 		actual := p.justKind(test.src)
 		expect := test.dst
@@ -174,14 +168,12 @@ func TestsPaddingJustKind(t *testing.T) {
 	}
 }
 
-type PaddingFormatTest struct {
+var paddingFormatTests = []struct {
 	justfies []Justify
 	width    []int
 	src      []string
 	dst      []string
-}
-
-var indexTestsPaddingFormat = []PaddingFormatTest{
+}{
 	{nil, nil,
 		[]string{"a"},
 		[]string{"a"}},
@@ -225,7 +217,7 @@ var indexTestsPaddingFormat = []PaddingFormatTest{
 
 func TestPaddingFormat(t *testing.T) {
 	p := NewPadding()
-	for _, test := range indexTestsPaddingFormat {
+	for _, test := range paddingFormatTests {
 		p.SetJustfies(test.justfies)
 		p.width = test.width
 		actual := p.Format(test.src)

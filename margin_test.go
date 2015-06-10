@@ -12,13 +12,11 @@ func TestMarginDefault(t *testing.T) {
 	}
 }
 
-type MarginSetTest struct {
+var marginSetTests = []struct {
 	format string
 	left   int
 	right  int
-}
-
-var indexTestsMarginSet = []MarginSetTest{
+}{
 	// Digit only
 	{"1", 1, 1},
 	{"2", 2, 2},
@@ -38,7 +36,7 @@ var indexTestsMarginSet = []MarginSetTest{
 
 func TestMarginSet(t *testing.T) {
 	m := NewMargin()
-	for _, test := range indexTestsMarginSet {
+	for _, test := range marginSetTests {
 		if err := m.Set(test.format); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.format, err)
@@ -50,7 +48,7 @@ func TestMarginSet(t *testing.T) {
 	}
 }
 
-var indexTestsMarginSetErr = []string{
+var marginSetErrTests = []string{
 	"abc",
 	"100000000000000000000000000000",
 	"-1",
@@ -66,21 +64,19 @@ var indexTestsMarginSetErr = []string{
 
 func TestMarginSetErr(t *testing.T) {
 	m := NewMargin()
-	for _, format := range indexTestsMarginSetErr {
+	for _, format := range marginSetErrTests {
 		if err := m.Set(format); err == nil {
 			t.Errorf("Margin.Set(%q) returns nil; want err", format)
 		}
 	}
 }
 
-type MarginJoinTest struct {
+var marginJoinTests = []struct {
 	left  int
 	right int
 	src   []string
 	dst   string
-}
-
-var indexTestsMarginJoin = []MarginJoinTest{
+}{
 	{0, 0, nil, ""},
 	{1, 1, nil, ""},
 
@@ -117,7 +113,7 @@ var indexTestsMarginJoin = []MarginJoinTest{
 
 func TestMarginJoin(t *testing.T) {
 	m := NewMargin()
-	for _, test := range indexTestsMarginJoin {
+	for _, test := range marginJoinTests {
 		m.SetMargin(test.left, test.right)
 		actual := m.Join(test.src)
 		expect := test.dst

@@ -14,13 +14,11 @@ func TestSpaceDefault(t *testing.T) {
 	}
 }
 
-type SpaceUpdateWidthTest struct {
+var spaceUpdateWidthTests = []struct {
 	src    string
 	before *Space
 	after  *Space
-}
-
-var indexTestsSpaceUpdateWidth = []SpaceUpdateWidthTest{
+}{
 	// read only headspace
 	{"  abc ",
 		&Space{8, 2, "  "},
@@ -56,7 +54,7 @@ var indexTestsSpaceUpdateWidth = []SpaceUpdateWidthTest{
 }
 
 func TestSpaceUpdateWidth(t *testing.T) {
-	for _, test := range indexTestsSpaceUpdateWidth {
+	for _, test := range spaceUpdateWidthTests {
 		s := test.before
 		s.UpdateHeadWidth(test.src)
 		actual := s
@@ -68,12 +66,10 @@ func TestSpaceUpdateWidth(t *testing.T) {
 	}
 }
 
-type SpaceStrip struct {
+var spaceStripTests = []struct {
 	src string
 	dst string
-}
-
-var indexTestsSpaceStrip = []SpaceStrip{
+}{
 	{"abc", "abc"},
 
 	{" abc", "abc"},
@@ -90,7 +86,7 @@ var indexTestsSpaceStrip = []SpaceStrip{
 
 func TestSpaceStrip(t *testing.T) {
 	s := NewSpace()
-	for _, test := range indexTestsSpaceStrip {
+	for _, test := range spaceStripTests {
 		actual := s.Strip(test.src)
 		expect := test.dst
 		if actual != expect {
@@ -99,13 +95,11 @@ func TestSpaceStrip(t *testing.T) {
 	}
 }
 
-type SpaceAdjust struct {
+var spaceAdjustTests = []struct {
 	space *Space
 	src   string
 	dst   string
-}
-
-var indexTestsSpaceAdjust = []SpaceAdjust{
+}{
 	// no change
 	{&Space{8, 0, ""}, "abc", "abc"},
 	{&Space{8, 0, ""}, "  abc", "  abc"},
@@ -127,7 +121,7 @@ var indexTestsSpaceAdjust = []SpaceAdjust{
 }
 
 func TestSpaceAdjust(t *testing.T) {
-	for _, test := range indexTestsSpaceAdjust {
+	for _, test := range spaceAdjustTests {
 		s := test.space
 		actual := s.Adjust(test.src)
 		expect := test.dst

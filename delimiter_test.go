@@ -6,13 +6,11 @@ import (
 	"testing"
 )
 
-type DelimiterSetTest struct {
+var delimiterSetTests = []struct {
 	useRegexp bool
 	expr      string
 	re        *regexp.Regexp
-}
-
-var indexTestsDelimiterSet = []DelimiterSetTest{
+}{
 	// Fixed
 	{false, `=`, regexp.MustCompile(`=`)},
 	{false, `=+`, regexp.MustCompile(`=\+`)},
@@ -32,7 +30,7 @@ var indexTestsDelimiterSet = []DelimiterSetTest{
 
 func TestDelimiterSet(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsDelimiterSet {
+	for _, test := range delimiterSetTests {
 		d.UseRegexp = test.useRegexp
 		if err := d.Set(test.expr); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
@@ -45,12 +43,10 @@ func TestDelimiterSet(t *testing.T) {
 	}
 }
 
-type DelimiterSplitDefaultTest struct {
+var delimiterSplitDefaultTests = []struct {
 	src string
 	dst []string
-}
-
-var indexTestsDelimiterSplitDefault = []DelimiterSplitDefaultTest{
+}{
 	// Normal
 	{"a", []string{"a"}},
 	{"a b", []string{"a", "b"}},
@@ -71,7 +67,7 @@ var indexTestsDelimiterSplitDefault = []DelimiterSplitDefaultTest{
 
 func TestDelimiterDefaultSplit(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsDelimiterSplitDefault {
+	for _, test := range delimiterSplitDefaultTests {
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
@@ -81,14 +77,12 @@ func TestDelimiterDefaultSplit(t *testing.T) {
 	}
 }
 
-type DelimiterSplitTest struct {
+var delimiterSplitTests = []struct {
 	useRegexp bool
 	expr      string
 	src       string
 	dst       []string
-}
-
-var indexTestsDelimiterSplit = []DelimiterSplitTest{
+}{
 	{false, `=`, "n", []string{"n"}},
 	{false, `=`, "n=", []string{"n", "=", ""}},
 	{false, `=`, "=n", []string{"", "=", "n"}},
@@ -115,7 +109,7 @@ var indexTestsDelimiterSplit = []DelimiterSplitTest{
 
 func TestDelimiterSplit(t *testing.T) {
 	d := NewDelimiter()
-	for _, test := range indexTestsDelimiterSplit {
+	for _, test := range delimiterSplitTests {
 		d.UseRegexp = test.useRegexp
 		if err := d.Set(test.expr); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
