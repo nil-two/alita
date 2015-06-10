@@ -7,6 +7,7 @@ import (
 
 func TestSpaceDefault(t *testing.T) {
 	h := NewSpace()
+
 	actual := h.tabWidth
 	expect := 8
 	if actual != expect {
@@ -57,6 +58,7 @@ func TestSpaceUpdateWidth(t *testing.T) {
 	for _, test := range spaceUpdateWidthTests {
 		s := test.before
 		s.UpdateHeadWidth(test.src)
+
 		actual := s
 		expect := test.after
 		if !reflect.DeepEqual(actual, expect) {
@@ -123,6 +125,7 @@ var spaceAdjustTests = []struct {
 func TestSpaceAdjust(t *testing.T) {
 	for _, test := range spaceAdjustTests {
 		s := test.space
+
 		actual := s.Adjust(test.src)
 		expect := test.dst
 		if actual != expect {

@@ -115,6 +115,7 @@ func TestDelimiterSplit(t *testing.T) {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.expr, err)
 		}
+
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {

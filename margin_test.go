@@ -115,6 +115,7 @@ func TestMarginJoin(t *testing.T) {
 	m := NewMargin()
 	for _, test := range marginJoinTests {
 		m.SetMargin(test.left, test.right)
+
 		actual := m.Join(test.src)
 		expect := test.dst
 		if actual != expect {

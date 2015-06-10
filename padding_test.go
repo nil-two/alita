@@ -102,6 +102,7 @@ func TestPaddingUpdateWidth(t *testing.T) {
 	for _, test := range paddingUpdateWidthTests {
 		p.width = test.before
 		p.UpdateWidth(test.a)
+
 		actual := p.width
 		expect := test.after
 		if !reflect.DeepEqual(actual, expect) {
@@ -159,6 +160,7 @@ func TestsPaddingJustKind(t *testing.T) {
 	p := NewPadding()
 	for _, test := range paddingJustKindTests {
 		p.SetJustfies(test.justfies)
+
 		actual := p.justKind(test.src)
 		expect := test.dst
 		if actual != expect {
@@ -220,6 +222,7 @@ func TestPaddingFormat(t *testing.T) {
 	for _, test := range paddingFormatTests {
 		p.SetJustfies(test.justfies)
 		p.width = test.width
+
 		actual := p.Format(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
