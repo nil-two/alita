@@ -22,6 +22,7 @@ Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Delimiter control:
+  -c, --count=COUNT        delimit line COUNT times
   -r, --regexp             DELIM is a regular expression
   -d, --delimiter=DELIM    delimit line by DELIM
 
@@ -50,6 +51,8 @@ func do(a *alita.Aligner, r io.Reader) error {
 
 func _main() error {
 	a := alita.NewAligner(os.Stdout)
+	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
+	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
 	flag.Var(a.Delimiter, "d", "")
