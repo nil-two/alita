@@ -41,6 +41,9 @@ func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
 		return SPACES.Split(s, -1)
 	}
+	if d.Count == 0 {
+		return []string{strings.TrimSpace(s)}
+	}
 
 	matches := d.re.FindAllStringIndex(s, -1)
 	if len(matches) == 0 {
