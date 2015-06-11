@@ -23,6 +23,7 @@ Usage
 	$ alita [OPTION]... [FILE]...
 
 	Delimiter control:
+	  -c, --count=COUNT        delimit line COUNT times
 	  -r, --regexp             DELIM is a regular expression
 	  -d, --delimiter=DELIM    delimit line by DELIM
 
@@ -55,6 +56,31 @@ Display a help message.
 ###--version
 
 Display the version of alita.
+
+### -c, --count=COUNT
+
+Delimit line COUNT times.
+Default COUNT is `-1`.
+
+If COUNT less than 0, delimiter will split endless
+
+	$ cat graph
+	1]
+	10]]]]]]]]]]
+	3]]]
+	7]]]]]]]
+
+	$ cat graph | alita -d=]
+	1  ]
+	10 ]  ]  ]  ]  ]  ]  ]  ]  ]  ]
+	3  ]  ]  ]
+	7  ]  ]  ]  ]  ]  ]  ]
+
+	$ cat graph | alita -d=] -c=1
+	1  ]
+	10 ]]]]]]]]]]
+	3  ]]]
+	7  ]]]]]]]
 
 ###-r, --regexp
 
