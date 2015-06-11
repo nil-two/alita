@@ -10,11 +10,15 @@ var SPACES = regexp.MustCompile(`\s+`)
 
 type Delimiter struct {
 	re        *regexp.Regexp
+	Count     int
 	UseRegexp bool
 }
 
 func NewDelimiter() *Delimiter {
-	return &Delimiter{}
+	return &Delimiter{
+		Count:     -1,
+		UseRegexp: false,
+	}
 }
 
 func (d *Delimiter) String() string {
