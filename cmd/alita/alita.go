@@ -49,21 +49,20 @@ func do(a *alita.Aligner, r io.Reader) error {
 }
 
 func _main() error {
-	var isHelp, isVersion bool
-	flag.BoolVar(&isHelp, "h", false, "")
-	flag.BoolVar(&isHelp, "help", false, "")
-	flag.BoolVar(&isVersion, "version", false, "")
-
 	a := alita.NewAligner(os.Stdout)
+	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
+	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
+	flag.Var(a.Delimiter, "d", "")
+	flag.Var(a.Delimiter, "delimiter", "")
 	flag.Var(a.Margin, "m", "")
 	flag.Var(a.Margin, "margin", "")
 	flag.Var(a.Padding, "j", "")
 	flag.Var(a.Padding, "justfy", "")
-	flag.Var(a.Delimiter, "d", "")
-	flag.Var(a.Delimiter, "delimiter", "")
-	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
-	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
 
+	var isHelp, isVersion bool
+	flag.BoolVar(&isHelp, "h", false, "")
+	flag.BoolVar(&isHelp, "help", false, "")
+	flag.BoolVar(&isVersion, "version", false, "")
 	flag.Usage = shortUsage
 	flag.Parse()
 	switch {
