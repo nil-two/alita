@@ -17,14 +17,14 @@ var marginSetTests = []struct {
 	left   int
 	right  int
 }{
-	// Digit only
+	// digit only
 	{"1", 1, 1},
 	{"2", 2, 2},
 	{"10", 10, 10},
 	{"00", 0, 0},
 	{"001", 1, 1},
 
-	// Colon separated digits
+	// colon separated digits
 	{"0:3", 0, 3},
 	{"00:001", 0, 1},
 	{"1:1", 1, 1},

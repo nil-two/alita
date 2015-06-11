@@ -11,7 +11,7 @@ var delimiterSetTests = []struct {
 	expr      string
 	re        *regexp.Regexp
 }{
-	// Fixed
+	// fixed
 	{false, `=`, regexp.MustCompile(`=`)},
 	{false, `=+`, regexp.MustCompile(`=\+`)},
 	{false, `-*>`, regexp.MustCompile(`-\*>`)},
@@ -19,7 +19,7 @@ var delimiterSetTests = []struct {
 	{false, `\w+:`, regexp.MustCompile(`\\w\+:`)},
 	{false, `[:/]+`, regexp.MustCompile(`\[:/\]\+`)},
 
-	// Regexp
+	// regexp
 	{true, `=`, regexp.MustCompile(`=`)},
 	{true, `=+`, regexp.MustCompile(`=+`)},
 	{true, `-*>`, regexp.MustCompile(`-*>`)},
@@ -47,7 +47,7 @@ var delimiterSplitDefaultTests = []struct {
 	src string
 	dst []string
 }{
-	// Normal
+	// normal
 	{"a", []string{"a"}},
 	{"a b", []string{"a", "b"}},
 	{"a b c", []string{"a", "b", "c"}},
@@ -55,12 +55,12 @@ var delimiterSplitDefaultTests = []struct {
 	{"ab cd", []string{"ab", "cd"}},
 	{"日本 語", []string{"日本", "語"}},
 
-	// Long spaces
+	// long spaces
 	{"a  b", []string{"a", "b"}},
 	{"a  b c", []string{"a", "b", "c"}},
 	{"a \t b c", []string{"a", "b", "c"}},
 
-	// Head and tail spaces
+	// head and tail spaces
 	{"  a b c", []string{"", "a", "b", "c"}},
 	{"a b c ", []string{"a", "b", "c", ""}},
 }
@@ -130,14 +130,14 @@ var delimiterSplitWithCountTests = []struct {
 	src   string
 	dst   []string
 }{
-	// Less than 0
+	// less than 0
 	{-2, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
 	{-1, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
 
-	// Equal 0
+	// equal 0
 	{0, "n =  m   =    100", []string{"n =  m   =    100"}},
 
-	// Greater than 0
+	// greater than 0
 	{1, "n =  m   =    100", []string{"n", "=  m   =    100"}},
 	{2, "n =  m   =    100", []string{"n", "=", "m   =    100"}},
 	{3, "n =  m   =    100", []string{"n", "=", "m", "=    100"}},

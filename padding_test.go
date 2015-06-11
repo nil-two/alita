@@ -11,7 +11,7 @@ var justfyTests = []struct {
 	src    string
 	dst    string
 }{
-	// Case normal
+	// normal
 	{JustLeft, 5, "abc", "abc  "},
 	{JustRight, 5, "abc", "  abc"},
 	{JustCenter, 5, "abc", " abc "},
@@ -19,7 +19,7 @@ var justfyTests = []struct {
 	{JustRight, 6, "abc", "   abc"},
 	{JustCenter, 6, "abc", " abc  "},
 
-	// Case equal
+	// equal
 	{JustLeft, 5, "abcde", "abcde"},
 	{JustRight, 5, "abcde", "abcde"},
 	{JustCenter, 5, "abcde", "abcde"},
@@ -27,22 +27,22 @@ var justfyTests = []struct {
 	{JustRight, 6, "abcdef", "abcdef"},
 	{JustCenter, 6, "abcdef", "abcdef"},
 
-	// Case min
+	// min
 	{JustLeft, 2, "a", "a "},
 	{JustRight, 2, "a", " a"},
 	{JustCenter, 2, "a", "a "},
 
-	// Case over
+	// over
 	{JustLeft, 4, "abcdefg", "abcdefg"},
 	{JustRight, 4, "abcdefg", "abcdefg"},
 	{JustCenter, 4, "abcdefg", "abcdefg"},
 
-	// Case minus
+	// minus
 	{JustLeft, -5, "abc", "abc"},
 	{JustRight, -5, "abc", "abc"},
 	{JustCenter, -5, "abc", "abc"},
 
-	// Case double-width character
+	// double-width character
 	{JustLeft, 8, "日本語", "日本語  "},
 	{JustRight, 8, "日本語", "  日本語"},
 	{JustCenter, 8, "日本語", " 日本語 "},
@@ -68,19 +68,19 @@ var paddingUpdateWidthTests = []struct {
 	before []int
 	after  []int
 }{
-	// Update
+	// update
 	{[]string{"aaa", "aaa"},
 		[]int{1, 2}, []int{3, 3}},
 	{[]string{"aaa", "aaa", "aaaa"},
 		[]int{1, 2, 3}, []int{3, 3, 4}},
 
-	// Update with stretch
+	// update with stretch
 	{[]string{"a", "aa"},
 		[]int{}, []int{1, 2}},
 	{[]string{"a", "aa", "aaa"},
 		[]int{1, 2}, []int{1, 2, 3}},
 
-	// No update
+	// no update
 	{nil,
 		[]int{1, 1}, []int{1, 1}},
 	{[]string{"a", "a"},
@@ -90,7 +90,7 @@ var paddingUpdateWidthTests = []struct {
 	{[]string{"aaa", "aaa", "aaa"},
 		[]int{4, 4, 4}, []int{4, 4, 4}},
 
-	// Correspondence double-width character
+	// correspondence double-width character
 	{[]string{"日本語", "日本語日本語"},
 		[]int{1, 1}, []int{6, 12}},
 	{[]string{"「おはよう」", "『こんにちは』"},
