@@ -43,7 +43,7 @@ END:
 	}
 }
 
-func (s *Space) Strip(t string) string {
+func (s *Space) Trim(t string) string {
 	return strings.TrimSpace(t)
 }
 

@@ -30,7 +30,7 @@ func (a *Aligner) SetOutput(w io.Writer) {
 }
 
 func (a *Aligner) AppendLine(s string) {
-	sp := a.Delimiter.Split(a.Space.Strip(s))
+	sp := a.Delimiter.Split(a.Space.Trim(s))
 	a.lines = append(a.lines, sp)
 
 	if len(sp) > 1 {

@@ -89,7 +89,7 @@ var spaceStripTests = []struct {
 func TestSpaceStrip(t *testing.T) {
 	s := NewSpace()
 	for _, test := range spaceStripTests {
-		actual := s.Strip(test.src)
+		actual := s.Trim(test.src)
 		expect := test.dst
 		if actual != expect {
 			t.Errorf("got %q; want %q", actual, expect)
