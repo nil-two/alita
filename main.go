@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-
-	"github.com/kusabashira/alita"
 )
 
 func shortUsage() {
@@ -42,7 +40,7 @@ v0.6.0
 `[1:])
 }
 
-func do(a *alita.Aligner, r io.Reader) error {
+func do(a *Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
 	}
@@ -50,7 +48,7 @@ func do(a *alita.Aligner, r io.Reader) error {
 }
 
 func _main() error {
-	a := alita.NewAligner(os.Stdout)
+	a := NewAligner(os.Stdout)
 	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
 	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
