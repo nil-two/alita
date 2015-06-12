@@ -57,35 +57,6 @@ Display a help message.
 
 Display the version of alita.
 
-### -c, --count=COUNT
-
-Delimit line COUNT times.
-Default COUNT is `-1`.
-
-If COUNT less than 0, delimiter will split endless
-
-	$ cat graph
-	1]
-	10]]]]]]]]]]
-	3]]]
-	7]]]]]]]
-
-	$ cat graph | alita -d=]
-	1  ]
-	10 ]  ]  ]  ]  ]  ]  ]  ]  ]  ]
-	3  ]  ]  ]
-	7  ]  ]  ]  ]  ]  ]  ]
-
-	$ cat graph | alita -d=] -c=1
-	1  ]
-	10 ]]]]]]]]]]
-	3  ]]]
-	7  ]]]]]]]
-
-###-r, --regexp
-
-Enable delimit line with regexp.
-
 ###-d, --delimiter=DELIM
 
 Delimit line by DELIM.
@@ -121,8 +92,9 @@ DELIM will interpreted as fixed string.
 	cout << "9 * 2 = " << 9 * 2 << endl;
 	cout << "9 / 2 = " << 9 / 2 << ".."  << 9 % 2 << endl;
 
-If you enabled regexp with `-r` or `--regexp`.
-DELIM will interpreted as regexp.
+###-r, --regexp
+
+Enable delimit line with regexp.
 
 	$ cat root
 	a=>b ===>  c
@@ -145,6 +117,31 @@ DELIM will interpreted as regexp.
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
 	https :// github.com / kusabashira / alita
+
+### -c, --count=COUNT
+
+Delimit line COUNT times.
+Default COUNT is `-1`.
+
+If COUNT less than 0, delimiter will split endless
+
+	$ cat graph
+	1]
+	10]]]]]]]]]]
+	3]]]
+	7]]]]]]]
+
+	$ cat graph | alita -d=]
+	1  ]
+	10 ]  ]  ]  ]  ]  ]  ]  ]  ]  ]
+	3  ]  ]  ]
+	7  ]  ]  ]  ]  ]  ]  ]
+
+	$ cat graph | alita -d=] -c=1
+	1  ]
+	10 ]]]]]]]]]]
+	3  ]]]
+	7  ]]]]]]]
 
 ###-m, --margin=FORMAT
 
