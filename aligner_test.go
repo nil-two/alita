@@ -1,4 +1,4 @@
-package alita
+package main
 
 import (
 	"bytes"
