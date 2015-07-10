@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/yuya-takeyama/argf"
 )
 
 func shortUsage() {
@@ -79,25 +81,12 @@ func _main() int {
 		return 0
 	}
 
-	if flag.NArg() < 1 {
-		if err := do(a, os.Stdin); err != nil {
-			printErr(err)
-			return 1
-		}
-		return 0
+	r, err := argf.From(flag.Args())
+	if err != nil {
+		printErr(err)
+		return 1
 	}
-
-	var input []io.Reader
-	for _, fname := range flag.Args() {
-		f, err := os.Open(fname)
-		if err != nil {
-			printErr(err)
-			return 1
-		}
-		defer f.Close()
-		input = append(input, f)
-	}
-	if err := do(a, io.MultiReader(input...)); err != nil {
+	if err = do(a, r); err != nil {
 		printErr(err)
 		return 1
 	}
