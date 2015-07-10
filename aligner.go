@@ -7,20 +7,42 @@ import (
 )
 
 type Aligner struct {
-	Space     *Space
-	Margin    *Margin
 	Delimiter *Delimiter
 	Padding   *Padding
+	Margin    *Margin
+	Space     *Space
 	lines     [][]string
 }
 
 func NewAligner() *Aligner {
 	return &Aligner{
-		Space:     NewSpace(),
-		Margin:    NewMargin(),
 		Delimiter: NewDelimiter(),
 		Padding:   NewPadding(),
+		Margin:    NewMargin(),
+		Space:     NewSpace(),
 	}
+}
+
+func NewAlignerWithModules(d *Delimiter, p *Padding, m *Margin, s *Space) *Aligner {
+	a := &Aligner{
+		Delimiter: d,
+		Padding:   p,
+		Margin:    m,
+		Space:     s,
+	}
+	if d == nil {
+		a.Delimiter = NewDelimiter()
+	}
+	if p == nil {
+		a.Padding = NewPadding()
+	}
+	if m == nil {
+		a.Margin = NewMargin()
+	}
+	if s == nil {
+		a.Space = NewSpace()
+	}
+	return a
 }
 
 func (a *Aligner) AppendLine(s string) {
