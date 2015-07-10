@@ -7,18 +7,17 @@ import (
 )
 
 func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
-	w := bytes.NewBuffer(make([]byte, 0))
-	a.SetOutput(w)
+	out := bytes.NewBuffer(make([]byte, 0))
 
 	r := bytes.NewReader(src)
 	if err := a.ReadAll(r); err != nil {
 		t.Errorf("ReadAll(%q) returns err; want nil", src)
 	}
-	if err := a.Flush(); err != nil {
+	if err := a.Flush(out); err != nil {
 		t.Errorf("Flush(%q) returns err; want nil", src)
 	}
 
-	actual := w.Bytes()
+	actual := out.Bytes()
 	expect := dst
 	if !reflect.DeepEqual(actual, expect) {
 		t.Errorf("got:\n%swant:\n%s", actual, expect)
@@ -98,7 +97,7 @@ eleven twelve thirteen fourteen fifteen
 
 func TestAlignSimple(t *testing.T) {
 	for _, test := range alignSimpleTests {
-		a := NewAligner(nil)
+		a := NewAligner()
 		testAlign(t, a, test.src, test.dst)
 	}
 }
@@ -253,7 +252,7 @@ ccccc = 100
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range alignFixedTests {
-		a := NewAligner(nil)
+		a := NewAligner()
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
@@ -346,7 +345,7 @@ ccccc = 100 /* C     */
 
 func TestAlignRegexp(t *testing.T) {
 	for _, test := range alignRegexpTests {
-		a := NewAligner(nil)
+		a := NewAligner()
 		a.Delimiter.UseRegexp = true
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
@@ -437,7 +436,7 @@ aaa=  b  =  ccc
 
 func TestAlignMargin(t *testing.T) {
 	for _, test := range alignMarginTests {
-		a := NewAligner(nil)
+		a := NewAligner()
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
@@ -559,7 +558,7 @@ aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
 func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
-		a := NewAligner(nil)
+		a := NewAligner()
 		if err := a.Delimiter.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
