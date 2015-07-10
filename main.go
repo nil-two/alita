@@ -40,6 +40,10 @@ v0.6.0
 `[1:])
 }
 
+func printErr(err error) {
+	fmt.Fprintln(os.Stderr, "alita:", err)
+}
+
 func do(a *Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
@@ -77,7 +81,7 @@ func _main() int {
 
 	if flag.NArg() < 1 {
 		if err := do(a, os.Stdin); err != nil {
-			fmt.Fprintln(os.Stderr, "alita:", err)
+			printErr(err)
 			return 1
 		}
 		return 0
@@ -87,14 +91,14 @@ func _main() int {
 	for _, fname := range flag.Args() {
 		f, err := os.Open(fname)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "alita:", err)
+			printErr(err)
 			return 1
 		}
 		defer f.Close()
 		input = append(input, f)
 	}
 	if err := do(a, io.MultiReader(input...)); err != nil {
-		fmt.Fprintln(os.Stderr, "alita:", err)
+		printErr(err)
 		return 1
 	}
 	return 0
