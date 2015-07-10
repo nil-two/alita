@@ -98,8 +98,8 @@ var paddingUpdateWidthTests = []struct {
 }
 
 func TestPaddingUpdateWidth(t *testing.T) {
-	p := NewPadding()
 	for _, test := range paddingUpdateWidthTests {
+		p := NewPaddingDefault()
 		p.width = test.before
 		p.UpdateWidth(test.a)
 
@@ -157,8 +157,8 @@ var paddingJustKindTests = []struct {
 }
 
 func TestsPaddingJustKind(t *testing.T) {
-	p := NewPadding()
 	for _, test := range paddingJustKindTests {
+		p := NewPaddingDefault()
 		p.SetJustfies(test.justfies)
 
 		actual := p.justKind(test.src)
@@ -218,8 +218,8 @@ var paddingFormatTests = []struct {
 }
 
 func TestPaddingFormat(t *testing.T) {
-	p := NewPadding()
 	for _, test := range paddingFormatTests {
+		p := NewPaddingDefault()
 		p.SetJustfies(test.justfies)
 		p.width = test.width
 

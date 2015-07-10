@@ -570,8 +570,8 @@ func TestAlignJustify(t *testing.T) {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-		p := NewPadding()
-		if err := p.Set(test.justfy); err != nil {
+		p, err := NewPadding(test.justfy)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
