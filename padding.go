@@ -44,8 +44,17 @@ type Padding struct {
 	width    []int
 }
 
-func NewPadding() *Padding {
-	return &Padding{}
+func NewPadding(format string) (*Padding, error) {
+	p := &Padding{}
+	if err := p.Set(format); err != nil {
+		return nil, err
+	}
+	return p, nil
+}
+
+func NewPaddingDefault() *Padding {
+	p, _ := NewPadding("l")
+	return p
 }
 
 func (p *Padding) SetJustfies(a []Justify) {
