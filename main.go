@@ -47,7 +47,7 @@ func do(a *Aligner, r io.Reader) error {
 	return a.Flush()
 }
 
-func _main() error {
+func _main() int {
 	a := NewAligner(os.Stdout)
 	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
 	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
@@ -69,31 +69,38 @@ func _main() error {
 	switch {
 	case isHelp:
 		longUsage()
-		return nil
+		return 0
 	case isVersion:
 		version()
-		return nil
+		return 0
 	}
 
 	if flag.NArg() < 1 {
-		return do(a, os.Stdin)
+		if err := do(a, os.Stdin); err != nil {
+			fmt.Fprintln(os.Stderr, "alita:", err)
+			return 1
+		}
+		return 0
 	}
 
 	var input []io.Reader
 	for _, fname := range flag.Args() {
 		f, err := os.Open(fname)
 		if err != nil {
-			return err
+			fmt.Fprintln(os.Stderr, "alita:", err)
+			return 1
 		}
 		defer f.Close()
 		input = append(input, f)
 	}
-	return do(a, io.MultiReader(input...))
+	if err := do(a, io.MultiReader(input...)); err != nil {
+		fmt.Fprintln(os.Stderr, "alita:", err)
+		return 1
+	}
+	return 0
 }
 
 func main() {
-	if err := _main(); err != nil {
-		fmt.Fprintln(os.Stderr, "alita:", err)
-		os.Exit(1)
-	}
+	e := _main()
+	os.Exit(e)
 }
