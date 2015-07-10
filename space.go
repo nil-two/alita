@@ -5,6 +5,8 @@ import (
 	"unicode"
 )
 
+var IntMax = int(^uint(0) >> 1)
+
 type Space struct {
 	tabWidth  int
 	headWidth int
@@ -14,7 +16,7 @@ type Space struct {
 func NewSpace() *Space {
 	return &Space{
 		tabWidth:  8,
-		headWidth: int(^uint(0) >> 1),
+		headWidth: IntMax,
 	}
 }
 
