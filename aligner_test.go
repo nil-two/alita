@@ -252,11 +252,13 @@ ccccc = 100
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range alignFixedTests {
-		a := NewAligner()
-		if err := a.Delimiter.Set(test.delim); err != nil {
+		d := NewDelimiter()
+		if err := d.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
+		a := NewAlignerWithModules(d, nil, nil, nil)
+
 		testAlign(t, a, test.src, test.dst)
 	}
 }
@@ -345,12 +347,14 @@ ccccc = 100 /* C     */
 
 func TestAlignRegexp(t *testing.T) {
 	for _, test := range alignRegexpTests {
-		a := NewAligner()
-		a.Delimiter.UseRegexp = true
-		if err := a.Delimiter.Set(test.delim); err != nil {
+		d := NewDelimiter()
+		d.UseRegexp = true
+		if err := d.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
+		a := NewAlignerWithModules(d, nil, nil, nil)
+
 		testAlign(t, a, test.src, test.dst)
 	}
 }
@@ -436,15 +440,18 @@ aaa=  b  =  ccc
 
 func TestAlignMargin(t *testing.T) {
 	for _, test := range alignMarginTests {
-		a := NewAligner()
-		if err := a.Delimiter.Set(test.delim); err != nil {
+		d := NewDelimiter()
+		if err := d.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-		if err := a.Margin.Set(test.margin); err != nil {
+		m := NewMargin()
+		if err := m.Set(test.margin); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
+		a := NewAlignerWithModules(d, nil, m, nil)
+
 		testAlign(t, a, test.src, test.dst)
 	}
 }
@@ -558,15 +565,18 @@ aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
 func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
-		a := NewAligner()
-		if err := a.Delimiter.Set(test.delim); err != nil {
+		d := NewDelimiter()
+		if err := d.Set(test.delim); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-		if err := a.Padding.Set(test.justfy); err != nil {
+		p := NewPadding()
+		if err := p.Set(test.justfy); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
+		a := NewAlignerWithModules(d, p, nil, nil)
+
 		testAlign(t, a, test.src, test.dst)
 	}
 }
