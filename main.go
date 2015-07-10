@@ -50,11 +50,11 @@ func do(a *Aligner, r io.Reader) error {
 	if err := a.ReadAll(r); err != nil {
 		return err
 	}
-	return a.Flush()
+	return a.Flush(os.Stdout)
 }
 
 func _main() int {
-	a := NewAligner(os.Stdout)
+	a := NewAligner()
 	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
 	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")

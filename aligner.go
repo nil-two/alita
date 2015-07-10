@@ -7,7 +7,6 @@ import (
 )
 
 type Aligner struct {
-	w         io.Writer
 	Space     *Space
 	Margin    *Margin
 	Delimiter *Delimiter
@@ -15,18 +14,13 @@ type Aligner struct {
 	lines     [][]string
 }
 
-func NewAligner(w io.Writer) *Aligner {
+func NewAligner() *Aligner {
 	return &Aligner{
-		w:         w,
 		Space:     NewSpace(),
 		Margin:    NewMargin(),
 		Delimiter: NewDelimiter(),
 		Padding:   NewPadding(),
 	}
-}
-
-func (a *Aligner) SetOutput(w io.Writer) {
-	a.w = w
 }
 
 func (a *Aligner) AppendLine(s string) {
@@ -54,9 +48,9 @@ func (a *Aligner) format(sp []string) string {
 	return a.Space.Adjust(a.Margin.Join(a.Padding.Format(sp)))
 }
 
-func (a *Aligner) Flush() error {
+func (a *Aligner) Flush(out io.Writer) error {
 	for _, sp := range a.lines {
-		_, err := fmt.Fprintln(a.w, a.format(sp))
+		_, err := fmt.Fprintln(out, a.format(sp))
 		if err != nil {
 			return err
 		}
