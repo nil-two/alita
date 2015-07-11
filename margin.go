@@ -29,44 +29,31 @@ func NewMarginDefault() *Margin {
 }
 
 func NewMarginWithFormat(format string) (*Margin, error) {
-	m := NewMarginDefault()
-	if err := m.Set(format); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (m *Margin) SetMargin(l, r int) {
-	m.left, m.right = l, r
-}
-
-func (m *Margin) Set(format string) error {
-	if format == "" {
-		m.SetMargin(1, 1)
-		return nil
-	}
-	if DIGIT_ONLY.MatchString(format) {
+	m := &Margin{}
+	switch {
+	case format == "":
+		m.left, m.right = 1, 1
+	case DIGIT_ONLY.MatchString(format):
 		n, err := strconv.Atoi(format)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		m.SetMargin(n, n)
-		return nil
-	}
-	if COLON_SEPARATED_DIGITS.MatchString(format) {
+		m.left, m.right = n, n
+	case COLON_SEPARATED_DIGITS.MatchString(format):
 		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)[0]
 		l, err := strconv.Atoi(a[1])
 		if err != nil {
-			return err
+			return nil, err
 		}
 		r, err := strconv.Atoi(a[2])
 		if err != nil {
-			return err
+			return nil, err
 		}
-		m.SetMargin(l, r)
-		return nil
+		m.left, m.right = l, r
+	default:
+		return nil, fmt.Errorf("margin: invalid format: %s", format)
 	}
-	return fmt.Errorf("margin: invalid format: %s", format)
+	return m, nil
 }
 
 func (m *Margin) Join(a []string) string {
