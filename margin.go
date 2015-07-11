@@ -17,7 +17,7 @@ type Margin struct {
 	right int
 }
 
-func NewMargin(left, right int) *Margin {
+func NewMarginWithNumber(left, right int) *Margin {
 	return &Margin{
 		left:  left,
 		right: right,
@@ -25,7 +25,7 @@ func NewMargin(left, right int) *Margin {
 }
 
 func NewMarginDefault() *Margin {
-	return NewMargin(1, 1)
+	return NewMarginWithNumber(1, 1)
 }
 
 func NewMarginWithFormat(format string) (*Margin, error) {

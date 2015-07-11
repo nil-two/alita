@@ -114,7 +114,7 @@ var marginJoinTests = []struct {
 
 func TestMarginJoin(t *testing.T) {
 	for _, test := range marginJoinTests {
-		m := NewMargin(test.left, test.right)
+		m := NewMarginWithNumber(test.left, test.right)
 
 		actual := m.Join(test.src)
 		expect := test.dst
