@@ -254,12 +254,14 @@ ccccc = 100
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range alignFixedTests {
-		d, err := NewDelimiter(test.delim, false, -1)
-		if err != nil {
-			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
-				test.delim, false, -1, err)
+		opt := &Option{
+			Delimiter: test.delim,
 		}
-		a := NewAlignerWithModules(d, nil, nil, nil)
+		a, err := NewAligner(opt)
+		if err != nil {
+			t.Errorf("NewAligner(%#v) returns %q; want nil",
+				opt, err)
+		}
 
 		testAlign(t, a, test.src, test.dst)
 	}
@@ -349,12 +351,15 @@ ccccc = 100 /* C     */
 
 func TestAlignRegexp(t *testing.T) {
 	for _, test := range alignRegexpTests {
-		d, err := NewDelimiter(test.delim, true, -1)
-		if err != nil {
-			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
-				test.delim, false, -1, err)
+		opt := &Option{
+			Delimiter: test.delim,
+			UseRegexp: true,
 		}
-		a := NewAlignerWithModules(d, nil, nil, nil)
+		a, err := NewAligner(opt)
+		if err != nil {
+			t.Errorf("NewAligner(%#v) returns %q; want nil",
+				opt, err)
+		}
 
 		testAlign(t, a, test.src, test.dst)
 	}
@@ -441,17 +446,15 @@ aaa=  b  =  ccc
 
 func TestAlignMargin(t *testing.T) {
 	for _, test := range alignMarginTests {
-		d, err := NewDelimiter(test.delim, false, -1)
-		if err != nil {
-			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
-				test.delim, false, -1, err)
+		opt := &Option{
+			Delimiter: test.delim,
+			Margin:    test.margin,
 		}
-		m, err := NewMarginWithFormat(test.margin)
+		a, err := NewAligner(opt)
 		if err != nil {
-			t.Errorf("NewMarginWithFormat(%q) returns %q; want nil",
-				test.margin, err)
+			t.Errorf("NewAligner(%#v) returns %q; want nil",
+				opt, err)
 		}
-		a := NewAlignerWithModules(d, nil, m, nil)
 
 		testAlign(t, a, test.src, test.dst)
 	}
@@ -566,17 +569,15 @@ aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
 func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
-		d, err := NewDelimiter(test.delim, false, -1)
-		if err != nil {
-			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
-				test.delim, false, -1, err)
+		opt := &Option{
+			Delimiter: test.delim,
+			Justify:   test.justfy,
 		}
-		p, err := NewPadding(test.justfy)
+		a, err := NewAligner(opt)
 		if err != nil {
-			t.Errorf("NewPadding(%v) returns %q; want nil",
-				test.justfy, err)
+			t.Errorf("NewAligner(%#v) returns %q; want nil",
+				opt, err)
 		}
-		a := NewAlignerWithModules(d, p, nil, nil)
 
 		testAlign(t, a, test.src, test.dst)
 	}
