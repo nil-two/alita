@@ -65,13 +65,13 @@ var delimiterSplitDefaultTests = []struct {
 }
 
 func TestDelimiterDefaultSplit(t *testing.T) {
-	d := NewDelimiterDefault()
+	d, _ := NewDelimiter("", false, 0)
 	for _, test := range delimiterSplitDefaultTests {
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("NewDelimiterDefault().Split(%q) = %q; want %q",
-				test.src, actual, expect)
+			t.Errorf("NewDelimiter(%q, %v, %v).Split(%q) = %q; want %q",
+				"", false, 0, test.src, actual, expect)
 		}
 	}
 }
