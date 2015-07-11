@@ -35,6 +35,10 @@ func (d *Delimiter) String() string {
 }
 
 func (d *Delimiter) Set(expr string) error {
+	if expr == "" {
+		d.re = nil
+		return nil
+	}
 	if !d.UseRegexp {
 		expr = regexp.QuoteMeta(expr)
 	}
