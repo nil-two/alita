@@ -36,11 +36,6 @@ func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err err
 	return d, nil
 }
 
-func NewDelimiterDefault() *Delimiter {
-	d, _ := NewDelimiter("", false, -1)
-	return d
-}
-
 func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
 		return SPACES.Split(s, -1)
