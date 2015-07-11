@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -28,10 +27,6 @@ func NewDelimiter(expr string, useRegexp bool, count int) (*Delimiter, error) {
 func NewDelimiterDefault() *Delimiter {
 	d, _ := NewDelimiter("", false, -1)
 	return d
-}
-
-func (d *Delimiter) String() string {
-	return fmt.Sprint(*d)
 }
 
 func (d *Delimiter) Set(expr string) error {

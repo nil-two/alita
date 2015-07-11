@@ -40,10 +40,6 @@ func (m *Margin) SetMargin(l, r int) {
 	m.left, m.right = l, r
 }
 
-func (m *Margin) String() string {
-	return fmt.Sprint(*m)
-}
-
 func (m *Margin) Set(format string) error {
 	if format == "" {
 		m.SetMargin(1, 1)

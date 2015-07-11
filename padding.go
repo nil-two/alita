@@ -61,10 +61,6 @@ func (p *Padding) SetJustfies(a []Justify) {
 	p.justfies = a
 }
 
-func (m *Padding) String() string {
-	return fmt.Sprint(*m)
-}
-
 func (p *Padding) Set(format string) error {
 	if format == "" {
 		p.SetJustfies([]Justify{JustLeft})
