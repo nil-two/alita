@@ -66,6 +66,10 @@ func (m *Padding) String() string {
 }
 
 func (p *Padding) Set(format string) error {
+	if format == "" {
+		p.SetJustfies([]Justify{JustLeft})
+		return nil
+	}
 	if !JUSTFIES_SEQUENCE.MatchString(format) {
 		return fmt.Errorf("padding: invalid format: %s", format)
 	}
