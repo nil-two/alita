@@ -54,7 +54,7 @@ func do(a *Aligner, r io.Reader) error {
 }
 
 func _main() int {
-	a := NewAligner()
+	a := NewAlignerDefault()
 	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
 	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
 	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")

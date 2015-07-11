@@ -99,7 +99,7 @@ eleven twelve thirteen fourteen fifteen
 
 func TestAlignSimple(t *testing.T) {
 	for _, test := range alignSimpleTests {
-		a := NewAligner()
+		a := NewAlignerDefault()
 		testAlign(t, a, test.src, test.dst)
 	}
 }

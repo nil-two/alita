@@ -14,7 +14,7 @@ type Aligner struct {
 	lines     [][]string
 }
 
-func NewAligner() *Aligner {
+func NewAlignerDefault() *Aligner {
 	return &Aligner{
 		Delimiter: NewDelimiterDefault(),
 		Padding:   NewPaddingDefault(),
