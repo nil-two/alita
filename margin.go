@@ -45,6 +45,10 @@ func (m *Margin) String() string {
 }
 
 func (m *Margin) Set(format string) error {
+	if format == "" {
+		m.SetMargin(1, 1)
+		return nil
+	}
 	if DIGIT_ONLY.MatchString(format) {
 		n, err := strconv.Atoi(format)
 		if err != nil {
