@@ -57,8 +57,8 @@ func TestJustfy(t *testing.T) {
 		expect := test.dst
 		if actual != expect {
 			kind := "lrc"[test.justfy]
-			t.Errorf("%q.Justfy(%q) = %q; want %q",
-				kind, test.src, actual, expect)
+			t.Errorf("%q.Justfy(%v, %q) = %q; want %q",
+				kind, test.width, test.src, actual, expect)
 		}
 	}
 }
@@ -106,7 +106,7 @@ func TestPaddingUpdateWidth(t *testing.T) {
 		actual := p.width
 		expect := test.after
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("%v -> UpdateWidth(%v) got %v; want %v",
+			t.Errorf("%v.UpdateWidth(%v) got %v; want %v",
 				test.before, test.a, actual, expect)
 		}
 	}
@@ -226,8 +226,8 @@ func TestPaddingFormat(t *testing.T) {
 		actual := p.Format(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("Padding(%v,%v) = %q; want %q",
-				test.justfies, test.width, actual, expect)
+			t.Errorf("Padding(%v, %v).Format(%q) = %q; want %q",
+				test.justfies, test.width, test.src, actual, expect)
 		}
 	}
 }

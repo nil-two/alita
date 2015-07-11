@@ -32,12 +32,12 @@ func TestDelimiterSet(t *testing.T) {
 	for _, test := range delimiterSetTests {
 		d, err := NewDelimiter(test.expr, test.useRegexp, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.expr, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.expr, test.useRegexp, -1, err)
 		}
 		if !reflect.DeepEqual(d.re, test.re) {
-			t.Errorf("got %q; want %q",
-				d.re, test.re)
+			t.Errorf("NewDelimiter(%q, %v, %v).re got %q; want %q",
+				test.expr, test.useRegexp, -1, d.re, test.re)
 		}
 	}
 }
@@ -70,8 +70,8 @@ func TestDelimiterDefaultSplit(t *testing.T) {
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("Delimiter(%q).Split(%q) = %q; want %q",
-				d.re, test.src, actual, expect)
+			t.Errorf("NewDelimiterDefault().Split(%q) = %q; want %q",
+				test.src, actual, expect)
 		}
 	}
 }
@@ -110,15 +110,15 @@ func TestDelimiterSplit(t *testing.T) {
 	for _, test := range delimiterSplitTests {
 		d, err := NewDelimiter(test.expr, test.useRegexp, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.expr, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.expr, test.useRegexp, -1, err)
 		}
 
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("Delimiter(%q).Split(%q) = %q; want %q",
-				d.re, test.src, actual, expect)
+			t.Errorf("NewDelimiter(%q, %v, %v).Split(%q) = %q; want %q",
+				test.expr, test.useRegexp, -1, test.src, actual, expect)
 		}
 	}
 }
@@ -144,17 +144,19 @@ var delimiterSplitWithCountTests = []struct {
 }
 
 func TestSplitWithCount(t *testing.T) {
+	delim := "="
 	for _, test := range delimiterSplitWithCountTests {
-		d, err := NewDelimiter("=", false, test.count)
+		d, err := NewDelimiter(delim, false, test.count)
 		if err != nil {
-			t.Errorf("Delimiter(\"=\").Split(%q) = %q; want %q", err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				delim, false, test.count, err)
 		}
 
 		actual := d.Split(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("Delimiter(%q, %d).Split(%q) = %q; want %q",
-				d.re, d.Count, test.src, actual, expect)
+			t.Errorf("NewDelimiter(%q, %v, %v).Split(%q) = %q; want %q",
+				delim, false, test.count, test.src, actual, expect)
 		}
 	}
 }

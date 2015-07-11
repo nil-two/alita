@@ -5,10 +5,10 @@ import (
 )
 
 func TestMarginDefault(t *testing.T) {
-	m := NewMarginDefault()
 	l, r := 1, 1
+	m := NewMarginDefault()
 	if m.left != l || m.right != r {
-		t.Errorf("got %d:%d; want %d:%d", m.left, m.right, l, r)
+		t.Errorf("got %v:%v; want %v:%v", m.left, m.right, l, r)
 	}
 }
 
@@ -38,12 +38,12 @@ func TestMarginSet(t *testing.T) {
 	for _, test := range marginSetTests {
 		m, err := NewMarginWithFormat(test.format)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
+			t.Errorf("NewMarginWithFormat(%q) returns %q; want nil",
 				test.format, err)
 		}
 		if m.left != test.left || m.right != test.right {
-			t.Errorf("got %d:%d; want %d:%d",
-				m.left, m.right, test.left, test.right)
+			t.Errorf("NewMarginWithFormat(%q) got %v:%v; want %v:%v",
+				test.format, m.left, m.right, test.left, test.right)
 		}
 	}
 }
@@ -63,10 +63,11 @@ var marginSetErrTests = []string{
 }
 
 func TestMarginSetErr(t *testing.T) {
-	m := NewMarginDefault()
 	for _, format := range marginSetErrTests {
-		if err := m.Set(format); err == nil {
-			t.Errorf("Margin.Set(%q) returns nil; want err", format)
+		_, err := NewMarginWithFormat(format)
+		if err == nil {
+			t.Errorf("NewMarginWithFormat(%q) returns nil; want err",
+				format)
 		}
 	}
 }
@@ -118,7 +119,7 @@ func TestMarginJoin(t *testing.T) {
 		actual := m.Join(test.src)
 		expect := test.dst
 		if actual != expect {
-			t.Errorf("Margin(%d, %d).Join(%q) = %q; want %q",
+			t.Errorf("NewMargin(%v, %v).Join(%q) = %q; want %q",
 				test.left, test.right, test.src, actual, expect)
 		}
 	}

@@ -11,10 +11,12 @@ func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
 
 	r := bytes.NewReader(src)
 	if err := a.ReadAll(r); err != nil {
-		t.Errorf("ReadAll(%q) returns err; want nil", src)
+		t.Errorf("ReadAll(%q) returns %q; want nil",
+			src, err)
 	}
 	if err := a.Flush(out); err != nil {
-		t.Errorf("Flush(%q) returns err; want nil", src)
+		t.Errorf("Flush(%q) returns %q; want nil",
+			src, err)
 	}
 
 	actual := out.Bytes()
@@ -254,8 +256,8 @@ func TestAlignFixed(t *testing.T) {
 	for _, test := range alignFixedTests {
 		d, err := NewDelimiter(test.delim, false, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.delim, false, -1, err)
 		}
 		a := NewAlignerWithModules(d, nil, nil, nil)
 
@@ -349,8 +351,8 @@ func TestAlignRegexp(t *testing.T) {
 	for _, test := range alignRegexpTests {
 		d, err := NewDelimiter(test.delim, true, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.delim, false, -1, err)
 		}
 		a := NewAlignerWithModules(d, nil, nil, nil)
 
@@ -441,13 +443,13 @@ func TestAlignMargin(t *testing.T) {
 	for _, test := range alignMarginTests {
 		d, err := NewDelimiter(test.delim, false, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.delim, false, -1, err)
 		}
-		m := NewMargin(0, 0)
-		if err := m.Set(test.margin); err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+		m, err := NewMarginWithFormat(test.margin)
+		if err != nil {
+			t.Errorf("NewMarginWithFormat(%q) returns %q; want nil",
+				test.margin, err)
 		}
 		a := NewAlignerWithModules(d, nil, m, nil)
 
@@ -566,13 +568,13 @@ func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
 		d, err := NewDelimiter(test.delim, false, -1)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
+				test.delim, false, -1, err)
 		}
 		p, err := NewPadding(test.justfy)
 		if err != nil {
-			t.Errorf("Set(%q) returns %q; want nil",
-				test.delim, err)
+			t.Errorf("NewPadding(%v) returns %q; want nil",
+				test.justfy, err)
 		}
 		a := NewAlignerWithModules(d, p, nil, nil)
 
