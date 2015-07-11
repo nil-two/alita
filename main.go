@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -54,38 +53,34 @@ func do(a *Aligner, r io.Reader) error {
 }
 
 func _main() int {
-	a := NewAlignerDefault()
-	flag.IntVar(&a.Delimiter.Count, "c", -1, "")
-	flag.IntVar(&a.Delimiter.Count, "count", -1, "")
-	flag.BoolVar(&a.Delimiter.UseRegexp, "r", false, "")
-	flag.BoolVar(&a.Delimiter.UseRegexp, "regexp", false, "")
-	flag.Var(a.Delimiter, "d", "")
-	flag.Var(a.Delimiter, "delimiter", "")
-	flag.Var(a.Margin, "m", "")
-	flag.Var(a.Margin, "margin", "")
-	flag.Var(a.Padding, "j", "")
-	flag.Var(a.Padding, "justfy", "")
+	opt, err := ParseOption(os.Args[1:])
+	if err != nil {
+		printErr(err)
+		shortUsage()
+		return 2
+	}
 
-	var isHelp, isVersion bool
-	flag.BoolVar(&isHelp, "h", false, "")
-	flag.BoolVar(&isHelp, "help", false, "")
-	flag.BoolVar(&isVersion, "version", false, "")
-	flag.Usage = shortUsage
-	flag.Parse()
 	switch {
-	case isHelp:
+	case opt.IsHelp:
 		longUsage()
 		return 0
-	case isVersion:
+	case opt.IsVersion:
 		version()
 		return 0
 	}
 
-	r, err := argf.From(flag.Args())
+	a, err := NewAligner(opt)
 	if err != nil {
 		printErr(err)
-		return 1
+		shortUsage()
+		return 2
 	}
+	r, err := argf.From(opt.Files)
+	if err != nil {
+		printErr(err)
+		return 2
+	}
+
 	if err = do(a, r); err != nil {
 		printErr(err)
 		return 1
