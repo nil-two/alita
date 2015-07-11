@@ -113,121 +113,127 @@ func TestPaddingUpdateWidth(t *testing.T) {
 }
 
 var paddingJustKindTests = []struct {
-	justfies []Justify
-	src      int
-	dst      Justify
+	seq string
+	src int
+	dst Justify
 }{
-	{nil, -1, JustLeft},
-	{nil, 0, JustLeft},
-	{nil, 1, JustLeft},
-	{nil, 2, JustLeft},
+	{"", -1, JustLeft},
+	{"", 0, JustLeft},
+	{"", 1, JustLeft},
+	{"", 2, JustLeft},
 
-	{[]Justify{JustLeft}, 0, JustLeft},
-	{[]Justify{JustRight}, 0, JustRight},
-	{[]Justify{JustCenter}, 0, JustCenter},
+	{"l", 0, JustLeft},
+	{"r", 0, JustRight},
+	{"c", 0, JustCenter},
 
-	{[]Justify{JustRight}, -2, JustRight},
-	{[]Justify{JustRight}, -1, JustRight},
-	{[]Justify{JustRight}, 1, JustRight},
-	{[]Justify{JustRight}, 2, JustRight},
+	{"r", -2, JustRight},
+	{"r", -1, JustRight},
+	{"r", 1, JustRight},
+	{"r", 2, JustRight},
 
-	{[]Justify{JustRight, JustCenter}, -1, JustRight},
-	{[]Justify{JustRight, JustCenter}, 0, JustRight},
-	{[]Justify{JustRight, JustCenter}, 1, JustCenter},
-	{[]Justify{JustRight, JustCenter}, 2, JustCenter},
-	{[]Justify{JustRight, JustCenter}, 3, JustCenter},
+	{"rc", -1, JustRight},
+	{"rc", 0, JustRight},
+	{"rc", 1, JustCenter},
+	{"rc", 2, JustCenter},
+	{"rc", 3, JustCenter},
 
-	{[]Justify{JustLeft, JustCenter, JustRight}, -1, JustLeft},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 0, JustLeft},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 1, JustCenter},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 2, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 3, JustCenter},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 4, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight}, 5, JustCenter},
+	{"lcr", -1, JustLeft},
+	{"lcr", 0, JustLeft},
+	{"lcr", 1, JustCenter},
+	{"lcr", 2, JustRight},
+	{"lcr", 3, JustCenter},
+	{"lcr", 4, JustRight},
+	{"lcr", 5, JustCenter},
 
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, -1, JustLeft},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 0, JustLeft},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 1, JustCenter},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 2, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 3, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 4, JustCenter},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 5, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 6, JustRight},
-	{[]Justify{JustLeft, JustCenter, JustRight, JustRight}, 7, JustCenter},
+	{"lcrr", -1, JustLeft},
+	{"lcrr", 0, JustLeft},
+	{"lcrr", 1, JustCenter},
+	{"lcrr", 2, JustRight},
+	{"lcrr", 3, JustRight},
+	{"lcrr", 4, JustCenter},
+	{"lcrr", 5, JustRight},
+	{"lcrr", 6, JustRight},
+	{"lcrr", 7, JustCenter},
 }
 
 func TestsPaddingJustKind(t *testing.T) {
 	for _, test := range paddingJustKindTests {
-		p := NewPaddingDefault()
-		p.SetJustfies(test.justfies)
+		p, err := NewPadding(test.seq)
+		if err != nil {
+			t.Errorf("NewPadding(%q) returns %q, want nil",
+				test.seq, err)
+		}
 
 		actual := p.justKind(test.src)
 		expect := test.dst
 		if actual != expect {
-			t.Errorf("Padding(%v).justkind(%v) = %v; want %v",
-				test.justfies, test.src, actual, expect)
+			t.Errorf("NewPadding(%q).justkind(%v) = %v; want %v",
+				test.seq, test.src, actual, expect)
 		}
 	}
 }
 
 var paddingFormatTests = []struct {
-	justfies []Justify
-	width    []int
-	src      []string
-	dst      []string
+	seq   string
+	width []int
+	src   []string
+	dst   []string
 }{
-	{nil, nil,
+	{"", nil,
 		[]string{"a"},
 		[]string{"a"}},
-	{nil, nil,
+	{"", nil,
 		[]string{"a", "b"},
 		[]string{"a", "b"}},
 
-	{nil, []int{2, 3},
+	{"", []int{2, 3},
 		[]string{"a", "b"},
 		[]string{"a ", "b  "}},
-	{nil, []int{2, 3, 4},
+	{"", []int{2, 3, 4},
 		[]string{"a", "b", "c"},
 		[]string{"a ", "b  ", "c   "}},
-	{nil, []int{2, 3, 4, 5},
+	{"", []int{2, 3, 4, 5},
 		[]string{"a", "b", "b", "d"},
 		[]string{"a ", "b  ", "b   ", "d    "}},
-	{nil, []int{2, 3, 4, 5, 6},
+	{"", []int{2, 3, 4, 5, 6},
 		[]string{"a", "b", "b", "d", "e"},
 		[]string{"a ", "b  ", "b   ", "d    ", "e     "}},
 
-	{[]Justify{JustRight}, []int{2, 3},
+	{"r", []int{2, 3},
 		[]string{"a", "b"},
 		[]string{" a", "  b"}},
-	{[]Justify{JustRight}, []int{2, 3, 4},
+	{"r", []int{2, 3, 4},
 		[]string{"a", "b", "c"},
 		[]string{" a", "  b", "   c"}},
-	{[]Justify{JustRight}, []int{2, 3, 4, 5},
+	{"r", []int{2, 3, 4, 5},
 		[]string{"a", "b", "c", "d"},
 		[]string{" a", "  b", "   c", "    d"}},
-	{[]Justify{JustRight}, []int{2, 3, 4, 5, 6},
+	{"r", []int{2, 3, 4, 5, 6},
 		[]string{"a", "b", "c", "d", "e"},
 		[]string{" a", "  b", "   c", "    d", "     e"}},
 
-	{[]Justify{JustLeft, JustCenter, JustRight}, []int{5, 1, 5},
+	{"lcr", []int{5, 1, 5},
 		[]string{"n", "=", "100"},
 		[]string{"n    ", "=", "  100"}},
-	{[]Justify{JustLeft, JustCenter, JustRight}, []int{8, 1, 8},
+	{"lcr", []int{8, 1, 8},
 		[]string{"n", "=", "100"},
 		[]string{"n       ", "=", "     100"}},
 }
 
 func TestPaddingFormat(t *testing.T) {
 	for _, test := range paddingFormatTests {
-		p := NewPaddingDefault()
-		p.SetJustfies(test.justfies)
+		p, err := NewPadding(test.seq)
+		if err != nil {
+			t.Errorf("NewPadding(%q) returns %q, want nil",
+				test.seq, err)
+		}
 		p.width = test.width
 
 		actual := p.Format(test.src)
 		expect := test.dst
 		if !reflect.DeepEqual(actual, expect) {
-			t.Errorf("Padding(%v, %v).Format(%q) = %q; want %q",
-				test.justfies, test.width, test.src, actual, expect)
+			t.Errorf("NewPadding(%q, %v).Format(%q) = %q; want %q",
+				test.seq, test.width, test.src, actual, expect)
 		}
 	}
 }
