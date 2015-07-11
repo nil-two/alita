@@ -17,11 +17,23 @@ type Margin struct {
 	right int
 }
 
-func NewMargin() *Margin {
+func NewMargin(left, right int) *Margin {
 	return &Margin{
-		left:  1,
-		right: 1,
+		left:  left,
+		right: right,
 	}
+}
+
+func NewMarginDefault() *Margin {
+	return NewMargin(1, 1)
+}
+
+func NewMarginWithFormat(format string) (*Margin, error) {
+	m := NewMarginDefault()
+	if err := m.Set(format); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (m *Margin) SetMargin(l, r int) {
