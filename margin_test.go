@@ -5,7 +5,7 @@ import (
 )
 
 func TestMarginDefault(t *testing.T) {
-	m := NewMargin()
+	m := NewMarginDefault()
 	l, r := 1, 1
 	if m.left != l || m.right != r {
 		t.Errorf("got %d:%d; want %d:%d", m.left, m.right, l, r)
@@ -35,9 +35,9 @@ var marginSetTests = []struct {
 }
 
 func TestMarginSet(t *testing.T) {
-	m := NewMargin()
 	for _, test := range marginSetTests {
-		if err := m.Set(test.format); err != nil {
+		m, err := NewMarginWithFormat(test.format)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.format, err)
 		}
@@ -63,7 +63,7 @@ var marginSetErrTests = []string{
 }
 
 func TestMarginSetErr(t *testing.T) {
-	m := NewMargin()
+	m := NewMarginDefault()
 	for _, format := range marginSetErrTests {
 		if err := m.Set(format); err == nil {
 			t.Errorf("Margin.Set(%q) returns nil; want err", format)
@@ -112,9 +112,8 @@ var marginJoinTests = []struct {
 }
 
 func TestMarginJoin(t *testing.T) {
-	m := NewMargin()
 	for _, test := range marginJoinTests {
-		m.SetMargin(test.left, test.right)
+		m := NewMargin(test.left, test.right)
 
 		actual := m.Join(test.src)
 		expect := test.dst

@@ -445,7 +445,7 @@ func TestAlignMargin(t *testing.T) {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
-		m := NewMargin()
+		m := NewMargin(0, 0)
 		if err := m.Set(test.margin); err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
