@@ -23,7 +23,7 @@ func NewAligner(opt *Option) (*Aligner, error) {
 	if err != nil {
 		return nil, err
 	}
-	m, err := NewMarginWithFormat(opt.Margin)
+	m, err := NewMargin(opt.Margin)
 	if err != nil {
 		return nil, err
 	}

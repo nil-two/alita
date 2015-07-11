@@ -36,7 +36,7 @@ var marginSetTests = []struct {
 
 func TestMarginSet(t *testing.T) {
 	for _, test := range marginSetTests {
-		m, err := NewMarginWithFormat(test.format)
+		m, err := NewMargin(test.format)
 		if err != nil {
 			t.Errorf("NewMarginWithFormat(%q) returns %q; want nil",
 				test.format, err)
@@ -64,7 +64,7 @@ var marginSetErrTests = []string{
 
 func TestMarginSetErr(t *testing.T) {
 	for _, format := range marginSetErrTests {
-		_, err := NewMarginWithFormat(format)
+		_, err := NewMargin(format)
 		if err == nil {
 			t.Errorf("NewMarginWithFormat(%q) returns nil; want err",
 				format)

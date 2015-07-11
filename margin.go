@@ -17,18 +17,7 @@ type Margin struct {
 	right int
 }
 
-func NewMarginWithNumber(left, right int) *Margin {
-	return &Margin{
-		left:  left,
-		right: right,
-	}
-}
-
-func NewMarginDefault() *Margin {
-	return NewMarginWithNumber(1, 1)
-}
-
-func NewMarginWithFormat(format string) (*Margin, error) {
+func NewMargin(format string) (*Margin, error) {
 	m := &Margin{}
 	switch {
 	case format == "":
@@ -54,6 +43,17 @@ func NewMarginWithFormat(format string) (*Margin, error) {
 		return nil, fmt.Errorf("margin: invalid format: %s", format)
 	}
 	return m, nil
+}
+
+func NewMarginWithNumber(left, right int) *Margin {
+	return &Margin{
+		left:  left,
+		right: right,
+	}
+}
+
+func NewMarginDefault() *Margin {
+	return NewMarginWithNumber(1, 1)
 }
 
 func (m *Margin) Join(a []string) string {
