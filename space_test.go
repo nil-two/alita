@@ -6,7 +6,7 @@ import (
 )
 
 func TestSpaceDefault(t *testing.T) {
-	h := NewSpace()
+	h := NewSpaceDefault()
 
 	actual := h.tabWidth
 	expect := 8
@@ -87,7 +87,7 @@ var spaceStripTests = []struct {
 }
 
 func TestSpaceStrip(t *testing.T) {
-	s := NewSpace()
+	s := NewSpace(8)
 	for _, test := range spaceStripTests {
 		actual := s.Trim(test.src)
 		expect := test.dst
