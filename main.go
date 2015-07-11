@@ -10,7 +10,6 @@ import (
 
 func shortUsage() {
 	os.Stderr.WriteString(`
-Usage: alita [OPTION]... [FILE]...
 Try 'alita --help' for more information.
 `[1:])
 }
