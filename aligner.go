@@ -38,9 +38,10 @@ func NewAligner(opt *Option) (*Aligner, error) {
 
 func NewAlignerDefault() *Aligner {
 	d, _ := NewDelimiter("", false, 0)
+	p, _ := NewPadding("")
 	return &Aligner{
 		Delimiter: d,
-		Padding:   NewPaddingDefault(),
+		Padding:   p,
 		Margin:    NewMarginDefault(),
 		Space:     NewSpace(),
 	}

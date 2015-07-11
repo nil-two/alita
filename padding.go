@@ -75,11 +75,6 @@ func NewPadding(seq string) (p *Padding, err error) {
 	return p, nil
 }
 
-func NewPaddingDefault() *Padding {
-	p, _ := NewPadding("l")
-	return p
-}
-
 func (p *Padding) UpdateWidth(a []string) {
 	for i, s := range a {
 		w := runewidth.StringWidth(s)
