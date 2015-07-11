@@ -99,7 +99,7 @@ var paddingUpdateWidthTests = []struct {
 
 func TestPaddingUpdateWidth(t *testing.T) {
 	for _, test := range paddingUpdateWidthTests {
-		p := NewPaddingDefault()
+		p, _ := NewPadding("")
 		p.width = test.before
 		p.UpdateWidth(test.a)
 
