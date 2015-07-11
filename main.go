@@ -8,7 +8,7 @@ import (
 	"github.com/yuya-takeyama/argf"
 )
 
-func shortUsage() {
+func guideToHelp() {
 	os.Stderr.WriteString(`
 Try 'alita --help' for more information.
 `[1:])
@@ -55,7 +55,7 @@ func _main() int {
 	opt, err := ParseOption(os.Args[1:])
 	if err != nil {
 		printErr(err)
-		shortUsage()
+		guideToHelp()
 		return 2
 	}
 
@@ -71,7 +71,7 @@ func _main() int {
 	a, err := NewAligner(opt)
 	if err != nil {
 		printErr(err)
-		shortUsage()
+		guideToHelp()
 		return 2
 	}
 	r, err := argf.From(opt.Files)
