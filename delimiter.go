@@ -54,12 +54,14 @@ func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
 		return SPACES.Split(s, -1)
 	}
-	if d.Count == 0 {
-		return []string{strings.TrimSpace(s)}
-	}
-	useCount := d.Count > 0
 
-	matches := d.re.FindAllStringIndex(s, d.Count)
+	count := d.Count
+	if count < 1 {
+		count = -1
+	}
+	useCount := count > 0
+
+	matches := d.re.FindAllStringIndex(s, count)
 	if len(matches) == 0 {
 		return []string{strings.TrimSpace(s)}
 	}
@@ -71,13 +73,13 @@ func (d *Delimiter) Split(s string) []string {
 
 		a = append(a, s[beg:end])
 		beg, end = match[0], match[1]
-		if useCount && len(a) >= d.Count {
+		if useCount && len(a) >= count {
 			break
 		}
 
 		a = append(a, s[beg:end])
 		beg = match[1]
-		if useCount && len(a) >= d.Count {
+		if useCount && len(a) >= count {
 			break
 		}
 	}
