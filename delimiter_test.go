@@ -128,12 +128,10 @@ var delimiterSplitWithCountTests = []struct {
 	src   string
 	dst   []string
 }{
-	// less than 0
+	// less than 1
 	{-2, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
 	{-1, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
-
-	// equal 0
-	{0, "n =  m   =    100", []string{"n =  m   =    100"}},
+	{0, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
 
 	// greater than 0
 	{1, "n =  m   =    100", []string{"n", "=  m   =    100"}},
