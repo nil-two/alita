@@ -80,10 +80,6 @@ func NewPaddingDefault() *Padding {
 	return p
 }
 
-func (p *Padding) SetJustfies(a []Justify) {
-	p.justfies = a
-}
-
 func (p *Padding) UpdateWidth(a []string) {
 	for i, s := range a {
 		w := runewidth.StringWidth(s)
