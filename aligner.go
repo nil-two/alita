@@ -45,28 +45,6 @@ func NewAlignerDefault() *Aligner {
 	}
 }
 
-func NewAlignerWithModules(d *Delimiter, p *Padding, m *Margin, s *Space) *Aligner {
-	a := &Aligner{
-		Delimiter: d,
-		Padding:   p,
-		Margin:    m,
-		Space:     s,
-	}
-	if d == nil {
-		a.Delimiter = NewDelimiterDefault()
-	}
-	if p == nil {
-		a.Padding = NewPaddingDefault()
-	}
-	if m == nil {
-		a.Margin = NewMarginDefault()
-	}
-	if s == nil {
-		a.Space = NewSpaceDefault()
-	}
-	return a
-}
-
 func (a *Aligner) AppendLine(s string) {
 	sp := a.Delimiter.Split(a.Space.Trim(s))
 	a.lines = append(a.lines, sp)
