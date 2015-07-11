@@ -461,10 +461,10 @@ func TestAlignMargin(t *testing.T) {
 }
 
 var alignJustifyTests = []struct {
-	justfy string
-	delim  string
-	src    []byte
-	dst    []byte
+	justify string
+	delim   string
+	src     []byte
+	dst     []byte
 }{
 	{`l`, `=`, []byte(`
 a = 1
@@ -571,7 +571,7 @@ func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
 		opt := &Option{
 			Delimiter: test.delim,
-			Justify:   test.justfy,
+			Justify:   test.justify,
 		}
 		a, err := NewAligner(opt)
 		if err != nil {

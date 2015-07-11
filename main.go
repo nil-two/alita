@@ -26,7 +26,7 @@ Delimiter control:
 
 Output control:
   -m, --margin=FORMAT      join cells by FORMAT
-  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE
+  -j, --justify=SEQUENCE   justify cells by SEQUENCE
 
 Miscellaneous:
   -h, --help               show this help message

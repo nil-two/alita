@@ -5,11 +5,11 @@ import (
 	"testing"
 )
 
-var justfyTests = []struct {
-	justfy Justify
-	width  int
-	src    string
-	dst    string
+var justifyTests = []struct {
+	justify Justify
+	width   int
+	src     string
+	dst     string
 }{
 	// normal
 	{JustLeft, 5, "abc", "abc  "},
@@ -52,11 +52,11 @@ var justfyTests = []struct {
 }
 
 func TestJustfy(t *testing.T) {
-	for _, test := range justfyTests {
-		actual := test.justfy.Just(test.width, test.src)
+	for _, test := range justifyTests {
+		actual := test.justify.Just(test.width, test.src)
 		expect := test.dst
 		if actual != expect {
-			kind := "lrc"[test.justfy]
+			kind := "lrc"[test.justify]
 			t.Errorf("%q.Justfy(%v, %q) = %q; want %q",
 				kind, test.width, test.src, actual, expect)
 		}

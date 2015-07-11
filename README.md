@@ -29,7 +29,7 @@ Usage
 
 	Output control:
 	  -m, --margin=FORMAT      join cells by FORMAT
-	  -j, --justfy=SEQUENCE    justfy cells by SEQUENCE
+	  -j, --justify=SEQUENCE   justify cells by SEQUENCE
 
 	Miscellaneous:
 	  -h, --help               show this help message
@@ -177,17 +177,17 @@ digit will interpreted as both `left-margin` and `right-margin`
 	name=Tom
 	age =17
 
-### -j, --justfy=SEQUENCE
+### -j, --justify=SEQUENCE
 
 Justfy cells by format which described in SEQUENCE.
 
 SEQUENCE include `l`, `r` or `c`.
 
-| char | justfy        |
-|:-----|:--------------|
-| l    | left-justfy   |
-| r    | right-justfy  |
-| c    | center-justfy |
+| char | justify        |
+|:-----|:---------------|
+| l    | left-justify   |
+| r    | right-justify  |
+| c    | center-justify |
 
 SEQUENCE will interpreted as following format.
 
