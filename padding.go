@@ -16,6 +16,30 @@ const (
 	JustCenter
 )
 
+var JUSTFIES_SEQUENCE = regexp.MustCompile("^[lrc]+$")
+
+func ParseJustifies(seq string) ([]Justify, error) {
+	switch {
+	case seq == "":
+		return []Justify{JustLeft}, nil
+	case JUSTFIES_SEQUENCE.MatchString(seq):
+		js := make([]Justify, 0, len(seq))
+		for _, ch := range seq {
+			switch ch {
+			case 'l':
+				js = append(js, JustLeft)
+			case 'r':
+				js = append(js, JustRight)
+			case 'c':
+				js = append(js, JustCenter)
+			}
+		}
+		return js, nil
+	default:
+		return nil, fmt.Errorf("padding: invalid format: %s", seq)
+	}
+}
+
 func (j Justify) Just(width int, s string) string {
 	w := runewidth.StringWidth(s)
 	if width <= w {
@@ -37,16 +61,15 @@ func (j Justify) Just(width int, s string) string {
 	return s + strings.Repeat(" ", width-w)
 }
 
-var JUSTFIES_SEQUENCE = regexp.MustCompile("^[lrc]+$")
-
 type Padding struct {
 	justfies []Justify
 	width    []int
 }
 
-func NewPadding(format string) (*Padding, error) {
-	p := &Padding{}
-	if err := p.Set(format); err != nil {
+func NewPadding(seq string) (p *Padding, err error) {
+	p = &Padding{}
+	p.justfies, err = ParseJustifies(seq)
+	if err != nil {
 		return nil, err
 	}
 	return p, nil
@@ -59,29 +82,6 @@ func NewPaddingDefault() *Padding {
 
 func (p *Padding) SetJustfies(a []Justify) {
 	p.justfies = a
-}
-
-func (p *Padding) Set(format string) error {
-	if format == "" {
-		p.SetJustfies([]Justify{JustLeft})
-		return nil
-	}
-	if !JUSTFIES_SEQUENCE.MatchString(format) {
-		return fmt.Errorf("padding: invalid format: %s", format)
-	}
-	a := make([]Justify, 0)
-	for _, c := range format {
-		switch c {
-		case 'l':
-			a = append(a, JustLeft)
-		case 'r':
-			a = append(a, JustRight)
-		case 'c':
-			a = append(a, JustCenter)
-		}
-	}
-	p.SetJustfies(a)
-	return nil
 }
 
 func (p *Padding) UpdateWidth(a []string) {
