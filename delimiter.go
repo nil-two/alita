@@ -13,13 +13,25 @@ type Delimiter struct {
 	UseRegexp bool
 }
 
-func NewDelimiter(expr string, useRegexp bool, count int) (*Delimiter, error) {
-	d := &Delimiter{
+func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err error) {
+	d = &Delimiter{
 		Count:     count,
 		UseRegexp: useRegexp,
 	}
-	if err := d.Set(expr); err != nil {
-		return nil, err
+	switch {
+	case expr == "":
+		d.re = nil
+	case d.UseRegexp:
+		d.re, err = regexp.Compile(expr)
+		if err != nil {
+			return nil, err
+		}
+	default:
+		expr = regexp.QuoteMeta(expr)
+		d.re, err = regexp.Compile(expr)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return d, nil
 }
@@ -27,22 +39,6 @@ func NewDelimiter(expr string, useRegexp bool, count int) (*Delimiter, error) {
 func NewDelimiterDefault() *Delimiter {
 	d, _ := NewDelimiter("", false, -1)
 	return d
-}
-
-func (d *Delimiter) Set(expr string) error {
-	if expr == "" {
-		d.re = nil
-		return nil
-	}
-	if !d.UseRegexp {
-		expr = regexp.QuoteMeta(expr)
-	}
-	re, err := regexp.Compile(expr)
-	if err != nil {
-		return err
-	}
-	d.re = re
-	return nil
 }
 
 func (d *Delimiter) Split(s string) []string {
