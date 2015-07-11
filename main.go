@@ -77,6 +77,7 @@ func _main() int {
 	r, err := argf.From(opt.Files)
 	if err != nil {
 		printErr(err)
+		guideToHelp()
 		return 2
 	}
 
