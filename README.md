@@ -23,9 +23,9 @@ Usage
 	$ alita [OPTION]... [FILE]...
 
 	Delimiter control:
-	  -c, --count=COUNT        delimit line COUNT times
-	  -r, --regexp             DELIM is a regular expression
 	  -d, --delimiter=DELIM    delimit line by DELIM
+	  -r, --regexp             DELIM is a regular expression
+	  -c, --count=COUNT        delimit line COUNT times
 
 	Output control:
 	  -m, --margin=FORMAT      join cells by FORMAT
