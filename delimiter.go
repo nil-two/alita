@@ -14,11 +14,20 @@ type Delimiter struct {
 	UseRegexp bool
 }
 
-func NewDelimiter() *Delimiter {
-	return &Delimiter{
-		Count:     -1,
-		UseRegexp: false,
+func NewDelimiter(expr string, useRegexp bool, count int) (*Delimiter, error) {
+	d := &Delimiter{
+		Count:     count,
+		UseRegexp: useRegexp,
 	}
+	if err := d.Set(expr); err != nil {
+		return nil, err
+	}
+	return d, nil
+}
+
+func NewDelimiterDefault() *Delimiter {
+	d, _ := NewDelimiter("", false, -1)
+	return d
 }
 
 func (d *Delimiter) String() string {

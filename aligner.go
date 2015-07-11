@@ -16,7 +16,7 @@ type Aligner struct {
 
 func NewAligner() *Aligner {
 	return &Aligner{
-		Delimiter: NewDelimiter(),
+		Delimiter: NewDelimiterDefault(),
 		Padding:   NewPaddingDefault(),
 		Margin:    NewMarginDefault(),
 		Space:     NewSpaceDefault(),
@@ -31,7 +31,7 @@ func NewAlignerWithModules(d *Delimiter, p *Padding, m *Margin, s *Space) *Align
 		Space:     s,
 	}
 	if d == nil {
-		a.Delimiter = NewDelimiter()
+		a.Delimiter = NewDelimiterDefault()
 	}
 	if p == nil {
 		a.Padding = NewPaddingDefault()
