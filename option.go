@@ -1,26 +1,41 @@
 package main
 
 import (
-	"github.com/jessevdk/go-flags"
+	"flag"
 )
 
 type Option struct {
-	Delimiter string `short:"d" long:"delimiter" default:""`
-	UseRegexp bool   `short:"r" long:"regexp"    default:"false"`
-	Count     int    `short:"c" long:"count"     default:"-1"`
-	Margin    string `short:"m" long:"margin"    default:"1:1"`
-	Justify   string `short:"j" long:"justify"   default:"l"`
-	IsHelp    bool   `short:"h" long:"help"      default:"false"`
-	IsVersion bool   `          long:"version"   default:"false"`
+	Delimiter string
+	UseRegexp bool
+	Count     int
+	Margin    string
+	Justify   string
+	IsHelp    bool
+	IsVersion bool
 	Files     []string
 }
 
 func ParseOption(args []string) (*Option, error) {
 	opt := &Option{}
-	files, err := flags.ParseArgs(opt, args)
-	if err != nil {
+
+	f := flag.NewFlagSet("alita", flag.ContinueOnError)
+	f.StringVar(&opt.Delimiter, "d", "", "")
+	f.StringVar(&opt.Delimiter, "delimiter", "", "")
+	f.BoolVar(&opt.UseRegexp, "r", false, "")
+	f.BoolVar(&opt.UseRegexp, "regexp", false, "")
+	f.IntVar(&opt.Count, "c", 0, "")
+	f.IntVar(&opt.Count, "count", 0, "")
+	f.StringVar(&opt.Margin, "m", "", "")
+	f.StringVar(&opt.Margin, "margin", "", "")
+	f.StringVar(&opt.Justify, "j", "", "")
+	f.StringVar(&opt.Justify, "justify", "", "")
+	f.BoolVar(&opt.IsHelp, "h", false, "")
+	f.BoolVar(&opt.IsHelp, "help", false, "")
+	f.BoolVar(&opt.IsVersion, "version", false, "")
+
+	if err := f.Parse(args); err != nil {
 		return nil, err
 	}
-	opt.Files = files
+	opt.Files = f.Args()
 	return opt, nil
 }
