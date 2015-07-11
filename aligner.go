@@ -14,6 +14,28 @@ type Aligner struct {
 	lines     [][]string
 }
 
+func NewAligner(opt *Option) (*Aligner, error) {
+	d, err := NewDelimiter(opt.Delimiter, opt.UseRegexp, opt.Count)
+	if err != nil {
+		return nil, err
+	}
+	p, err := NewPadding(opt.Justify)
+	if err != nil {
+		return nil, err
+	}
+	m, err := NewMarginWithFormat(opt.Margin)
+	if err != nil {
+		return nil, err
+	}
+	s := NewSpace(8)
+	return &Aligner{
+		Delimiter: d,
+		Padding:   p,
+		Margin:    m,
+		Space:     s,
+	}, nil
+}
+
 func NewAlignerDefault() *Aligner {
 	return &Aligner{
 		Delimiter: NewDelimiterDefault(),
