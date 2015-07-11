@@ -29,10 +29,9 @@ var delimiterSetTests = []struct {
 }
 
 func TestDelimiterSet(t *testing.T) {
-	d := NewDelimiter()
 	for _, test := range delimiterSetTests {
-		d.UseRegexp = test.useRegexp
-		if err := d.Set(test.expr); err != nil {
+		d, err := NewDelimiter(test.expr, test.useRegexp, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.expr, err)
 		}
@@ -66,7 +65,7 @@ var delimiterSplitDefaultTests = []struct {
 }
 
 func TestDelimiterDefaultSplit(t *testing.T) {
-	d := NewDelimiter()
+	d := NewDelimiterDefault()
 	for _, test := range delimiterSplitDefaultTests {
 		actual := d.Split(test.src)
 		expect := test.dst
@@ -108,10 +107,9 @@ var delimiterSplitTests = []struct {
 }
 
 func TestDelimiterSplit(t *testing.T) {
-	d := NewDelimiter()
 	for _, test := range delimiterSplitTests {
-		d.UseRegexp = test.useRegexp
-		if err := d.Set(test.expr); err != nil {
+		d, err := NewDelimiter(test.expr, test.useRegexp, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.expr, err)
 		}
@@ -146,12 +144,11 @@ var delimiterSplitWithCountTests = []struct {
 }
 
 func TestSplitWithCount(t *testing.T) {
-	d := NewDelimiter()
-	if err := d.Set(`=`); err != nil {
-		t.Errorf("Delimiter(\"=\").Split(%q) = %q; want %q", err)
-	}
 	for _, test := range delimiterSplitWithCountTests {
-		d.Count = test.count
+		d, err := NewDelimiter("=", false, test.count)
+		if err != nil {
+			t.Errorf("Delimiter(\"=\").Split(%q) = %q; want %q", err)
+		}
 
 		actual := d.Split(test.src)
 		expect := test.dst

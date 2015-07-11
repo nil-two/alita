@@ -252,8 +252,8 @@ ccccc = 100
 
 func TestAlignFixed(t *testing.T) {
 	for _, test := range alignFixedTests {
-		d := NewDelimiter()
-		if err := d.Set(test.delim); err != nil {
+		d, err := NewDelimiter(test.delim, false, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
@@ -347,9 +347,8 @@ ccccc = 100 /* C     */
 
 func TestAlignRegexp(t *testing.T) {
 	for _, test := range alignRegexpTests {
-		d := NewDelimiter()
-		d.UseRegexp = true
-		if err := d.Set(test.delim); err != nil {
+		d, err := NewDelimiter(test.delim, true, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
@@ -440,8 +439,8 @@ aaa=  b  =  ccc
 
 func TestAlignMargin(t *testing.T) {
 	for _, test := range alignMarginTests {
-		d := NewDelimiter()
-		if err := d.Set(test.delim); err != nil {
+		d, err := NewDelimiter(test.delim, false, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
@@ -565,8 +564,8 @@ aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
 func TestAlignJustify(t *testing.T) {
 	for _, test := range alignJustifyTests {
-		d := NewDelimiter()
-		if err := d.Set(test.delim); err != nil {
+		d, err := NewDelimiter(test.delim, false, -1)
+		if err != nil {
 			t.Errorf("Set(%q) returns %q; want nil",
 				test.delim, err)
 		}
