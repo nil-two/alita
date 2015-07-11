@@ -13,11 +13,15 @@ type Space struct {
 	headSpace string
 }
 
-func NewSpace() *Space {
+func NewSpace(tabWidth int) *Space {
 	return &Space{
-		tabWidth:  8,
+		tabWidth:  tabWidth,
 		headWidth: IntMax,
 	}
+}
+
+func NewSpaceDefault() *Space {
+	return NewSpace(8)
 }
 
 func (s *Space) UpdateHeadWidth(t string) {

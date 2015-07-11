@@ -19,7 +19,7 @@ func NewAligner() *Aligner {
 		Delimiter: NewDelimiter(),
 		Padding:   NewPaddingDefault(),
 		Margin:    NewMarginDefault(),
-		Space:     NewSpace(),
+		Space:     NewSpaceDefault(),
 	}
 }
 
@@ -40,7 +40,7 @@ func NewAlignerWithModules(d *Delimiter, p *Padding, m *Margin, s *Space) *Align
 		a.Margin = NewMarginDefault()
 	}
 	if s == nil {
-		a.Space = NewSpace()
+		a.Space = NewSpaceDefault()
 	}
 	return a
 }
