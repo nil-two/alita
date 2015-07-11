@@ -14,7 +14,7 @@ Try 'alita --help' for more information.
 `[1:])
 }
 
-func longUsage() {
+func usage() {
 	os.Stderr.WriteString(`
 Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
@@ -61,7 +61,7 @@ func _main() int {
 
 	switch {
 	case opt.IsHelp:
-		longUsage()
+		usage()
 		return 0
 	case opt.IsVersion:
 		version()
