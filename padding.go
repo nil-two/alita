@@ -96,12 +96,9 @@ func (p *Padding) justKind(i int) Justify {
 }
 
 func (p *Padding) Format(a []string) []string {
-	for i := 0; i < len(a); i++ {
+	for i := 0; i < len(a) && i < len(p.width); i++ {
 		j := p.justKind(i)
-		w := 0
-		if i < len(p.width) {
-			w = p.width[i]
-		}
+		w := p.width[i]
 		a[i] = j.Just(w, a[i])
 	}
 	return a
