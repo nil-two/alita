@@ -53,10 +53,10 @@ func NewMarginWithNumber(left, right int) *Margin {
 }
 
 func (m *Margin) Join(a []string) string {
-	if len(a) == 0 {
+	switch len(a) {
+	case 0:
 		return ""
-	}
-	if len(a) == 1 {
+	case 1:
 		return a[0]
 	}
 
@@ -67,16 +67,17 @@ func (m *Margin) Join(a []string) string {
 	if l < 0 {
 		l = 0
 	}
-	n := (l + r) * (len(a) / 2)
+
+	buflen := (l + r) * (len(a) / 2)
 	if len(a)%2 == 0 {
-		n -= r
+		buflen -= r
 	}
 	for i := 0; i < len(a); i++ {
-		n += len(a[i])
+		buflen += len(a[i])
 	}
 	lm, rm := strings.Repeat(" ", l), strings.Repeat(" ", r)
 
-	b := make([]byte, n)
+	b := make([]byte, buflen)
 	bp := copy(b, a[0])
 	for i := 2; i <= len(a); i += 2 {
 		bp += copy(b[bp:], lm)
