@@ -8,8 +8,8 @@ import (
 
 type Aligner struct {
 	Delimiter *Delimiter
-	Padding   *Padding
 	Margin    *Margin
+	Padding   *Padding
 	Space     *Space
 	lines     [][]string
 }
@@ -23,11 +23,11 @@ func NewAligner(opt *Option) (*Aligner, error) {
 	if err != nil {
 		return nil, err
 	}
-	p, err := NewPadding(opt.Justify)
+	m, err := NewMargin(opt.Margin)
 	if err != nil {
 		return nil, err
 	}
-	m, err := NewMargin(opt.Margin)
+	p, err := NewPadding(opt.Justify)
 	if err != nil {
 		return nil, err
 	}
