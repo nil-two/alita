@@ -52,10 +52,6 @@ func NewMarginWithNumber(left, right int) *Margin {
 	}
 }
 
-func NewMarginDefault() *Margin {
-	return NewMarginWithNumber(1, 1)
-}
-
 func (m *Margin) Join(a []string) string {
 	if len(a) == 0 {
 		return ""
