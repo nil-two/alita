@@ -7,10 +7,10 @@ import (
 )
 
 type Aligner struct {
-	Delimiter *Delimiter
-	Margin    *Margin
-	Padding   *Padding
-	Space     *Space
+	delimiter *Delimiter
+	margin    *Margin
+	padding   *Padding
+	space     *Space
 	lines     [][]string
 }
 
@@ -33,20 +33,20 @@ func NewAligner(opt *Option) (*Aligner, error) {
 	}
 	s := NewSpace()
 	return &Aligner{
-		Delimiter: d,
-		Padding:   p,
-		Margin:    m,
-		Space:     s,
+		delimiter: d,
+		padding:   p,
+		margin:    m,
+		space:     s,
 	}, nil
 }
 
 func (a *Aligner) AppendLine(s string) {
-	sp := a.Delimiter.Split(a.Space.Trim(s))
+	sp := a.delimiter.Split(a.space.Trim(s))
 	a.lines = append(a.lines, sp)
 
 	if len(sp) > 1 {
-		a.Space.UpdateHeadWidth(s)
-		a.Padding.UpdateWidth(sp)
+		a.space.UpdateHeadWidth(s)
+		a.padding.UpdateWidth(sp)
 	}
 }
 
@@ -62,7 +62,7 @@ func (a *Aligner) format(sp []string) string {
 	if len(sp) == 1 {
 		return sp[0]
 	}
-	return a.Space.Adjust(a.Margin.Join(a.Padding.Format(sp)))
+	return a.space.Adjust(a.margin.Join(a.padding.Format(sp)))
 }
 
 func (a *Aligner) Flush(out io.Writer) error {
