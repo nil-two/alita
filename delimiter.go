@@ -8,20 +8,18 @@ import (
 var SPACES = regexp.MustCompile(`\s+`)
 
 type Delimiter struct {
-	re        *regexp.Regexp
-	UseRegexp bool
-	Count     int
+	re    *regexp.Regexp
+	Count int
 }
 
 func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err error) {
 	d = &Delimiter{
-		Count:     count,
-		UseRegexp: useRegexp,
+		Count: count,
 	}
 	switch {
 	case expr == "":
 		d.re = nil
-	case d.UseRegexp:
+	case useRegexp:
 		d.re, err = regexp.Compile(expr)
 		if err != nil {
 			return nil, err
