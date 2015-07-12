@@ -15,6 +15,10 @@ type Aligner struct {
 }
 
 func NewAligner(opt *Option) (*Aligner, error) {
+	if opt == nil {
+		opt = &Option{}
+	}
+
 	d, err := NewDelimiter(opt.Delimiter, opt.UseRegexp, opt.Count)
 	if err != nil {
 		return nil, err
