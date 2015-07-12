@@ -13,8 +13,10 @@ type Delimiter struct {
 }
 
 func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err error) {
-	d = &Delimiter{
-		count: count,
+	d = &Delimiter{}
+	d.count = count
+	if d.count < 1 {
+		d.count = -1
 	}
 	switch {
 	case expr == "":
@@ -39,31 +41,26 @@ func (d *Delimiter) Split(s string) []string {
 		return SPACES.Split(s, -1)
 	}
 
-	count := d.count
-	if count < 1 {
-		count = -1
-	}
-	useCount := count > 0
-
-	matches := d.re.FindAllStringIndex(s, count)
+	matches := d.re.FindAllStringIndex(s, d.count)
 	if len(matches) == 0 {
 		return []string{strings.TrimSpace(s)}
 	}
 
 	a := make([]string, 0, len(matches)*2+1)
 	beg, end := 0, 0
+	useCount := d.count > 0
 	for _, match := range matches {
 		end = match[0]
 
 		a = append(a, s[beg:end])
 		beg, end = match[0], match[1]
-		if useCount && len(a) >= count {
+		if useCount && len(a) >= d.count {
 			break
 		}
 
 		a = append(a, s[beg:end])
 		beg = match[1]
-		if useCount && len(a) >= count {
+		if useCount && len(a) >= d.count {
 			break
 		}
 	}
