@@ -9,8 +9,8 @@ var SPACES = regexp.MustCompile(`\s+`)
 
 type Delimiter struct {
 	re        *regexp.Regexp
-	Count     int
 	UseRegexp bool
+	Count     int
 }
 
 func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err error) {

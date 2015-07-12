@@ -18,10 +18,12 @@ type Option struct {
 func ParseOption(args []string) (*Option, error) {
 	opt := &Option{}
 	f := flags.NewParser(opt, flags.PassDoubleDash)
+
 	files, err := f.ParseArgs(args)
 	if err != nil {
 		return nil, err
 	}
 	opt.Files = files
+
 	return opt, nil
 }
