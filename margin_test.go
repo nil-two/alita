@@ -6,7 +6,7 @@ import (
 
 func TestMarginDefault(t *testing.T) {
 	l, r := 1, 1
-	m := NewMarginDefault()
+	m, _ := NewMargin("")
 	if m.left != l || m.right != r {
 		t.Errorf("got %v:%v; want %v:%v", m.left, m.right, l, r)
 	}
