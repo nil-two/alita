@@ -40,18 +40,6 @@ func NewAligner(opt *Option) (*Aligner, error) {
 	}, nil
 }
 
-func NewAlignerDefault() *Aligner {
-	d, _ := NewDelimiter("", false, 0)
-	p, _ := NewPadding("")
-	m, _ := NewMargin("")
-	return &Aligner{
-		Delimiter: d,
-		Padding:   p,
-		Margin:    m,
-		Space:     NewSpace(),
-	}
-}
-
 func (a *Aligner) AppendLine(s string) {
 	sp := a.Delimiter.Split(a.Space.Trim(s))
 	a.lines = append(a.lines, sp)
