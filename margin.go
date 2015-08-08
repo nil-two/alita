@@ -61,11 +61,11 @@ func (m *Margin) Join(a []string) string {
 	}
 
 	l, r := m.left, m.right
-	if r < 0 {
-		r = 0
-	}
 	if l < 0 {
 		l = 0
+	}
+	if r < 0 {
+		r = 0
 	}
 
 	buflen := (l + r) * (len(a) / 2)
