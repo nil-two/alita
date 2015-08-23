@@ -173,7 +173,7 @@ digit will interpreted as both `left-margin` and `right-margin`
 	age   =  17
 
 	$ cat user | alita -m=0
-	(left-margin: 2, right-margin: 2)
+	(left-margin: 0, right-margin: 0)
 	name=Tom
 	age =17
 
