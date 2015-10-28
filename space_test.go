@@ -8,8 +8,8 @@ import (
 func TestSpaceDefault(t *testing.T) {
 	h := NewSpace()
 
-	actual := h.tabWidth
 	expect := 8
+	actual := h.tabWidth
 	if actual != expect {
 		t.Errorf("got %d; want %d", actual, expect)
 	}
@@ -59,8 +59,8 @@ func TestSpaceUpdateWidth(t *testing.T) {
 		s := test.before
 		s.UpdateHeadWidth(test.src)
 
-		actual := s
 		expect := test.after
+		actual := s
 		if !reflect.DeepEqual(actual, expect) {
 			t.Errorf("%v.UpdateWidth(%q) got %v; want %v",
 				test.before, test.src, actual, expect)
@@ -89,8 +89,8 @@ var spaceStripTests = []struct {
 func TestSpaceStrip(t *testing.T) {
 	s := NewSpace()
 	for _, test := range spaceStripTests {
-		actual := s.Trim(test.src)
 		expect := test.dst
+		actual := s.Trim(test.src)
 		if actual != expect {
 			t.Errorf("got %q; want %q", actual, expect)
 		}
@@ -126,8 +126,8 @@ func TestSpaceAdjust(t *testing.T) {
 	for _, test := range spaceAdjustTests {
 		s := test.space
 
-		actual := s.Adjust(test.src)
 		expect := test.dst
+		actual := s.Adjust(test.src)
 		if actual != expect {
 			t.Error("%v.Adjust(%q) = %q; want %q",
 				s, test.src, actual, expect)

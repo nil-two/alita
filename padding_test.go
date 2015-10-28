@@ -53,8 +53,8 @@ var justifyTests = []struct {
 
 func TestJustfy(t *testing.T) {
 	for _, test := range justifyTests {
-		actual := test.justify.Just(test.width, test.src)
 		expect := test.dst
+		actual := test.justify.Just(test.width, test.src)
 		if actual != expect {
 			kind := "lrc"[test.justify]
 			t.Errorf("%q.Justfy(%v, %q) = %q; want %q",
@@ -103,8 +103,8 @@ func TestPaddingUpdateWidth(t *testing.T) {
 		p.width = test.before
 		p.UpdateWidth(test.a)
 
-		actual := p.width
 		expect := test.after
+		actual := p.width
 		if !reflect.DeepEqual(actual, expect) {
 			t.Errorf("%v.UpdateWidth(%v) got %v; want %v",
 				test.before, test.a, actual, expect)
@@ -164,8 +164,8 @@ func TestsPaddingJustKind(t *testing.T) {
 				test.seq, err)
 		}
 
-		actual := p.justKind(test.src)
 		expect := test.dst
+		actual := p.justKind(test.src)
 		if actual != expect {
 			t.Errorf("NewPadding(%q).justkind(%v) = %v; want %v",
 				test.seq, test.src, actual, expect)
@@ -229,8 +229,8 @@ func TestPaddingFormat(t *testing.T) {
 		}
 		p.width = test.width
 
-		actual := p.Format(test.src)
 		expect := test.dst
+		actual := p.Format(test.src)
 		if !reflect.DeepEqual(actual, expect) {
 			t.Errorf("NewPadding(%q, %v).Format(%q) = %q; want %q",
 				test.seq, test.width, test.src, actual, expect)

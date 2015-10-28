@@ -19,8 +19,8 @@ func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
 			src, err)
 	}
 
-	actual := out.Bytes()
 	expect := dst
+	actual := out.Bytes()
 	if !reflect.DeepEqual(actual, expect) {
 		t.Errorf("got:\n%swant:\n%s", actual, expect)
 	}
