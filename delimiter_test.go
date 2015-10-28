@@ -34,6 +34,7 @@ func TestDelimiterSet(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
 				test.expr, test.useRegexp, -1, err)
+			continue
 		}
 		if !reflect.DeepEqual(d.re, test.re) {
 			t.Errorf("NewDelimiter(%q, %v, %v).re got %q; want %q",
@@ -112,6 +113,7 @@ func TestDelimiterSplit(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
 				test.expr, test.useRegexp, -1, err)
+			continue
 		}
 
 		expect := test.dst
@@ -148,6 +150,7 @@ func TestSplitWithCount(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
 				delim, false, test.count, err)
+			continue
 		}
 
 		expect := test.dst

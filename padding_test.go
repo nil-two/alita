@@ -162,6 +162,7 @@ func TestsPaddingJustKind(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewPadding(%q) returns %q, want nil",
 				test.seq, err)
+			continue
 		}
 
 		expect := test.dst
@@ -226,6 +227,7 @@ func TestPaddingFormat(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewPadding(%q) returns %q, want nil",
 				test.seq, err)
+			continue
 		}
 		p.width = test.width
 

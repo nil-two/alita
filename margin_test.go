@@ -40,6 +40,7 @@ func TestMarginSet(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewMarginWithFormat(%q) returns %q; want nil",
 				test.format, err)
+			continue
 		}
 		if m.left != test.left || m.right != test.right {
 			t.Errorf("NewMarginWithFormat(%q) got %v:%v; want %v:%v",

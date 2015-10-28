@@ -13,10 +13,12 @@ func testAlign(t *testing.T, a *Aligner, src, dst []byte) {
 	if err := a.ReadAll(r); err != nil {
 		t.Errorf("ReadAll(%q) returns %q; want nil",
 			src, err)
+		return
 	}
 	if err := a.Flush(out); err != nil {
 		t.Errorf("Flush(%q) returns %q; want nil",
 			src, err)
+		return
 	}
 
 	expect := dst
@@ -261,6 +263,7 @@ func TestAlignFixed(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewAligner(%#v) returns %q; want nil",
 				opt, err)
+			continue
 		}
 
 		testAlign(t, a, test.src, test.dst)
@@ -359,6 +362,7 @@ func TestAlignRegexp(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewAligner(%#v) returns %q; want nil",
 				opt, err)
+			continue
 		}
 
 		testAlign(t, a, test.src, test.dst)
@@ -454,6 +458,7 @@ func TestAlignMargin(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewAligner(%#v) returns %q; want nil",
 				opt, err)
+			continue
 		}
 
 		testAlign(t, a, test.src, test.dst)
@@ -577,6 +582,7 @@ func TestAlignJustify(t *testing.T) {
 		if err != nil {
 			t.Errorf("NewAligner(%#v) returns %q; want nil",
 				opt, err)
+			continue
 		}
 
 		testAlign(t, a, test.src, test.dst)
