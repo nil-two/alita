@@ -21,6 +21,9 @@ func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err err
 	switch {
 	case expr == "":
 		d.re = nil
+		if d.count != -1 {
+			d.count += 1
+		}
 	case useRegexp:
 		d.re, err = regexp.Compile(expr)
 		if err != nil {
@@ -38,7 +41,7 @@ func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err err
 
 func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
-		return SPACES.Split(s, -1)
+		return SPACES.Split(s, d.count)
 	}
 
 	matches := d.re.FindAllStringIndex(s, d.count)
