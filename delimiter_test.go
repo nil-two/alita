@@ -127,29 +127,38 @@ func TestDelimiterSplit(t *testing.T) {
 
 var delimiterSplitWithCountTests = []struct {
 	count int
+	expr  string
 	src   string
 	dst   []string
 }{
 	// less than 1
-	{-2, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
-	{-1, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
-	{0, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+	{-2, "=", "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+	{-1, "=", "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+	{0, "=", "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
 
 	// greater than 0
-	{1, "n =  m   =    100", []string{"n", "=  m   =    100"}},
-	{2, "n =  m   =    100", []string{"n", "=", "m   =    100"}},
-	{3, "n =  m   =    100", []string{"n", "=", "m", "=    100"}},
-	{4, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
-	{5, "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+	{1, "=", "n =  m   =    100", []string{"n", "=  m   =    100"}},
+	{2, "=", "n =  m   =    100", []string{"n", "=", "m   =    100"}},
+	{3, "=", "n =  m   =    100", []string{"n", "=", "m", "=    100"}},
+	{4, "=", "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+	{5, "=", "n =  m   =    100", []string{"n", "=", "m", "=", "100"}},
+
+	// with default delimiter
+	{-2, "", "1 10 100 1000", []string{"1", "10", "100", "1000"}},
+	{-1, "", "1 10 100 1000", []string{"1", "10", "100", "1000"}},
+	{0, "", "1 10 100 1000", []string{"1", "10", "100", "1000"}},
+	{1, "", "1 10 100 1000", []string{"1", "10 100 1000"}},
+	{2, "", "1 10 100 1000", []string{"1", "10", "100 1000"}},
+	{3, "", "1 10 100 1000", []string{"1", "10", "100", "1000"}},
+	{4, "", "1 10 100 1000", []string{"1", "10", "100", "1000"}},
 }
 
 func TestSplitWithCount(t *testing.T) {
-	delim := "="
 	for _, test := range delimiterSplitWithCountTests {
-		d, err := NewDelimiter(delim, false, test.count)
+		d, err := NewDelimiter(test.expr, false, test.count)
 		if err != nil {
 			t.Errorf("NewDelimiter(%q, %v, %v) returns %q; want nil",
-				delim, false, test.count, err)
+				test.expr, false, test.count, err)
 			continue
 		}
 
@@ -157,7 +166,7 @@ func TestSplitWithCount(t *testing.T) {
 		actual := d.Split(test.src)
 		if !reflect.DeepEqual(actual, expect) {
 			t.Errorf("NewDelimiter(%q, %v, %v).Split(%q) = %q; want %q",
-				delim, false, test.count, test.src, actual, expect)
+				test.expr, false, test.count, test.src, actual, expect)
 		}
 	}
 }
