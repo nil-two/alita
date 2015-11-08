@@ -36,7 +36,7 @@ Miscellaneous:
 
 func version() {
 	os.Stderr.WriteString(`
-v0.6.1
+v0.7.0
 `[1:])
 }
 
