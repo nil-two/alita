@@ -38,26 +38,26 @@ Usage
 Installation
 ------------
 
-###compiled binary
+### compiled binary
 
 See [releases](https://github.com/kusabashira/alita/releases)
 
-###go get
+### go get
 
 	go get github.com/kusabashira/alita
 
 Command Line Options
 --------------------
 
-###-h, --help
+### -h, --help
 
 Display a help message.
 
-###--version
+### --version
 
 Display the version of alita.
 
-###-d, --delimiter=DELIM
+### -d, --delimiter=DELIM
 
 Delimit line by DELIM.
 Default DELIM is `spaces (/\s+/)`.
@@ -92,7 +92,7 @@ DELIM will interpreted as fixed string.
 	cout << "9 * 2 = " << 9 * 2 << endl;
 	cout << "9 / 2 = " << 9 / 2 << ".."  << 9 % 2 << endl;
 
-###-r, --regexp
+### -r, --regexp
 
 Enable delimit line with regexp.
 
@@ -143,7 +143,7 @@ If COUNT less than 0, delimiter will split endless
 	3  ]]]
 	7  ]]]]]]]
 
-###-m, --margin=FORMAT
+### -m, --margin=FORMAT
 
 Join cells with margin which described in FORMAT.
 Default FORMAT is `1:1`.
@@ -238,12 +238,12 @@ they will continue to be applied to the order.
 Other Specification
 -------------------
 
-####head spaces
+#### head spaces
 
 If input text has head spaces.
 It will remain shortest head spaces.
 
-####trailing spaces
+#### trailing spaces
 
 It will remove all trailing spaces.
 
