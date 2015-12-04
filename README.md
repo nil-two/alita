@@ -1,6 +1,8 @@
 alita
 =====
 
+[![Build Status](https://travis-ci.org/kusabashira/alita.svg?branch=master)](https://travis-ci.org/kusabashira/alita.svg?branch=master)
+
 Align FILE(s), or standard input.
 
 It's inspired by [h1mesuke/vim-alignta](https://github.com/h1mesuke/vim-alignta).
