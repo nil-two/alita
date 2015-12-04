@@ -1,7 +1,7 @@
 alita
 =====
 
-[![Build Status](https://travis-ci.org/kusabashira/alita.svg?branch=master)](https://travis-ci.org/kusabashira/alita.svg?branch=master)
+[![Build Status](https://travis-ci.org/kusabashira/alita.svg?branch=master)](https://travis-ci.org/kusabashira/alita)
 
 Align FILE(s), or standard input.
 
