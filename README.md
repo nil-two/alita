@@ -48,8 +48,8 @@ See [releases](https://github.com/kusabashira/alita/releases)
 
 	go get github.com/kusabashira/alita
 
-Command Line Options
---------------------
+Options
+-------
 
 ### -h, --help
 
