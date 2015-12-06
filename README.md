@@ -89,7 +89,7 @@ DELIM will interpreted as fixed string.
 	cout    <<    "9 * 2 = "<<9 * 2 << endl;
 	cout << "9 / 2 = "<<9 / 2 << ".." << 9 % 2<< endl;
 
-	$ cat snip.cpp | alita -d="<<"
+	$ cat snip.cpp | alita -d'<<'
 	(delimit line by '<<')
 	cout << "9 * 2 = " << 9 * 2 << endl;
 	cout << "9 / 2 = " << 9 / 2 << ".."  << 9 % 2 << endl;
@@ -103,7 +103,7 @@ Enable delimit line with regexp.
 	c ==>    d ==>e
 	f===> g =>   h
 
-	$ cat root | alita -r -d="=+>"
+	$ cat root | alita -r -d='=+>'
 	(delimit line by /=+>/)
 	a =>   b ===> c
 	c ==>  d ==>  e
@@ -114,7 +114,7 @@ Enable delimit line with regexp.
 	https://github.com/h1mesuke/vim-alignta
 	https://github.com/kusabashira/alita
 
-	$ cat url | alita -r -d="[:/]+"
+	$ cat url | alita -r -d[:/]+
 	(delimit line by /[:\/]+/)
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
@@ -133,13 +133,13 @@ If COUNT less than 0, delimiter will split endless
 	3]]]
 	7]]]]]]]
 
-	$ cat graph | alita -d=]
+	$ cat graph | alita -d]
 	1  ]
 	10 ]  ]  ]  ]  ]  ]  ]  ]  ]  ]
 	3  ]  ]  ]
 	7  ]  ]  ]  ]  ]  ]  ]
 
-	$ cat graph | alita -d=] -c=1
+	$ cat graph | alita -d] -c1
 	1  ]
 	10 ]]]]]]]]]]
 	3  ]]]
@@ -156,12 +156,12 @@ If FORMAT is colon separated digits.
 left side will interpreted as `left-margin`,
 right side will interpreted as `right-margin`.
 
-	$ cat user | alita -d== -m=0:1
+	$ cat user | alita -d== -m0:1
 	(left-margin: 0, right-margin: 1)
 	name= Tom
 	age = 17
 
-	$ cat user | alita -d== -m=3:2
+	$ cat user | alita -d== -m3:2
 	(left-margin: 3, right-margin: 2)
 	name   =  Tom
 	age    =  17
@@ -169,12 +169,12 @@ right side will interpreted as `right-margin`.
 If FORMAT is `digit only`,
 digit will interpreted as both `left-margin` and `right-margin`
 
-	$ cat user | alita -m=2
+	$ cat user | alita -m2
 	(left-margin: 2, right-margin: 2)
 	name  =  Tom
 	age   =  17
 
-	$ cat user | alita -m=0
+	$ cat user | alita -m0
 	(left-margin: 0, right-margin: 0)
 	name=Tom
 	age =17
@@ -214,20 +214,20 @@ they will continue to be applied to the order.
 	aaa   = bbb   = ccc   = ddd   = eee   = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-	$ cat text | alita -d== -j=r
+	$ cat text | alita -d== -jr
 	(all cells right-justified)
 	    a = bbbbb =     c = ddddd =     e = fffff =   1
 	  aaa =   bbb =   ccc =   ddd =   eee =   fff =  10
 	aaaaa =     b = ccccc =     d = eeeee =     f = 100
 
-	$ cat text | alita -d== -j=rl
+	$ cat text | alita -d== -jrl
 	(Only the first cell right-justified,
 	the rest of the cell left-justified)
 	    a = bbbbb = c     = ddddd = e     = fffff = 1
 	  aaa = bbb   = ccc   = ddd   = eee   = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-	$ cat text | alita -j=rllcc
+	$ cat text | alita -jrllcc
 	(cell[0] right-justified.  cell[1] left-justified.
 	 cell[2] left-justified.   cell[3] center-justified.
 	 cell[4] center-justified. cell[5] left-justified.
