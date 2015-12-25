@@ -181,7 +181,7 @@ digit will interpreted as both `left-margin` and `right-margin`
 
 ### -j, --justify=SEQUENCE
 
-Justfy cells by format which described in SEQUENCE.
+Justify cells by format which described in SEQUENCE.
 
 SEQUENCE include `l`, `r` or `c`.
 
