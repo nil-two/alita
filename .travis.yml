@@ -2,5 +2,30 @@ language: go
 go:
   - 1.5
 
+env:
+  global:
+    - PATH="$GOPATH/bin:$PATH"
+    - RELEASES_PATH=/tmp/releases
+
 script:
   - go test -v
+
+before_deploy:
+  - go get github.com/laher/goxc
+  - goxc -tasks 'xc archive' -bc 'windows darwin linux' -d "$RELEASES_PATH" -resources-include 'README*'
+
+deploy:
+  provider: releases
+  api_key:
+    secure: d07jXd/pfCddQg/AaQa1zf6n2T0peYCcsVxCpsjipZSn7YE1ZpF5WXZrOYjD15ktrpwO6I3DHaiA2VRrCti2EIqSaCASh3GjRgKYt96fKonLYpYfOCgd09bs23qnL2x/v2zPP1+/9hGG+v9kn1kQj9a0DZuFCI94pE6OqhJLDKdrVHDlRZdwGcRQL7OMyJackIoZZ/4r7y+luxdRjI1rFlIY3jPSWs1WGJbdyKpFjGq+04XRXBRxnWQ7roSUQGPuodWQ+L6s6fnJomYTr6TOA3iuL4q1upDEgrln3JC/mX4Mmmr7URUgGtwAc4SEr+ZsmePtBGG8FQITdL79fFw+otpiNQXnYdMYeb2slPRTwKYPXPDVbYCjRFkpFLdoTHU2x5co/dMJ/PNrKoV4R38co9jUgY4zcNs8nhsDaJ5so6fo9oKgdZx/3v0ZeoXWA2BoU5Q7h5jHzmtCHygE9rCpqIJ3LOBSH2y6FjHq+A8J5cwrWuzUhUS70/EbevMQl/1s7jn7scG5DTlNrlUA5ObpvaJDBWmf4Hj5BGApUoG4yiB1PbpOQxauC6CEsGJ3/Tkp/6uI6kG90iazCAZIOD2gp0GqlBWntXS4vnI4XN910eS7UIhQoYfjnUehB4sCLQhhOpOxoxanGn9lEzYH1kBhkdsrsP2ghuEvSH3jGZIK14s=
+  file:
+    - $RELEASES_PATH/snapshot/alita_windows_386.zip
+    - $RELEASES_PATH/snapshot/alita_windows_amd64.zip
+    - $RELEASES_PATH/snapshot/alita_darwin_386.zip
+    - $RELEASES_PATH/snapshot/alita_darwin_amd64.zip
+    - $RELEASES_PATH/snapshot/alita_linux_386.tar.gz
+    - $RELEASES_PATH/snapshot/alita_linux_amd64.tar.gz
+    - $RELEASES_PATH/snapshot/alita_linux_arm.tar.gz
+  on:
+    repo: kusabashira/alita
+    tags: true
