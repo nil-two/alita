@@ -8,12 +8,6 @@ import (
 	"github.com/yuya-takeyama/argf"
 )
 
-func guideToHelp() {
-	os.Stderr.WriteString(`
-Try 'alita --help' for more information.
-`[1:])
-}
-
 func usage() {
 	os.Stderr.WriteString(`
 Usage: alita [OPTION]... [FILE]...
@@ -42,6 +36,12 @@ func version() {
 
 func printErr(err error) {
 	fmt.Fprintln(os.Stderr, "alita:", err)
+}
+
+func guideToHelp() {
+	os.Stderr.WriteString(`
+Try 'alita --help' for more information.
+`[1:])
 }
 
 func do(a *Aligner, r io.Reader) error {
