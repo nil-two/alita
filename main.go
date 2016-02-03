@@ -8,7 +8,7 @@ import (
 	"github.com/yuya-takeyama/argf"
 )
 
-func usage() {
+func printUsage() {
 	os.Stderr.WriteString(`
 Usage: alita [OPTION]... [FILE]...
 Align FILE(s), or standard input.
@@ -61,7 +61,7 @@ func _main() int {
 
 	switch {
 	case opt.IsHelp:
-		usage()
+		printUsage()
 		return 0
 	case opt.IsVersion:
 		printVersion()
