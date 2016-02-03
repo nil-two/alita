@@ -8,6 +8,10 @@ import (
 	"github.com/yuya-takeyama/argf"
 )
 
+var (
+	version = "0.7.1"
+)
+
 func printUsage() {
 	os.Stderr.WriteString(`
 Usage: alita [OPTION]... [FILE]...
@@ -29,9 +33,7 @@ Miscellaneous:
 }
 
 func printVersion() {
-	os.Stderr.WriteString(`
-0.7.1
-`[1:])
+	fmt.Fprintln(os.Stderr, version)
 }
 
 func printErr(err error) {
