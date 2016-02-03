@@ -9,12 +9,13 @@ import (
 )
 
 var (
+	name    = "alita"
 	version = "0.7.1"
 )
 
 func printUsage() {
-	os.Stderr.WriteString(`
-Usage: alita [OPTION]... [FILE]...
+	fmt.Fprintf(os.Stderr, `
+Usage: %s [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Delimiter control:
@@ -29,7 +30,7 @@ Output control:
 Miscellaneous:
   -h, --help               show this help message
       --version            print the version
-`[1:])
+`[1:], name)
 }
 
 func printVersion() {
@@ -37,13 +38,11 @@ func printVersion() {
 }
 
 func printErr(err error) {
-	fmt.Fprintln(os.Stderr, "alita:", err)
+	fmt.Fprintf(os.Stderr, "%s: %s\n", name, err)
 }
 
 func guideToHelp() {
-	os.Stderr.WriteString(`
-Try 'alita --help' for more information.
-`[1:])
+	fmt.Fprintf(os.Stderr, "Try '%s --help' for more information.\n", name)
 }
 
 func do(a *Aligner, r io.Reader) error {
