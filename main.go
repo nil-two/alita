@@ -28,7 +28,7 @@ Miscellaneous:
 `[1:])
 }
 
-func version() {
+func printVersion() {
 	os.Stderr.WriteString(`
 0.7.1
 `[1:])
@@ -64,7 +64,7 @@ func _main() int {
 		usage()
 		return 0
 	case opt.IsVersion:
-		version()
+		printVersion()
 		return 0
 	}
 
