@@ -16,13 +16,13 @@ const (
 	JustCenter
 )
 
-var JUSTFIES_SEQUENCE = regexp.MustCompile("^[lrc]+$")
+var justfiesSequence = regexp.MustCompile("^[lrc]+$")
 
 func ParseJustifies(seq string) ([]Justify, error) {
 	switch {
 	case seq == "":
 		return []Justify{JustLeft}, nil
-	case JUSTFIES_SEQUENCE.MatchString(seq):
+	case justfiesSequence.MatchString(seq):
 		js := make([]Justify, 0, len(seq))
 		for _, ch := range seq {
 			switch ch {

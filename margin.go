@@ -8,8 +8,8 @@ import (
 )
 
 var (
-	DIGIT_ONLY             = regexp.MustCompile(`^\d+$`)
-	COLON_SEPARATED_DIGITS = regexp.MustCompile(`^(\d+):(\d+)$`)
+	digitOnly            = regexp.MustCompile(`^\d+$`)
+	colonSeparatedDigits = regexp.MustCompile(`^(\d+):(\d+)$`)
 )
 
 type Margin struct {
@@ -22,14 +22,14 @@ func NewMargin(format string) (*Margin, error) {
 	switch {
 	case format == "":
 		m.left, m.right = 1, 1
-	case DIGIT_ONLY.MatchString(format):
+	case digitOnly.MatchString(format):
 		n, err := strconv.Atoi(format)
 		if err != nil {
 			return nil, err
 		}
 		m.left, m.right = n, n
-	case COLON_SEPARATED_DIGITS.MatchString(format):
-		a := COLON_SEPARATED_DIGITS.FindAllStringSubmatch(format, -1)[0]
+	case colonSeparatedDigits.MatchString(format):
+		a := colonSeparatedDigits.FindAllStringSubmatch(format, -1)[0]
 		l, err := strconv.Atoi(a[1])
 		if err != nil {
 			return nil, err
