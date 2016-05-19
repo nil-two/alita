@@ -25,17 +25,17 @@ Usage
 	$ alita [OPTION]... [FILE]...
 
 	Delimiter control:
-	  -d, --delimiter=DELIM    delimit line by DELIM
+	  -d, --delimiter=DELIM    separate lines by DELIM
 	  -r, --regexp             DELIM is a regular expression
-	  -c, --count=COUNT        delimit line COUNT times
+	  -c, --count=COUNT        separate lines only COUNT times
 
 	Output control:
 	  -m, --margin=FORMAT      join cells by FORMAT
 	  -j, --justify=SEQUENCE   justify cells by SEQUENCE
 
 	Miscellaneous:
-	  -h, --help               show this help message
-	      --version            print the version
+	  -h, --help               display this help and exit
+	      --version            display version information and exit
 
 Installation
 ------------
