@@ -61,7 +61,7 @@ Display the version of alita.
 
 ### -d, --delimiter=DELIM
 
-Delimit line by DELIM.
+Separate lines by DELIM.
 Default DELIM is `spaces (/\s+/)`.
 
 	$ cat nums.txt
@@ -74,7 +74,7 @@ Default DELIM is `spaces (/\s+/)`.
 	100   10000 1
 	10000 1     100
 
-DELIM will interpreted as fixed string.
+DELIM will interpreted as a fixed string.
 
 	$ cat user
 	name=Tom
@@ -96,7 +96,7 @@ DELIM will interpreted as fixed string.
 
 ### -r, --regexp
 
-Enable delimit line with regexp.
+Separate lines by a regular expression.
 
 	$ cat root
 	a=>b ===>  c
@@ -122,10 +122,10 @@ Enable delimit line with regexp.
 
 ### -c, --count=COUNT
 
-Delimit line COUNT times.
+Separate lines only COUNT times.
 Default COUNT is `-1`.
 
-If COUNT less than 0, delimiter will split endless
+If COUNT is smaller than 0, delimiter separates as much as possible.
 
 	$ cat graph
 	1]
@@ -147,14 +147,14 @@ If COUNT less than 0, delimiter will split endless
 
 ### -m, --margin=FORMAT
 
-Join cells with margin which described in FORMAT.
+Join cells with a margin which described in FORMAT.
 Default FORMAT is `1:1`.
 
 FORMAT needs to be `{left-margin}:{right-margin}` or `{margin}`.
 
-If FORMAT is colon separated digits.
-left side will interpreted as `left-margin`,
-right side will interpreted as `right-margin`.
+If FORMAT is a `colon separated digits`.
+The left side will interpreted as `left-margin`,
+and the right side will interpreted as `right-margin`.
 
 	$ cat user | alita -d== -m0:1
 	(left-margin: 0, right-margin: 1)
@@ -166,8 +166,8 @@ right side will interpreted as `right-margin`.
 	name   =  Tom
 	age    =  17
 
-If FORMAT is `digit only`,
-digit will interpreted as both `left-margin` and `right-margin`
+If FORMAT is a `digit only`,
+The digit will interpreted as both `left-margin` and `right-margin`.
 
 	$ cat user | alita -m2
 	(left-margin: 2, right-margin: 2)
@@ -181,9 +181,9 @@ digit will interpreted as both `left-margin` and `right-margin`
 
 ### -j, --justify=SEQUENCE
 
-Justify cells by format which described in SEQUENCE.
+Justify cells by a format which described in SEQUENCE.
 
-SEQUENCE include `l`, `r` or `c`.
+SEQUENCE includes only `l`, `r` and `c`.
 
 | char | justify        |
 |:-----|:---------------|
@@ -191,7 +191,7 @@ SEQUENCE include `l`, `r` or `c`.
 | r    | right-justify  |
 | c    | center-justify |
 
-SEQUENCE will interpreted as following format.
+SEQUENCE will interpreted as the following format.
 
 (Default SEQUENCE is `l`)
 
@@ -199,9 +199,9 @@ SEQUENCE will interpreted as following format.
 
 You can specify any number of `{M-fld-align}` and `{R-fld-align}`.
 
-If the match there is more than one,
-they will continue to be applied to the order.
-(next of last `R-fld-align` is first `M-fld-align`)
+Justifies are applied to cells in order from left.
+
+(The next of the last `R-fld-align` is the first `M-fld-align`)
 
 	$ cat text
 	a = bbbbb =  c = ddddd =  e = fffff =  1
@@ -242,12 +242,12 @@ Other Specification
 
 #### head spaces
 
-If input text has head spaces.
-It will remain shortest head spaces.
+If the input text includes head spaces.
+alita leaves the shortest head spaces.
 
 #### trailing spaces
 
-It will remove all trailing spaces.
+alita removes all trailing spaces.
 
 License
 -------
