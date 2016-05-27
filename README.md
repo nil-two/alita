@@ -57,7 +57,7 @@ Display a help message.
 
 ### --version
 
-Display the version of alita.
+Output the version of alita.
 
 ### -d, --delimiter=DELIM
 
