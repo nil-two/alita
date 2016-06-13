@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	cmdName = "alita"
-	version = "0.7.1"
+	cmdName    = "alita"
+	cmdVersion = "0.7.1"
 )
 
 func printUsage() {
@@ -34,7 +34,7 @@ Miscellaneous:
 }
 
 func printVersion() {
-	fmt.Fprintln(os.Stderr, version)
+	fmt.Fprintln(os.Stderr, cmdVersion)
 }
 
 func printErr(err error) {
