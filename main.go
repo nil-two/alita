@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	name    = "alita"
+	cmdName = "alita"
 	version = "0.7.1"
 )
 
@@ -30,7 +30,7 @@ Output control:
 Miscellaneous:
   -h, --help               display this help and exit
       --version            display version information and exit
-`[1:], name)
+`[1:], cmdName)
 }
 
 func printVersion() {
@@ -38,11 +38,11 @@ func printVersion() {
 }
 
 func printErr(err error) {
-	fmt.Fprintf(os.Stderr, "%s: %s\n", name, err)
+	fmt.Fprintf(os.Stderr, "%s: %s\n", cmdName, err)
 }
 
 func guideToHelp() {
-	fmt.Fprintf(os.Stderr, "Try '%s --help' for more information.\n", name)
+	fmt.Fprintf(os.Stderr, "Try '%s --help' for more information.\n", cmdName)
 }
 
 func do(a *Aligner, r io.Reader) error {
