@@ -13,7 +13,7 @@ It's inspired by [h1mesuke/vim-alignta](https://github.com/h1mesuke/vim-alignta)
 	age  =17
 	userid = 10001
 
-	$ cat user.conf | alita -d==
+	$ cat user.conf | alita -d=
 	[user]
 	name   = Tom
 	age    = 17
@@ -80,7 +80,7 @@ DELIM will interpreted as a fixed string.
 	name=Tom
 	age=17
 
-	$ cat user | alita -d==
+	$ cat user | alita -d=
 	(delimit line by '=')
 	name = Tom
 	age  = 17
@@ -103,7 +103,7 @@ Separate lines by a regular expression.
 	c ==>    d ==>e
 	f===> g =>   h
 
-	$ cat root | alita -r -d='=+>'
+	$ cat root | alita -rd'=+>'
 	(delimit line by /=+>/)
 	a =>   b ===> c
 	c ==>  d ==>  e
@@ -114,7 +114,7 @@ Separate lines by a regular expression.
 	https://github.com/h1mesuke/vim-alignta
 	https://github.com/kusabashira/alita
 
-	$ cat url | alita -r -d[:/]+
+	$ cat url | alita -rd[:/]+
 	(delimit line by /[:\/]+/)
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
@@ -156,12 +156,12 @@ If FORMAT is a `colon separated digits`.
 The left side will interpreted as `left-margin`,
 and the right side will interpreted as `right-margin`.
 
-	$ cat user | alita -d== -m0:1
+	$ cat user | alita -d= -m0:1
 	(left-margin: 0, right-margin: 1)
 	name= Tom
 	age = 17
 
-	$ cat user | alita -d== -m3:2
+	$ cat user | alita -d= -m3:2
 	(left-margin: 3, right-margin: 2)
 	name   =  Tom
 	age    =  17
@@ -208,19 +208,19 @@ Justifies are applied to cells in order from left.
 	 aaa = bbb = ccc =  ddd = eee = fff = 10
 	aaaaa =  b = ccccc = d = eeeee =  f = 100
 	
-	$ cat text | alita -d==
+	$ cat text | alita -d=
 	(all cells left-justified)
 	a     = bbbbb = c     = ddddd = e     = fffff = 1
 	aaa   = bbb   = ccc   = ddd   = eee   = fff   = 10
 	aaaaa = b     = ccccc = d     = eeeee = f     = 100
 
-	$ cat text | alita -d== -jr
+	$ cat text | alita -d= -jr
 	(all cells right-justified)
 	    a = bbbbb =     c = ddddd =     e = fffff =   1
 	  aaa =   bbb =   ccc =   ddd =   eee =   fff =  10
 	aaaaa =     b = ccccc =     d = eeeee =     f = 100
 
-	$ cat text | alita -d== -jrl
+	$ cat text | alita -d= -jrl
 	(Only the first cell right-justified,
 	the rest of the cell left-justified)
 	    a = bbbbb = c     = ddddd = e     = fffff = 1
