@@ -38,7 +38,8 @@ func NewCLI(stdin io.Reader, stdout io.Writer, stderr io.Writer) *CLI {
 
 func (c *CLI) printUsage() {
 	fmt.Fprintf(c.stderr, `
-$ alita [OPTION]... [FILE]...
+Usage: %s [OPTION]... [FILE]...
+Align FILE(s), or standard input.
 
 Delimiter control:
   -d, --delimiter=DELIM    separate lines by DELIM
