@@ -5,7 +5,7 @@ go:
 
 env:
   global:
-    - PATH="$GOPATH/bin:$PATH"
+    - PATH=$PATH:$GOPATH/bin
     - RELEASES_PATH=/tmp/releases
 
 script:
