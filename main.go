@@ -160,6 +160,7 @@ func (c *CLI) Run(args []string) int {
 }
 
 func main() {
-	cli := NewCLI(os.Stdin, os.Stdout, os.Stderr)
-	os.Exit(cli.Run(os.Args[1:]))
+	c := NewCLI(os.Stdin, os.Stdout, os.Stderr)
+	e := c.Run(os.Args[1:])
+	os.Exit(e)
 }
