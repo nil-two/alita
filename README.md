@@ -23,19 +23,20 @@ Usage
 -----
 
 	$ alita [OPTION]... [FILE]...
-
+	Align FILE(s), or standard input.
+	
 	Delimiter control:
-	  -d, --delimiter=DELIM    separate lines by DELIM
-	  -r, --regexp             DELIM is a regular expression
-	  -c, --count=COUNT        separate lines only COUNT times
-
+	  -d, --delimiter=DELIM      separate lines by DELIM
+	  -r, --regexp               DELIM is a regular expression
+	  -c, --count=COUNT          separate lines only COUNT times
+	
 	Output control:
-	  -m, --margin=FORMAT      join cells by FORMAT
-	  -j, --justify=SEQUENCE   justify cells by SEQUENCE
-
+	  -m, --margin=N[:M]         put N or N and M spaces at both ends of DELIM
+	  -j, --justify=[l|c|r]...   justify cells to the left, center, or right
+	
 	Miscellaneous:
-	  -h, --help               display this help and exit
-	      --version            display version information and exit
+	  -h, --help                 display this help and exit
+	      --version              display version information and exit
 
 Installation
 ------------
@@ -145,10 +146,10 @@ If COUNT is smaller than 0, delimiter separates as much as possible.
 	3  ]]]
 	7  ]]]]]]]
 
-### -m, --margin=FORMAT
+### -m, --margin=N[:M]
 
-Join cells with a margin which described in FORMAT.
-Default FORMAT is `1:1`.
+put N or N and M spaces at both ends of DELIM.
+Default is `1:1`.
 
 FORMAT needs to be `{left-margin}:{right-margin}` or `{margin}`.
 
@@ -179,9 +180,10 @@ The digit will interpreted as both `left-margin` and `right-margin`.
 	name=Tom
 	age =17
 
-### -j, --justify=SEQUENCE
+### -j, --justify=[l|c|r]...
 
-Justify cells by a format which described in SEQUENCE.
+Justify cells to the left, center, or right.
+Default is `l`.
 
 SEQUENCE includes only `l`, `r` and `c`.
 
@@ -192,8 +194,6 @@ SEQUENCE includes only `l`, `r` and `c`.
 | r    | right-justify  |
 
 SEQUENCE will interpreted as the following format.
-
-(Default SEQUENCE is `l`)
 
 `{L-fld-align} [ {M-fld-align} {R-fld-align} ]...`
 
