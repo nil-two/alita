@@ -24,16 +24,16 @@ Usage
 
 	$ alita [OPTION]... [FILE]...
 	Align FILE(s), or standard input.
-	
+
 	Delimiter control:
 	  -d, --delimiter=DELIM      separate lines by DELIM
 	  -r, --regexp               DELIM is a regular expression
 	  -c, --count=COUNT          separate lines only COUNT times
-	
+
 	Output control:
 	  -m, --margin=N[:M]         put N or N and M spaces at both ends of DELIM
 	  -j, --justify=[l|c|r]...   justify cells to the left, center, or right
-	
+
 	Miscellaneous:
 	  -h, --help                 display this help and exit
 	      --version              display version information and exit
@@ -207,7 +207,7 @@ Justifies are applied to cells in order from left.
 	a = bbbbb =  c = ddddd =  e = fffff =  1
 	 aaa = bbb = ccc =  ddd = eee = fff = 10
 	aaaaa =  b = ccccc = d = eeeee =  f = 100
-	
+
 	$ cat text | alita -d=
 	(all cells left-justified)
 	a     = bbbbb = c     = ddddd = e     = fffff = 1
