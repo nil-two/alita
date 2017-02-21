@@ -11,7 +11,7 @@ import (
 
 var (
 	cmdName    = "alita"
-	cmdVersion = "0.7.1"
+	cmdVersion = "0.8.0"
 )
 
 type CLI struct {
