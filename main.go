@@ -42,17 +42,17 @@ Usage: %s [OPTION]... [FILE]...
 Align FILE(s), or standard input.
 
 Delimiter control:
-  -d, --delimiter=DELIM    separate lines by DELIM
-  -r, --regexp             DELIM is a regular expression
-  -c, --count=COUNT        separate lines only COUNT times
+  -d, --delimiter=DELIM      separate lines by DELIM
+  -r, --regexp               DELIM is a regular expression
+  -c, --count=COUNT          separate lines only COUNT times
 
 Output control:
-  -m, --margin=FORMAT      join cells by FORMAT
-  -j, --justify=SEQUENCE   justify cells by SEQUENCE
+  -m, --margin=N[:M]         put N or N and M spaces at both ends of DELIM
+  -j, --justify=[l|c|r]...   justify cells to the left, center, or right
 
 Miscellaneous:
-  -h, --help               display this help and exit
-      --version            display version information and exit
+  -h, --help                 display this help and exit
+      --version              display version information and exit
 `[1:], cmdName)
 }
 
