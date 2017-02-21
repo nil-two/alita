@@ -12,11 +12,11 @@ type Justify int
 
 const (
 	JustLeft Justify = iota
-	JustRight
 	JustCenter
+	JustRight
 )
 
-var justfiesSequence = regexp.MustCompile("^[lrc]+$")
+var justfiesSequence = regexp.MustCompile("^[lcr]+$")
 
 func ParseJustifies(seq string) ([]Justify, error) {
 	switch {
@@ -28,10 +28,10 @@ func ParseJustifies(seq string) ([]Justify, error) {
 			switch ch {
 			case 'l':
 				js = append(js, JustLeft)
-			case 'r':
-				js = append(js, JustRight)
 			case 'c':
 				js = append(js, JustCenter)
+			case 'r':
+				js = append(js, JustRight)
 			}
 		}
 		return js, nil

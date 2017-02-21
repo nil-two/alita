@@ -188,8 +188,8 @@ SEQUENCE includes only `l`, `r` and `c`.
 | char | justify        |
 |:-----|:---------------|
 | l    | left-justify   |
-| r    | right-justify  |
 | c    | center-justify |
+| r    | right-justify  |
 
 SEQUENCE will interpreted as the following format.
 
