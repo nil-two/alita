@@ -20,7 +20,7 @@
 
 ### v0.5.0 - 2015-05-21
 
-- Leave shortest head spaces.
+- Leave shortest leading spaces.
 
 ### v0.4.0 - 2015-05-21
 

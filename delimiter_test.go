@@ -60,7 +60,7 @@ var delimiterSplitDefaultTests = []struct {
 	{"a  b c", []string{"a", "b", "c"}},
 	{"a \t b c", []string{"a", "b", "c"}},
 
-	// head and tail spaces
+	// leading and tail spaces
 	{"  a b c", []string{"", "a", "b", "c"}},
 	{"a b c ", []string{"a", "b", "c", ""}},
 }

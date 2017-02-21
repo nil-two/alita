@@ -240,10 +240,10 @@ Justifies are applied to cells in order from left.
 Other Specification
 -------------------
 
-#### head spaces
+#### leading spaces
 
-If the input text includes head spaces.
-alita leaves the shortest head spaces.
+If the input text includes leading spaces.
+alita leaves the shortest leading spaces.
 
 #### trailing spaces
 

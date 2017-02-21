@@ -20,7 +20,7 @@ var spaceUpdateWidthTests = []struct {
 	before *Space
 	after  *Space
 }{
-	// read only headspace
+	// read only leadingspace
 	{"  abc ",
 		&Space{8, 2, "  "},
 		&Space{8, 2, "  "}},
@@ -57,7 +57,7 @@ var spaceUpdateWidthTests = []struct {
 func TestSpaceUpdateWidth(t *testing.T) {
 	for _, test := range spaceUpdateWidthTests {
 		s := test.before
-		s.UpdateHeadWidth(test.src)
+		s.UpdateLeadingWidth(test.src)
 
 		expect := test.after
 		actual := s
@@ -110,7 +110,7 @@ var spaceAdjustTests = []struct {
 	{&Space{8, 0, ""}, "abc      ", "abc"},
 	{&Space{8, 0, ""}, "abc\t    ", "abc"},
 
-	// insert head space
+	// insert leading space
 	{&Space{8, 1, " "}, "abc", " abc"},
 	{&Space{8, 8, "\t"}, "abc", "\tabc"},
 	{&Space{8, 9, "\t "}, "abc", "\t abc"},

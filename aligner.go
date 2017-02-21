@@ -52,7 +52,7 @@ func (a *Aligner) AddRow(s string) {
 	a.cells = append(a.cells, row)
 
 	if len(row) > 1 {
-		a.space.UpdateHeadWidth(s)
+		a.space.UpdateLeadingWidth(s)
 		a.padding.UpdateWidth(row)
 	}
 }

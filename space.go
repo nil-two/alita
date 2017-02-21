@@ -8,20 +8,20 @@ import (
 var IntMax = int(^uint(0) >> 1)
 
 type Space struct {
-	tabWidth  int
-	headWidth int
-	headSpace string
+	tabWidth     int
+	leadingWidth int
+	leadingSpace string
 }
 
 func NewSpace() *Space {
 	return &Space{
-		tabWidth:  8,
-		headWidth: IntMax,
+		tabWidth:     8,
+		leadingWidth: IntMax,
 	}
 }
 
-func (s *Space) UpdateHeadWidth(t string) {
-	if s.headWidth < 1 {
+func (s *Space) UpdateLeadingWidth(t string) {
+	if s.leadingWidth < 1 {
 		return
 	}
 
@@ -39,9 +39,9 @@ func (s *Space) UpdateHeadWidth(t string) {
 		}
 	}
 END:
-	if w < s.headWidth {
-		s.headWidth = w
-		s.headSpace = t[:i]
+	if w < s.leadingWidth {
+		s.leadingWidth = w
+		s.leadingSpace = t[:i]
 	}
 }
 
@@ -50,5 +50,5 @@ func (s *Space) Trim(t string) string {
 }
 
 func (s *Space) Adjust(t string) string {
-	return s.headSpace + strings.TrimRightFunc(t, unicode.IsSpace)
+	return s.leadingSpace + strings.TrimRightFunc(t, unicode.IsSpace)
 }
