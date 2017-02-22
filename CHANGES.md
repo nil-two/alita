@@ -1,3 +1,10 @@
+### v0.8.0 - 2017-02-21
+
+- Support mixed flag like `-rd'[:/]+'`.
+- Interpret an equal sign immediately after a short option as the value of the option
+  - later:   -d== #=> DELIM = "=="
+  - earlier: -d== #=> DELIM = "="
+
 ### v0.7.1 - 2016-01-12
 
 - Change the format of version from "v0.7.1" to "0.7.1".
