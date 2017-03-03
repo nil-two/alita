@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-var SPACES = regexp.MustCompile(`\s+`)
+var Spaces = regexp.MustCompile(`\s+`)
 
 type Delimiter struct {
 	re    *regexp.Regexp
@@ -41,7 +41,7 @@ func NewDelimiter(expr string, useRegexp bool, count int) (d *Delimiter, err err
 
 func (d *Delimiter) Split(s string) []string {
 	if d.re == nil {
-		return SPACES.Split(s, d.count)
+		return Spaces.Split(s, d.count)
 	}
 
 	matches := d.re.FindAllStringIndex(s, d.count)
