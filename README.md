@@ -1,8 +1,6 @@
 alita
 =====
 
-[![Build Status](https://travis-ci.org/kusabashira/alita.svg?branch=master)](https://travis-ci.org/kusabashira/alita)
-
 Align FILE(s), or standard input.
 
 It's inspired by [h1mesuke/vim-alignta](https://github.com/h1mesuke/vim-alignta).
@@ -43,11 +41,11 @@ Installation
 
 ### compiled binary
 
-See [releases](https://github.com/kusabashira/alita/releases)
+See [releases](https://github.com/nil2nekoni/alita/releases)
 
 ### go get
 
-	go get github.com/kusabashira/alita
+	go get github.com/nil2nekoni/alita
 
 Options
 -------
@@ -113,13 +111,13 @@ Separate lines by a regular expression.
 	$ cat url
 	https://github.com/vim-scripts/Align
 	https://github.com/h1mesuke/vim-alignta
-	https://github.com/kusabashira/alita
+	https://github.com/nil2nekoni/alita
 
 	$ cat url | alita -rd[:/]+
 	(delimit line by /[:\/]+/)
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
-	https :// github.com / kusabashira / alita
+	https :// github.com / nil2nekoni  / alita
 
 ### -c, --count=COUNT
 
@@ -257,4 +255,4 @@ MIT License
 Author
 -------
 
-kusabashira <kusabashira227@gmail.com>
+nil2 <nil2@nil2.org>
