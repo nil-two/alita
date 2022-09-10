@@ -288,11 +288,11 @@ f ===> g =>   h
 	{`[:/]+`, []byte(`
 https://github.com/vim-scripts/Align
 https://github.com/h1mesuke/vim-alignta
-https://github.com/nil2nekoni/alita
+https://github.com/nil-two/alita
 `[1:]), []byte(`
 https :// github.com / vim-scripts / Align
 https :// github.com / h1mesuke    / vim-alignta
-https :// github.com / nil2nekoni  / alita
+https :// github.com / nil-two  / alita
 `[1:])},
 
 	{`\\$`, []byte(`

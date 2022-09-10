@@ -28,5 +28,5 @@ deploy:
     - $RELEASES_PATH/snapshot/alita_linux_amd64.tar.gz
     - $RELEASES_PATH/snapshot/alita_linux_arm.tar.gz
   on:
-    repo: kusabashira/alita
+    repo: nil_two/alita
     tags: true

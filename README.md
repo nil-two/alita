@@ -41,11 +41,11 @@ Installation
 
 ### compiled binary
 
-See [releases](https://github.com/nil2nekoni/alita/releases)
+See [releases](https://github.com/nil-two/alita/releases)
 
 ### go get
 
-	go get github.com/nil2nekoni/alita
+	go get github.com/nil-two/alita
 
 Options
 -------
@@ -111,13 +111,13 @@ Separate lines by a regular expression.
 	$ cat url
 	https://github.com/vim-scripts/Align
 	https://github.com/h1mesuke/vim-alignta
-	https://github.com/nil2nekoni/alita
+	https://github.com/nil-two/alita
 
 	$ cat url | alita -rd[:/]+
 	(delimit line by /[:\/]+/)
 	https :// github.com / vim-scripts / Align
 	https :// github.com / h1mesuke    / vim-alignta
-	https :// github.com / nil2nekoni  / alita
+	https :// github.com / nil-two     / alita
 
 ### -c, --count=COUNT
 
